@@ -1,0 +1,36 @@
+{
+  "name": "ZealotZone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/style.css",
+    "watch:css": "tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/style.css --watch",
+    "build:js": "esbuild ./wwwroot/js/site.js --bundle --outfile=./wwwroot/js/bundle.js --sourcemap",
+    "watch:js": "esbuild ./wwwroot/js/site.js --bundle --outfile=./wwwroot/js/bundle.js --sourcemap --watch",
+    "browser-sync": "browser-sync start --proxy  'https://localhost:7170/' --files 'wwwroot/css/*.css, wwwroot/js/*.js, **/*.cshtml, **/*.html' --reload-delay 2000 --no-inject-changes",
+    "mvc-watch-run": "concurrently \"dotnet watch run --launch-profile https\" \"pnpm run watch:css\" \"pnpm run watch:js\" \"pnpm run browser-sync\"",
+    "rider-debug": "concurrently \"pnpm run watch:css\" \"pnpm run watch:js\" \"pnpm run browser-sync\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.1",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "browser-sync": "^3.0.3",
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.25.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.12"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.12"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

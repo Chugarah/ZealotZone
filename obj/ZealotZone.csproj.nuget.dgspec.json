@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/run/media/georgi/Core/Projects/EC/05.MVC/ZealotZone/ZealotZone/ZealotZone.csproj": {}
+    "/home/georgi/Projects/ZealotZone/ZealotZone.csproj": {}
   },
   "projects": {
-    "/run/media/georgi/Core/Projects/EC/05.MVC/ZealotZone/ZealotZone/ZealotZone.csproj": {
+    "/home/georgi/Projects/ZealotZone/ZealotZone.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/run/media/georgi/Core/Projects/EC/05.MVC/ZealotZone/ZealotZone/ZealotZone.csproj",
+        "projectUniqueName": "/home/georgi/Projects/ZealotZone/ZealotZone.csproj",
         "projectName": "ZealotZone",
-        "projectPath": "/run/media/georgi/Core/Projects/EC/05.MVC/ZealotZone/ZealotZone/ZealotZone.csproj",
+        "projectPath": "/home/georgi/Projects/ZealotZone/ZealotZone.csproj",
         "packagesPath": "/home/georgi/.nuget/packages/",
-        "outputPath": "/run/media/georgi/Core/Projects/EC/05.MVC/ZealotZone/ZealotZone/obj/",
+        "outputPath": "/home/georgi/Projects/ZealotZone/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/georgi/.nuget/NuGet/NuGet.Config"
@@ -20,6 +20,7 @@
           "net9.0"
         ],
         "sources": {
+          "/usr/lib64/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,7 +39,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -84,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/georgi/.dotnet/sdk/9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.103/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

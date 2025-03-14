@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZealotZone")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b238df20c5c5415b2c8a5a57f502ff257f74aec4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c3229ddebd75bdcffd3d8c5cbdd9580a166589c5")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZealotZone")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZealotZone")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
