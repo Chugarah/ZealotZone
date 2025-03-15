@@ -4,14 +4,14 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - ZealotZone Test</title>
-    <script type="importmap"></script>
+    <script type="import"></script>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
 </head>
 <body>
 <header>
     <section title="Header">
         <!-- Header using ASP tag-helper :) -->
-        <partial name="Header/_header" />
+        @await Html.PartialAsync("Header/_Header")
     </section>
 </header>
 <div class="container">
@@ -21,9 +21,10 @@
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - ZealotZone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
+    <section title="Footer">
+        <!-- Footer using ASP tag-helper :) -->
+      <!--  <partial name="Footer/_footer" />-->
+    </section>
 </footer>
 
 <!-- Scripts -->

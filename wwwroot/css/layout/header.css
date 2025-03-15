@@ -1,0 +1,8 @@
+/* Importing the tailwindcss */
+.header_menu{
+    @apply flex justify-end items-center;
+}
+
+.header_container{
+    @apply pr-1875;
+}

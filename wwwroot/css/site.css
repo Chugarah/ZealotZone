@@ -1,2 +1,12 @@
+/* Importing the tailwindcss */
 @import "tailwindcss";
+    
+/* Importing the Layout css */
+@import "./layout/header.css";
 
+/* Importing the Utility css */
+@import "./utility/sizes.css";
+
+html {
+    font-size: 16px;
+}
