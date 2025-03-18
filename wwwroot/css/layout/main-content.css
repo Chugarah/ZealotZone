@@ -1,0 +1,14 @@
+.main-content-body {
+    @apply
+    px-1875 py-2625
+    bg-fuchsia-200;
+}
+
+.main-content-project-nav {
+    @apply pb-1875;
+
+    span {
+        @apply
+        pr-10625;
+    }
+}

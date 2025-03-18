@@ -1,0 +1,26 @@
+/* Shadows */
+@theme{
+ --shadow-surface-1: 
+ 0, 1.25em 1.875em 1.125em rgba(4, 15, 21, 0.1),
+ -1em, 1.875em, 1.5625em 0 rgba(4, 15, 21, 0.02);
+ 
+ --shadow-surface-2: 
+ 0, 2.5em 1.875em -1.875em rgba(4, 15, 21, 0.06),
+ -1em, 1.875em, 1.5625em 0 rgba(4, 15, 21, 0.02);
+ 
+ --shadow-popup-1: 
+ 0, 2.5em 1.875em -1.875em rgba(4, 15, 21, 0.15),
+ 0, 3.125em, 3.125em 0 rgba(4, 15, 21, 0.15);
+ 
+ /* Popup 30px */
+  --shadow-popup-2: 
+ 0, 0.5em 1.875em 0em rgba(4, 15, 21, 0.10);
+
+  /* Popup 80px */
+  --shadow-popup-3: 
+ 0, 1em 5em 0em rgba(4, 15, 21, 0.15),
+ 0, 2.5em, 1.25em 1.875em rgba(4, 15, 21, 0.10);
+ 
+  --shadow-button: 
+ 0, 0.25em 1em 0em rgba(0, 129, 255, 0.18);
+}
