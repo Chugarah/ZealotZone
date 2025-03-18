@@ -19,3 +19,9 @@
 /* Importing the Utility css */
 @import "./utility/sizes.css";
 
+/* Importing the Utility css */
+@import "./utility/colors.css";
+
+/* Importing the Utility css */
+@import "./utility/shadows.css";
+
