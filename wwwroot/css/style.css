@@ -7,16 +7,12 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-500: oklch(0.637 0.237 25.331);
-    --color-amber-500: oklch(0.769 0.188 70.08);
-    --color-amber-950: oklch(0.279 0.077 45.635);
     --color-fuchsia-200: oklch(0.903 0.076 319.62);
     --color-fuchsia-300: oklch(0.833 0.145 321.434);
     --color-fuchsia-400: oklch(0.74 0.238 322.16);
     --color-fuchsia-600: oklch(0.591 0.293 322.896);
     --color-fuchsia-900: oklch(0.401 0.17 325.612);
     --spacing: 0.25rem;
-    --text-8xl: 6rem;
-    --text-8xl--line-height: 1;
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -34,10 +30,14 @@
     --default-mono-font-variation-settings: var(
       --font-mono--font-variation-settings
     );
+    --spacing-1000: 1rem;
+    --spacing-10625: 1.0625rem;
     --spacing-14375: 1.4375rem;
     --spacing-1500: 1.5rem;
+    --spacing-1750: 1.75rem;
     --spacing-1875: 1.875rem;
     --spacing-2500: 2.5em;
+    --spacing-2625: 2.625rem;
     --breakpoint-large: 90rem;
   }
 }
@@ -604,9 +604,6 @@
   .animate-none {
     animation: none;
   }
-  .cursor-pointer {
-    cursor: pointer;
-  }
   .touch-pinch-zoom {
     --tw-pinch-zoom: pinch-zoom;
     touch-action: var(--tw-pan-x,) var(--tw-pan-y,) var(--tw-pinch-zoom,);
@@ -1089,12 +1086,6 @@
   .bg-\[var\(--my_variable\)\] {
     background-color: var(--my_variable);
   }
-  .bg-amber-500 {
-    background-color: var(--color-amber-500);
-  }
-  .bg-amber-950 {
-    background-color: var(--color-amber-950);
-  }
   .bg-red-500 {
     background-color: var(--color-red-500);
   }
@@ -1111,10 +1102,6 @@
   .bg-conic {
     --tw-gradient-position: in oklab;
     background-image: conic-gradient(var(--tw-gradient-stops));
-  }
-  .bg-linear-to-br {
-    --tw-gradient-position: to bottom right in oklab;
-    background-image: linear-gradient(var(--tw-gradient-stops));
   }
   .bg-radial {
     --tw-gradient-position: in oklab;
@@ -1274,14 +1261,20 @@
   .object-top {
     object-position: top;
   }
-  .p-20 {
-    padding: calc(var(--spacing) * 20);
+  .py-1875 {
+    padding-block: var(--spacing-1875);
   }
   .py-2500 {
     padding-block: var(--spacing-2500);
   }
   .pr-1500 {
     padding-right: var(--spacing-1500);
+  }
+  .pr-1750 {
+    padding-right: var(--spacing-1750);
+  }
+  .pb-3 {
+    padding-bottom: calc(var(--spacing) * 3);
   }
   .pl-14375 {
     padding-left: var(--spacing-14375);
@@ -1327,10 +1320,6 @@
   }
   .align-top {
     vertical-align: top;
-  }
-  .text-8xl {
-    font-size: var(--text-8xl);
-    line-height: var(--tw-leading, var(--text-8xl--line-height));
   }
   .leading-none {
     --tw-leading: 1;
@@ -1408,9 +1397,6 @@
   }
   .\[color\:red\]\/50\! {
     color: color-mix(in oklab, red 50%, transparent) !important;
-  }
-  .text-amber-950 {
-    color: var(--color-amber-950);
   }
   .capitalize {
     text-transform: capitalize;
@@ -1870,21 +1856,25 @@
   grid-auto-flow: column;
   grid-auto-rows: auto;
   background-color: var(--color-fuchsia-900);
+  padding-inline: var(--spacing-1000);
 }
 .header-skeleton {
   background-color: var(--color-fuchsia-600);
 }
 .main-content-skeleton {
+  overflow: clip;
   background-color: var(--color-fuchsia-400);
 }
 .main-content-footer-skeleton {
   background-color: var(--color-fuchsia-200);
+  text-align: center;
 }
 .main-content-nav {
   grid-column-start: 1;
   grid-row-start: 1;
   grid-row-end: 2;
   background-color: var(--color-fuchsia-300);
+  padding-right: var(--spacing-1000);
 }
 .header_menu {
   display: flex;
@@ -1893,6 +1883,17 @@
 }
 .header_container {
   padding-right: var(--spacing-1875);
+}
+.main-content-body {
+  background-color: var(--color-fuchsia-200);
+  padding-inline: var(--spacing-1875);
+  padding-block: var(--spacing-2625);
+}
+.main-content-project-nav {
+  padding-bottom: var(--spacing-1875);
+  span {
+    padding-right: var(--spacing-10625);
+  }
 }
 @property --tw-translate-x {
   syntax: "*";

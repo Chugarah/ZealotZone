@@ -18,7 +18,7 @@
             <!-- #region Main Nav -->
             <div class="main-content-nav">
                 <section title="Main Nav">
-                    Nav Here
+                    <partial name="Navigation/_HeaderNavigation" />
                 </section>
             </div>
             <!-- #endregion -->
@@ -30,22 +30,34 @@
                 <div class="header-skeleton">
                     <section title="Header">
                         <header>
-
                             <!-- Header using ASP tag-helper :) -->
                             <partial name="Header/_Header" />
-
                         </header>
                     </section>
                 </div>
                 <!-- #endregion -->
 
                 <!-- #region Main Content Body -->
-                <div class="main-content-body">
-                    <section title="Main Content">
-                        @RenderBody()
-                    </section>
-                </div>
-                <!-- #endregion -->
+                <section title="Main Content">
+                    <div class="main-content-body">
+
+
+                        <div class="main-content-project-nav">
+                            <span>ALL[6969]</span>
+                            <span>|</span>
+                            <span>STARTED [69]</span>
+                            <span>|</span>
+                            <span>COMPLETED [4269]</span>
+                        </div>
+
+                        <div class="main-content-body-content">
+                            @RenderBody()
+                        </div>
+
+
+                        <!-- #endregion -->
+                    </div>
+                </section>
             </div>
             <!-- #endregion -->
 
@@ -60,11 +72,6 @@
         </div>
         <!-- #endregion -->
     </div>
-
-
-
-
-
 
     <!-- Scripts -->
     <script src="~/js/site.js" asp-append-version="true"></script>
