@@ -1,35 +1,74 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ZealotZone Test</title>
     <script type="import"></script>
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
+
 <body>
-<header>
-    <section title="Header">
-        <!-- Header using ASP tag-helper :) -->
-        @await Html.PartialAsync("Header/_Header")
-    </section>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
 
-<footer class="border-top footer text-muted">
-    <section title="Footer">
-        <!-- Footer using ASP tag-helper :) -->
-      <!--  <partial name="Footer/_footer" />-->
-    </section>
-</footer>
 
-<!-- Scripts -->
+    <div class="container">
+        <div class="main-skeleton">
 
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+            <!-- #region Main Nav -->
+            <div class="main-content-nav">
+                <section title="Main Nav">
+                    Nav Here
+                </section>
+            </div>
+            <!-- #endregion -->
+
+
+            <!-- #region Main Content -->
+            <div class="main-content-skeleton">
+                <!-- #region Header -->
+                <div class="header-skeleton">
+                    <section title="Header">
+                        <header>
+
+                            <!-- Header using ASP tag-helper :) -->
+                            <partial name="Header/_Header" />
+
+                        </header>
+                    </section>
+                </div>
+                <!-- #endregion -->
+
+                <!-- #region Main Content Body -->
+                <div class="main-content-body">
+                    <section title="Main Content">
+                        @RenderBody()
+                    </section>
+                </div>
+                <!-- #endregion -->
+            </div>
+            <!-- #endregion -->
+
+
+
+        </div>
+        <!-- #region Footer -->
+        <div class="main-content-footer-skeleton">
+            <section title="Footer">
+                Footer Here
+            </section>
+        </div>
+        <!-- #endregion -->
+    </div>
+
+
+
+
+
+
+    <!-- Scripts -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

@@ -1,12 +1,21 @@
 /* Importing the tailwindcss */
+/* https://tailwindcss.com/docs/preflight */
+/* When adding an new be sure to rerun the pnpm run mvc-watch-run */
+
 @import "tailwindcss";
     
 /* Importing the Layout css */
+@import "./layout/base.css";
+
+/* Importing the Layout css */
 @import "./layout/header.css";
+
+/* Importing the Layout css */
+@import "./layout/main-content.css";
+
+/* Importing the Layout css */
+@import "./layout/footer.css";
 
 /* Importing the Utility css */
 @import "./utility/sizes.css";
 
-html {
-    font-size: 16px;
-}
