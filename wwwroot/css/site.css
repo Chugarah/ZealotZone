@@ -2,6 +2,8 @@
 /* https://tailwindcss.com/docs/preflight */
 /* When adding an new be sure to rerun the pnpm run mvc-watch-run */
 
+/* https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities */
+
 @import "tailwindcss";
     
 /* Importing the Layout css */
@@ -24,4 +26,10 @@
 
 /* Importing the Utility css */
 @import "./utility/shadows.css";
+
+/* Importing the Font css */
+@import "./utility/typography.css";
+
+/* Importing the Text Components css */
+@import "./components/text-components.css";
 

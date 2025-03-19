@@ -11,27 +11,23 @@
 .main-skeleton {
 	@apply grid flex-grow
     px-1000
-    grid-flow-col auto-rows-auto 
-    bg-fuchsia-900;
+    grid-flow-col auto-rows-auto ;
 }
 
 /* Header Skeleton */
 .header-skeleton {
-    @apply
-    bg-fuchsia-600;
+    /* Nothing yet */
 }
 
 /* Main Content Skeleton */
 .main-content-skeleton {
     @apply
-    overflow-clip
-    bg-fuchsia-400;
+    overflow-clip;
 }
 
 .main-content-footer-skeleton {
     @apply
-    text-center
-    bg-fuchsia-200;
+    text-center;
 }
 
 
@@ -39,6 +35,5 @@
     @apply
     col-start-1
     row-start-1 row-end-2
-    pr-1000
-    bg-fuchsia-300;
+    pr-1000;
 }

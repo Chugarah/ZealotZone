@@ -13,8 +13,6 @@
     --spacing-2500: 2.5em; /* 40px */
     --spacing-2625: 2.625rem; /* 42px */
 
-
-
     /* Adding custom breakpoints */
     --breakpoint-mobile: 480px;
     --breakpoint-tablet: 768px;

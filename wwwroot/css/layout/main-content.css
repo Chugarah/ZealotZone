@@ -1,7 +1,6 @@
 .main-content-body {
     @apply
-    px-1875 py-2625
-    bg-fuchsia-200;
+    px-1875 py-2625;
 }
 
 .main-content-project-nav {

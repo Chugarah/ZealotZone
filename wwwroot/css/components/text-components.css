@@ -1,0 +1,7 @@
+@layer components {
+    .menu-horizontal {
+        font-weight: var(--font-weight-bold);
+        font-size: var(--menu-horizontal);
+        color: var(--color-body-light);
+    }
+}
