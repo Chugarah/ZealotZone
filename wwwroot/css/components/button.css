@@ -1,0 +1,40 @@
+@layer components {
+	/* Primary button, mostly for actions */
+	.btn-primary {
+		@apply 
+            py-0875 pr-1500 pl-1375 inline-flex justify-center 
+            items-center gap-x-2 text-sm font-medium 
+            rounded-[var(--spacing-0875)]
+            
+            border border-white 
+            bg-accent text-white 
+            
+            hover:bg-accent-hover
+            focus:outline-hidden 
+            focus:bg-accent-hover
+
+            drop-shadow-[var(--shadow-button)]
+            disabled:bg-accent-opacity
+            disabled:pointer-events-none;
+	}
+
+    /* Secondary button, mostly for login and signup */
+	.btn-secondary {
+		@apply 
+            min-w-[var(--spacing-40000)]
+            py-0875 px-1500 inline-flex justify-center 
+            items-center gap-x-2 text-sm font-medium 
+            rounded-[var(--spacing-0875)]
+            
+            border border-white 
+            bg-accent text-white 
+            
+            hover:bg-accent-hover
+            focus:outline-hidden 
+            focus:bg-accent-hover
+
+            drop-shadow-[var(--shadow-button)]
+            disabled:bg-accent-opacity
+            disabled:pointer-events-none;
+	}
+}

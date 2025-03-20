@@ -1,0 +1,35 @@
+@layer components {
+    .form-input {
+        @apply 
+            p-3 sm:p-4 block
+            min-h-3000 min-w-40000
+            
+            /* Border styling */
+            border border-alpha-border-100 
+            rounded-[var(--spacing-0875)] 
+            
+            /* Text styling */
+            text-body-dark
+            sm:text-body-regular-15 
+            placeholder:text-body-light
+            
+            /* States */
+            hover:border-alpha-border-200
+            hover:bg-alpha-border-hover
+            
+            focus:border-alpha-border-hover
+            focus:bg-alpha-border-hover
+            focus:text-body-dark
+            focus:outline-none
+
+            /* Disabled state */
+            disabled:pointer-events-none 
+            disabled:bg-grey-100
+            ;
+    }
+
+
+
+
+    
+}
