@@ -1,0 +1,14 @@
+augmentignore
+dbmdl
+dgspec
+ebug
+elease
+eleases
+eslintcache
+nuxt
+packagespec
+publishsettings
+staticwebassets
+vuepress
+wscript
+wwwroot

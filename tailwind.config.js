@@ -2,16 +2,25 @@
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-        "./Pages/**/*.{cshtml,razor,cs,js}",
-        "./Views/**/*.{cshtml,razor,cs,js}",
-        "./Components/**/*.{cshtml,razor,cs,js}",
-        "./Pages/**/*.cshtml.css",
-        "./Views/**/*.cshtml.css",
-        "./Components/**/*.razor.css"
-    ],
-    theme: {
-        extend: {},
-    },
-    plugins: [],
-}
+	content: [
+		"./Pages/**/*.{cshtml,razor,cs,js}",
+		"./Views/**/*.{cshtml,razor,cs,js}",
+		"./Components/**/*.{cshtml,razor,cs,js}",
+		"./Pages/**/*.cshtml.css",
+		"./Views/**/*.cshtml.css",
+		"./Components/**/*.razor.css",
+		'node_modules/preline/dist/*.js',
+		'node_modules/lucide-react/dist/cjs/*.js'
+	],
+	darkMode: 'class',
+	theme: {
+		extend: {},
+	},
+	plugins: [
+		require('@tailwindcss/forms'),
+		require('@tailwindcss/typography'),
+		require('@tailwindcss/aspect-ratio'),
+		require('@tailwindcss/container-queries'),
+		require('preline/plugin'),
+	],
+};
