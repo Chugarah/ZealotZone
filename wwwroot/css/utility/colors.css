@@ -24,7 +24,7 @@
     --opacity-high: 0.9;
 }
 
-@theme {
+@theme  {
     /* Text colors */
     --color-heading: rgba(26, 25, 38, 1);
     --color-body-light: rgba(99, 112, 133, 1);
@@ -37,9 +37,9 @@
     --color-grey-400: rgba(227, 229, 232, 1);
 
     /* Border colors */
-    --color-border-100: rgba(235, 238, 242, 1);
-    --color-border-200: rgba(227, 229, 232, 1);
-    --color-border-300: rgba(198, 200, 204, 1);
+    --color-alpha-border-100: rgba(235, 238, 242, 1);
+    --color-alpha-border-200: rgba(227, 229, 232, 1);
+    --color-alpha-border-300: rgba(198, 200, 204, 1);
 
     /* Background colors */
     --color-background: rgba(241, 243, 247, 1);
@@ -69,14 +69,22 @@
     --color-red-opacity: rgba(var(--base-red), var(--opacity-low));
     --color-purple-opacity: rgba(var(--base-purple), var(--opacity-low));
 
+    /* Accent hover */
+    --color-accent-hover: rgba(var(--base-accent), var(--opacity-medium));
+    --color-alpha-border-hover: rgba(var(--color-green), var(--opacity-low));
+
     /* Gradients */
     --gradient-avatar-orange: radial-gradient(36% 100%,
             rgb(255 208 128 / 1),
             rgb(255 187 128 / 1));
 }
 
-@theme dark {
-    /* Text colors - overridden for dark mode */
+
+
+/* https://stackoverflow.com/questions/79487101/tailwindcss-v4-dark-theme-by-class-not-working-without-dark-tag */
+@layer base {
+    @variant dark {
+        /* Text colors - overridden for dark mode */
     --color-heading: rgba(255, 255, 255, var(--opacity-high));
     --color-body-light: rgba(200, 200, 220, 1);
     --color-body-dark: rgba(180, 180, 200, 1);
@@ -108,7 +116,8 @@
     --color-accent-opacity: rgba(var(--base-accent), 0.15);
     --color-green-opacity: rgba(var(--base-dark-green), 0.15);
     --color-red-opacity: rgba(var(--base-dark-red), 0.15);
-    --color-purple-opacity: rgba(var(--base-dark-purple), 0.15);
+        --color-purple-opacity: rgba(var(--base-dark-purple), 0.15);
+    }
 }
 
 /* Color utilities */

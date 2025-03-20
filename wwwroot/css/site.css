@@ -5,7 +5,10 @@
 /* https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities */
 
 @import "tailwindcss";
-    
+
+/* Importing the Preline css */
+@import "../../node_modules/preline/variants.css";
+
 /* Importing the Layout css */
 @import "./layout/base.css";
 
@@ -32,4 +35,16 @@
 
 /* Importing the Text Components css */
 @import "./components/text-components.css";
+@import "./components/button.css";
+@import "./components/forms.css";
 
+/* Smooth theme transition , Refactored by Phind AI */
+/* https://preline.co/docs/dark-mode.html */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: all 0.3s ease !important;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));

@@ -1,9 +1,11 @@
 
 @theme{
     /* Adding custom spacing */
+    --spacing-0875: 0.875rem; /* 14px */
     --spacing-1000: 1rem; /* 16px */
     --spacing-10625: 1.0625rem; /* 17px */
     --spacing-1250: 1.25rem; /* 20px */
+    --spacing-1375: 1.375rem; /* 22px */
     --spacing-14375: 1.4375rem; /* 23px */
     --spacing-1500: 1.5rem; /* 24px */
     --spacing-1625: 1.625rem; /* 26px */
@@ -12,6 +14,11 @@
     --spacing-2125: 2.125rem; /* 34px */
     --spacing-2500: 2.5em; /* 40px */
     --spacing-2625: 2.625rem; /* 42px */
+    --spacing-3000: 3rem; /* 48px */
+
+    /* Big sizes */
+    --spacing-40000: 25em; /* 400px */
+
 
     /* Adding custom breakpoints */
     --breakpoint-mobile: 480px;
