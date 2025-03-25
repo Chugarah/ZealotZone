@@ -52,14 +52,28 @@
     --spacing-40000: 25rem;
     --spacing-30625: 30.625rem;
     --breakpoint-large: 90rem;
+    --color-heading: rgba(26, 25, 38, 1);
     --color-body-light: rgba(99, 112, 133, 1);
+    --color-body-dark: rgba(40, 38, 59, 1);
     --color-grey-100: rgba(245, 247, 250, 1);
+    --color-grey-200: rgba(240, 241, 245, 1);
+    --color-grey-300: rgba(232, 234, 237, 1);
+    --color-grey-400: rgba(227, 229, 232, 1);
     --color-alpha-border-100: rgba(235, 238, 242, 1);
     --color-alpha-border-200: rgba(227, 229, 232, 1);
     --color-background: rgba(241, 243, 247, 1);
+    --color-surface: rgba(255, 255, 255, 1);
     --color-accent: rgba(var(--base-accent), 1);
     --color-green: rgba(var(--base-green), 1);
+    --color-orange: rgba(var(--base-orange), 1);
+    --color-red: rgba(var(--base-red), 1);
+    --color-yellow: rgba(var(--base-yellow), 1);
+    --color-blue-dark: rgba(var(--base-blue-dark), 1);
+    --color-purple: rgba(var(--base-purple), 1);
     --color-accent-opacity: rgba(var(--base-accent), var(--opacity-low));
+    --color-green-opacity: rgba(var(--base-green), var(--opacity-low));
+    --color-red-opacity: rgba(var(--base-red), var(--opacity-low));
+    --color-purple-opacity: rgba(var(--base-purple), var(--opacity-low));
     --color-accent-hover: rgba(var(--base-accent), var(--opacity-medium));
     --color-alpha-border-hover: rgba(var(--color-green), var(--opacity-low));
     --shadow-opacity-low: 0.2;
@@ -237,8 +251,14 @@
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
+  .start-0 {
+    inset-inline-start: calc(var(--spacing) * 0);
+  }
   .start-0\.5 {
     inset-inline-start: calc(var(--spacing) * 0.5);
+  }
+  .top-1 {
+    top: calc(var(--spacing) * 1);
   }
   .top-1\/2 {
     top: calc(1/2 * 100%);
@@ -312,8 +332,21 @@
   .w-11 {
     width: calc(var(--spacing) * 11);
   }
+  .flex-shrink {
+    flex-shrink: 1;
+  }
   .shrink-0 {
     flex-shrink: 0;
+  }
+  .flex-grow {
+    flex-grow: 1;
+  }
+  .border-collapse {
+    border-collapse: collapse;
+  }
+  .-translate-y-1 {
+    --tw-translate-y: calc(var(--spacing) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .-translate-y-1\/2 {
     --tw-translate-y: calc(calc(1/2 * 100%) * -1);
@@ -321,6 +354,9 @@
   }
   .cursor-pointer {
     cursor: pointer;
+  }
+  .resize {
+    resize: both;
   }
   .list-inside {
     list-style-position: inside;
@@ -406,6 +442,9 @@
   .pr-1750 {
     padding-right: var(--spacing-1750);
   }
+  .pb-3 {
+    padding-bottom: calc(var(--spacing) * 3);
+  }
   .pl-14375 {
     padding-left: var(--spacing-14375);
   }
@@ -434,12 +473,25 @@
   .text-inherit {
     color: inherit;
   }
+  .lowercase {
+    text-transform: lowercase;
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
   .decoration-2 {
     text-decoration-thickness: 2px;
   }
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
+  }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .\!transition-transform {
     transition-property: transform, translate, scale, rotate !important;
@@ -1102,18 +1154,10 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-duration {
+@property --tw-outline-style {
   syntax: "*";
   inherits: false;
-}
-@property --tw-ease {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-content {
-  syntax: "*";
-  initial-value: "";
-  inherits: false;
+  initial-value: solid;
 }
 @property --tw-blur {
   syntax: "*";
@@ -1153,5 +1197,18 @@
 }
 @property --tw-drop-shadow {
   syntax: "*";
+  inherits: false;
+}
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ease {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-content {
+  syntax: "*";
+  initial-value: "";
   inherits: false;
 }
