@@ -40,29 +40,12 @@ pnpm add -D @tiptap/extension-placeholder @tiptap/extension-ordered-list @tiptap
 
 pnpm add -D @tiptap/extension-bold @tiptap/extension-underline  @tiptap/extension-link
 
-
 pnpm add -D @tiptap/extension-bullet-list @tiptap/extension-list-item @tiptap/extension-ordered-list @tiptap/extension-list-item @tiptap/extension-blockquote
-
-
-
-
-
-
-
-
-
-
-
-
-
+pnpm add -D @tiptap/extension-text-align
 
 
 Icons
 <https://lucide.dev/>
-
-
-
-
 
 pnpm install lucide
 <i data-lucide="menu"></i>

@@ -9,7 +9,6 @@
             rounded-[var(--spacing-0875)] 
             
             /* Text styling */
-            text-body-dark
             sm:text-body-regular-15 
             placeholder:text-body-light
             
@@ -17,15 +16,35 @@
             hover:border-alpha-border-200
             hover:bg-alpha-border-hover
             
-            focus:border-alpha-border-hover
-            focus:bg-alpha-border-hover
-            focus:text-body-dark
             focus:outline-none
+            focus:border-accent
 
             /* Disabled state */
             disabled:pointer-events-none 
             disabled:bg-grey-100
             ;
+    }
+
+
+    .text-editor-input {
+        @apply 
+        p-3 sm:p-4 
+      placeholder:text-body-light
+        min-h-108125 min-w-30625
+        bg-transparent
+        rounded-br-none rounded-bl-none
+        ;
+    }
+
+    .tiptap-editor-menu {
+        @apply 
+            sticky top-0 bg-none 
+            flex align-middle gap-x-0.5  
+            rounded-bl-[var(--spacing-0875)]
+            rounded-br-[var(--spacing-0875)]
+            border-b border-alpha-border-100 p-2
+            border-l border-r
+        ;
     }
 
 
