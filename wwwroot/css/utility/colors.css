@@ -26,15 +26,15 @@
 
 @theme  {
     /* Text colors */
-    --color-heading: rgba(26, 25, 38, 1);
-    --color-body-light: rgba(99, 112, 133, 1);
-    --color-body-dark: rgba(40, 38, 59, 1);
+    --color-alpha-heading: rgba(26, 25, 38, 1);
+    --color-alpha-body-light: rgba(99, 112, 133, 1);
+    --color-alpha-body-dark: rgba(40, 38, 59, 1);
 
     /* Grey scale */
-    --color-grey-100: rgba(245, 247, 250, 1);
-    --color-grey-200: rgba(240, 241, 245, 1);
-    --color-grey-300: rgba(232, 234, 237, 1);
-    --color-grey-400: rgba(227, 229, 232, 1);
+    --color-alpha-grey-100: rgba(245, 247, 250, 1);
+    --color-alpha-grey-200: rgba(240, 241, 245, 1);
+    --color-alpha-grey-300: rgba(232, 234, 237, 1);
+    --color-alpha-grey-400: rgba(227, 229, 232, 1);
 
     /* Border colors */
     --color-alpha-border-100: rgba(235, 238, 242, 1);
@@ -42,35 +42,37 @@
     --color-alpha-border-300: rgba(198, 200, 204, 1);
 
     /* Background colors */
-    --color-background: rgba(241, 243, 247, 1);
-    --color-surface: rgba(255, 255, 255, 1);
+    --color-alpha-background: rgba(241, 243, 247, 1);
+    --color-alpha-surface: rgba(255, 255, 255, 1);
+    --color-alpha-form-bg: rgba(255, 255, 255, 1);
+    --color-alpha-form-user-bg: rgba(49, 49, 51, 1);
 
     /* Primary colors - using base variables */
-    --color-accent: rgba(var(--base-accent), 1);
-    --color-green: rgba(var(--base-green), 1);
-    --color-orange: rgba(var(--base-orange), 1);
-    --color-red: rgba(var(--base-red), 1);
-    --color-yellow: rgba(var(--base-yellow), 1);
-    --color-blue-1: rgba(var(--base-blue-1), 1);
-    --color-blue-dark: rgba(var(--base-blue-dark), 1);
-    --color-purple: rgba(var(--base-purple), 1);
+    --color-alpha-accent: rgba(var(--base-accent), 1);
+    --color-alpha-green: rgba(var(--base-green), 1);
+    --color-alpha-orange: rgba(var(--base-orange), 1);
+    --color-alpha-red: rgba(var(--base-red), 1);
+    --color-alpha-yellow: rgba(var(--base-yellow), 1);
+    --color-alpha-blue-1: rgba(var(--base-blue-1), 1);
+    --color-alpha-blue-dark: rgba(var(--base-blue-dark), 1);
+    --color-alpha-purple: rgba(var(--base-purple), 1);
 
     /* Dark variants - using base variables */
-    --color-dark-green: rgba(var(--base-dark-green), 1);
-    --color-dark-orange: rgba(var(--base-dark-orange), 1);
-    --color-dark-yellow: rgba(var(--base-dark-yellow), 1);
-    --color-dark-red: rgba(var(--base-dark-red), 1);
-    --color-dark-purple: rgba(var(--base-dark-purple), 1);
-    --color-dark-accent: rgba(var(--base-dark-accent), 1);
+    --color-alpha-dark-green: rgba(var(--base-dark-green), 1);
+    --color-alpha-dark-orange: rgba(var(--base-dark-orange), 1);
+    --color-alpha-dark-yellow: rgba(var(--base-dark-yellow), 1);
+    --color-alpha-dark-red: rgba(var(--base-dark-red), 1);
+    --color-alpha-dark-purple: rgba(var(--base-dark-purple), 1);
+    --color-alpha-dark-accent: rgba(var(--base-dark-accent), 1);
 
     /* Opacity variants - using base variables */
-    --color-accent-opacity: rgba(var(--base-accent), var(--opacity-low));
-    --color-green-opacity: rgba(var(--base-green), var(--opacity-low));
-    --color-red-opacity: rgba(var(--base-red), var(--opacity-low));
-    --color-purple-opacity: rgba(var(--base-purple), var(--opacity-low));
+    --color-alpha-accent-opacity: rgba(var(--base-accent), var(--opacity-low));
+    --color-alpha-green-opacity: rgba(var(--base-green), var(--opacity-low));
+    --color-alpha-red-opacity: rgba(var(--base-red), var(--opacity-low));
+    --color-alpha-purple-opacity: rgba(var(--base-purple), var(--opacity-low));
 
     /* Accent hover */
-    --color-accent-hover: rgba(var(--base-accent), var(--opacity-medium));
+    --color-alpha-accent-hover: rgba(var(--base-accent), var(--opacity-medium));
     --color-alpha-border-hover: rgba(var(--color-green), var(--opacity-low));
 
     /* Gradients */
@@ -85,38 +87,40 @@
 @layer base {
     @variant dark {
         /* Text colors - overridden for dark mode */
-    --color-heading: rgba(255, 255, 255, var(--opacity-high));
-    --color-body-light: rgba(200, 200, 220, 1);
-    --color-body-dark: rgba(180, 180, 200, 1);
+    --color-alpha-heading: rgba(255, 255, 255, var(--opacity-high));
+    --color-alpha-body-light: rgba(200, 200, 220, 1);
+    --color-alpha-body-dark: rgba(180, 180, 200, 1);
 
     /* Grey scale - overridden for dark mode */
-    --color-grey-100: rgba(40, 40, 50, 1);
-    --color-grey-200: rgba(50, 50, 60, 1);
-    --color-grey-300: rgba(60, 60, 70, 1);
-    --color-grey-400: rgba(70, 70, 80, 1);
+    --color-alpha-grey-100: rgba(32, 33, 35, 1);
+    --color-alpha-grey-200: rgba(50, 50, 60, 1);
+    --color-alpha-grey-300: rgba(60, 60, 70, 1);
+    --color-alpha-grey-400: rgba(70, 70, 80, 1);
 
     /* Border colors - overridden for dark mode */
-    --color-border-100: rgba(60, 60, 70, 1);
-    --color-border-200: rgba(70, 70, 80, 1);
-    --color-border-300: rgba(90, 90, 100, 1);
+    --color-alpha-border-100: rgba(47, 47, 48, 1);
+    --color-alpha-border-200: rgba(70, 70, 80, 1);
+    --color-alpha-border-300: rgba(90, 90, 100, 1);
 
     /* Background colors - overridden for dark mode */
-    --color-background: rgba(20, 20, 30, 1);
-    --color-surface: rgba(30, 30, 40, 1);
-
+    --color-alpha-background: rgba(21, 21, 23, 1);
+    --color-alpha-surface: rgba(30, 30, 40, 1);
+    --color-alpha-form-bg: rgba(32, 33, 35, 1);
+    --color-alpha-form-user-bg: rgba(49, 49, 51, 1);
+    
     /* Primary colors - using dark variants */
-    --color-green: rgba(var(--base-dark-green), 1);
-    --color-orange: rgba(var(--base-dark-orange), 1);
-    --color-yellow: rgba(var(--base-dark-yellow), 1);
-    --color-red: rgba(var(--base-dark-red), 1);
-    --color-purple: rgba(var(--base-dark-purple), 1);
-    --color-blue-dark: rgba(var(--base-dark-accent), 1);
+    --color-alpha-green: rgba(var(--base-dark-green), 1);
+    --color-alpha-orange: rgba(var(--base-dark-orange), 1);
+    --color-alpha-yellow: rgba(var(--base-dark-yellow), 1);
+    --color-alpha-red: rgba(var(--base-dark-red), 1);
+    --color-alpha-purple: rgba(var(--base-dark-purple), 1);
+    --color-alpha-blue-dark: rgba(var(--base-dark-accent), 1);
 
     /* Opacity variants - adjusted for dark mode */
-    --color-accent-opacity: rgba(var(--base-accent), 0.15);
-    --color-green-opacity: rgba(var(--base-dark-green), 0.15);
-    --color-red-opacity: rgba(var(--base-dark-red), 0.15);
-        --color-purple-opacity: rgba(var(--base-dark-purple), 0.15);
+    --color-alpha-accent-opacity: rgba(var(--base-accent), 0.15);
+    --color-alpha-green-opacity: rgba(var(--base-dark-green), 0.15);
+    --color-alpha-red-opacity: rgba(var(--base-dark-red), 0.15);
+    --color-alpha-purple-opacity: rgba(var(--base-dark-purple), 0.15);
     }
 }
 

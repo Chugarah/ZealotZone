@@ -8,21 +8,21 @@
             rounded-[var(--spacing-0875)] 
             
             sm:text-body-regular-15 
-            placeholder:text-body-light
+            placeholder:text-alpha-body-light
             
             hover:border-alpha-border-200
             
             focus:outline-none
-            focus:border-accent
+            focus:border-alpha-accent
 
             disabled:pointer-events-none 
-            disabled:bg-grey-100;
+            disabled:bg-alpha-grey-100;
 	}
 
 	/* Text Editor Input */
 	.text-editor-input {
 		@apply p-3 sm:p-4 
-      placeholder:text-body-light
+      placeholder:text-alpha-body-light
         min-h-108125 min-w-30625
         bg-transparent
         rounded-br-none rounded-bl-none;
@@ -62,25 +62,66 @@
         dark:bg-neutral-900 dark:border-neutral-700;
 	}
 	.form-date-picker-single-month-header {
-		@apply grid grid-cols-5 items-center gap-x-3 mx-1.5 pb-3;
+		@apply items-center gap-x-3 grid grid-cols-5 mx-1.5 pb-3;
 	}
 
 	.hs-datepicker {
 		@apply min-w-145625;
 	}
 
-	/* Data Select */
-	.hs-select-dropdown {
+	/* Multi Select */
+	.alpha-hs-select-dropdown {
 		@apply mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 
-		bg-white border border-gray-200 
-		rounded-lg overflow-hidden overflow-y-auto 
+		bg-alpha-grey-100 border border-gray-200 
+		 rounded-[var(--spacing-0875)] overflow-hidden overflow-y-auto 
 		[&::-webkit-scrollbar]:w-2 
-		[&::-webkit-scrollbar-thumb]:rounded-full 
+		[&::-webkit-scrollbar-thumb]:rounded-[var(--spacing-04375)]  
 		[&::-webkit-scrollbar-track]:bg-gray-100 
 		[&::-webkit-scrollbar-thumb]:bg-gray-300 
 		
 		dark:[&::-webkit-scrollbar-track]:bg-neutral-700 
 		dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 
-		dark:bg-neutral-900 dark:border-neutral-700;
+		dark:bg-alpha-grey-100 dark:border-alpha-body-light;
 	}
+
+	.alpha-hs-select-dropdown-option {
+		@apply hover:bg-gray-100 focus:bg-gray-100 
+		dark:bg-alpha-grey-100 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 
+		
+		hs-select-disabled:opacity-50 px-4 py-2 rounded-lg focus:outline-hidden w-full 
+		text-gray-800 dark:text-neutral-200 text-sm cursor-pointer 
+		hs-select-disabled:pointer-events-none;
+	}
+
+	.alpha-hs-select-droppdown-wrapper {
+		@apply relative flex flex-wrap items-center bg-white
+		dark:bg-alpha-grey-100 ps-0.5 pe-9 w-40000 
+		
+		border border-alpha-border-100 dark:border-alpha-border-100 
+		focus:border-alpha-blue-dark rounded-lg focus:ring-alpha-blue-dark 
+		
+	  dark:text-alpha-body-light text-sm text-start text-nowrap;
+	}
+
+	.alpha-hs-select-droppdown-tag-item-avatar {
+		@apply flex flex-nowrap items-center relative z-10 
+		bg-alpha-grey-100 border border-gray-200 rounded-[var(--spacing-04375)] 
+		p-04375 m-0.5 dark:bg-alpha-form-user-bg dark:border-neutral-700
+
+		[&_[data-icon]]:size-6
+		[&_[data-title]]:whitespace-nowrap;
+	}
+
+	/*TODO: Need to update the avatars to follow template*/
+	.alpha-hs-select-droppdown-tag-item-remove {
+		@apply inline-flex shrink-0 justify-center items-center size-5 
+		ms-2 rounded-full 
+		
+		text-alpha-body-dark hover:bg-gray-300 
+		focus:outline-hidden focus:ring-2 
+		focus:ring-gray-400 text-sm 
+		dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer;
+	}
+
+	/* Multi Select End */
 }

@@ -7,14 +7,14 @@
             rounded-[var(--spacing-0875)]
             
             border border-white 
-            bg-accent text-white 
+            bg-alpha-accent text-white 
             
-            hover:bg-accent-hover
+            hover:bg-alpha-accent-hover
             focus:outline-hidden 
-            focus:bg-accent-hover
+            focus:bg-alpha-accent-hover
 
             drop-shadow-[var(--shadow-button)]
-            disabled:bg-accent-opacity
+            disabled:bg-alpha-accent-opacity
             disabled:pointer-events-none;
 	}
 
@@ -27,14 +27,14 @@
             rounded-[var(--spacing-0875)]
             
             border border-white 
-            bg-accent text-white 
+            bg-alpha-accent text-white 
             
-            hover:bg-accent-hover
+            hover:bg-alpha-accent-hover
             focus:outline-hidden 
-            focus:bg-accent-hover
+            focus:bg-alpha-accent-hover
 
             drop-shadow-[var(--shadow-button)]
-            disabled:bg-accent-opacity
+            disabled:bg-alpha-accent-opacity
             disabled:pointer-events-none;
 	}
 }

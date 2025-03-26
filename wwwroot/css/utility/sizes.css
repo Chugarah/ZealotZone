@@ -1,6 +1,7 @@
 
 @theme{
     /* Adding custom spacing */
+    --spacing-04375: 0.4375rem; /* 7px */
     --spacing-0875: 0.875rem; /* 14px */
     --spacing-1000: 1rem; /* 16px */
     --spacing-10625: 1.0625rem; /* 17px */
