@@ -5,10 +5,12 @@
             min-h-3000 min-w-40000
             
             border border-alpha-border-100 
+			bg-alpha-form-bg dark:bg-alpha-form-bg
             rounded-[var(--spacing-0875)] 
-            
+			
+            text-alpha-body-dark dark:text-alpha-body-dark
             sm:text-body-regular-15 
-            placeholder:text-alpha-body-light
+            placeholder:text-alpha-body-light dark:placeholder:text-alpha-body-light
             
             hover:border-alpha-border-200
             

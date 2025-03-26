@@ -187,38 +187,47 @@
 @layer base {
   :root {
     font-family: var(--font-nunito);
+    color: var(--color-alpha-body-dark);
   }
 
     body {
         font-family: var(--font-nunito);
+        color: var(--color-alpha-body-dark);
     }
 
     p{
         font-size: var(--text-body-regular-15);
+        color: inherit;
     }
 
     h1{
         font-size: var(--text-h1);
+        color: var(--color-alpha-heading);
     }
 
     h2{
         font-size: var(--text-h2);
+        color: var(--color-alpha-heading);
     }
 
     h3{
         font-size: var(--text-h3);
+        color: var(--color-alpha-heading);
     }
 
     h4{
         font-size: var(--text-h4);
+        color: var(--color-alpha-heading);
     }
 
     h5{
         font-size: var(--text-h5);
+        color: var(--color-alpha-heading);
     }
 
     h6{
         font-size: var(--text-h6);
+        color: var(--color-alpha-heading);
     }
 
 }

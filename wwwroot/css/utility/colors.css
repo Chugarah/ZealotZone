@@ -87,9 +87,9 @@
 @layer base {
     @variant dark {
         /* Text colors - overridden for dark mode */
-    --color-alpha-heading: rgba(255, 255, 255, var(--opacity-high));
-    --color-alpha-body-light: rgba(200, 200, 220, 1);
-    --color-alpha-body-dark: rgba(180, 180, 200, 1);
+    --color-alpha-heading: rgba(255, 255, 255, 1);
+    --color-alpha-body-light: rgba(158, 158, 158, 1);
+    --color-alpha-body-dark: rgba(255, 255, 255, 1);
 
     /* Grey scale - overridden for dark mode */
     --color-alpha-grey-100: rgba(32, 33, 35, 1);

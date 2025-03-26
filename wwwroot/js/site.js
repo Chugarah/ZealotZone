@@ -12,7 +12,7 @@ window.Calendar = Calendar;
 
 // Initialize Lucide icons
 import { createIcons } from "lucide";
-import { Menu, Plus, Sun, Moon, CalendarDays } from "lucide";
+import { Menu, Plus, Sun, Moon, CalendarDays, DollarSign } from "lucide";
 import initializeEditor from "./text-editor/editor-init";
 
 // You can import your own modules to be bundled
@@ -29,6 +29,7 @@ createIcons({
 		Sun,
 		Moon,
 		CalendarDays,
+		DollarSign,
 	},
 });
 
