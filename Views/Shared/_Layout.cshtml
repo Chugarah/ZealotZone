@@ -75,7 +75,10 @@
         <!-- #endregion -->
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts - now only bundle.js -->
+    <script src="~/js/vendor/lodash/lodash.js" asp-append-version="true"></script>
+    <script src="~/js/vendor/vanilla-calendar-pro/index.js" asp-append-version="true"></script>
+    <script src="~/js/vendor/preline/preline.js" asp-append-version="true"></script>
     <script src="~/js/bundle.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

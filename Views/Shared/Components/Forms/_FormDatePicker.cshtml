@@ -1,0 +1,43 @@
+<div class="max-w-145625 space-y-3">
+  <div>
+    <div class="relative">
+      <!-- Datepicker -->
+      <input class="hs-datepicker py-3 alpha-form-input" type="text" placeholder="Select day" readonly=""
+        data-hs-datepicker='{
+          "selectionDatesMode": "single",
+          "dateMax": "2050-12-31",
+          "dateMin": "2020-01-01",
+          "inputMode": "input",
+          "dateToday": "today",
+          "styles": {
+            "customSelect": {
+              "shared": {
+                "toggleClasses": "form-date-picker-shared"
+              },
+              "months": {
+                "toggleClasses": "form-date-picker-months"
+              },
+              "years": {
+                "toggleClasses": "form-date-picker-years"
+              }
+            }
+          },
+          "layouts": {
+            "default": "<div class=\"--single-month form-date-picker-single-month\"><div class=\"form-date-picker-single-month-header\"><div class=\"col-span-1\"><#CustomArrowPrev /></div><div class=\"col-span-3 flex justify-center items-center gap-x-1\"><#CustomMonth /><span class=\"text-gray-800 dark:text-neutral-200\">/</span><#CustomYear /></div><div class=\"col-span-1 flex justify-end\"><#CustomArrowNext /></div></div><div data-vc=\"wrapper\"><div data-vc=\"content\"><#Week /><#Dates /></div></div></div>"
+          },
+          "mode": "custom-select",
+          "inputModeOptions": {
+            "itemsSeparator": " / "
+          },
+          "templates": {
+            "arrowPrev": "<button data-vc-arrow=\"prev\"><svg class=\"shrink-0 size-4\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m15 18-6-6 6-6\"></path></svg></button>",
+            "arrowNext": "<button data-vc-arrow=\"next\"><svg class=\"shrink-0 size-4\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 18 6-6-6-6\"></path></svg></button>"
+          }
+        }'>
+      <!-- End Datepicker -->
+      <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
+        <i data-lucide="calendar-days"></i>
+      </div>
+    </div>
+  </div>
+</div>

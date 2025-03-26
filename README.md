@@ -32,7 +32,12 @@ pnpm add -D @tailwindcss/aspect-ratio
 pnpm add -D @tailwindcss/container-queries
 pnpm list
 pnpm add -D preline
+
 pnpm add -D @preline/theme-switch
+## <https://vanilla-calendar.pro/>
+
+pnpm add -D vanilla-calendar-pro lodash
+
 pnpm add -D @tiptap/core @tiptap/pm @tiptap/starter-kit
 
 <https://tiptap.dev/docs/editor/extensions/functionality/bubble-menu>
@@ -50,3 +55,9 @@ Icons
 pnpm install lucide
 <i data-lucide="menu"></i>
 <span class="btn-primary"><i data-lucide="plus"></i>Add Project</span>
+
+We are using Preline as our component template :)
+<https://preline.co/>
+
+
+

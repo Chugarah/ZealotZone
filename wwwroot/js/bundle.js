@@ -1,147 +1,5 @@
+"use strict";
 (() => {
-  var __create = Object.create;
-  var __defProp = Object.defineProperty;
-  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-  var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __getProtoOf = Object.getPrototypeOf;
-  var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-  };
-  var __copyProps = (to, from2, except, desc) => {
-    if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-      for (let key of __getOwnPropNames(from2))
-        if (!__hasOwnProp.call(to, key) && key !== except)
-          __defProp(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc(from2, key)) || desc.enumerable });
-    }
-    return to;
-  };
-  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-    // If the importer is in node compatibility mode or this is not an ESM
-    // file that has been converted to a CommonJS file using a Babel-
-    // compatible transform (i.e. "__esModule" has not been set), then set
-    // "default" to the CommonJS "module.exports" for node compatibility.
-    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-    mod
-  ));
-
-  // node_modules/.pnpm/@preline+theme-switch@3.0.0/node_modules/@preline/theme-switch/index.js
-  var require_theme_switch = __commonJS({
-    "node_modules/.pnpm/@preline+theme-switch@3.0.0/node_modules/@preline/theme-switch/index.js"(exports, module) {
-      !function(e, t) {
-        if ("object" == typeof exports && "object" == typeof module) module.exports = t();
-        else if ("function" == typeof define && define.amd) define([], t);
-        else {
-          var i = t();
-          for (var n in i) ("object" == typeof exports ? exports : e)[n] = i[n];
-        }
-      }(self, () => (() => {
-        "use strict";
-        var e = { 961: (e2, t2) => {
-          Object.defineProperty(t2, "__esModule", { value: true });
-          t2.default = class {
-            constructor(e3, t3, i2) {
-              this.el = e3, this.options = t3, this.events = i2, this.el = e3, this.options = t3, this.events = {};
-            }
-            createCollection(e3, t3) {
-              var i2;
-              e3.push({ id: (null === (i2 = null == t3 ? void 0 : t3.el) || void 0 === i2 ? void 0 : i2.id) || e3.length + 1, element: t3 });
-            }
-            fireEvent(e3, t3 = null) {
-              if (this.events.hasOwnProperty(e3)) return this.events[e3](t3);
-            }
-            on(e3, t3) {
-              this.events[e3] = t3;
-            }
-          };
-        }, 502: function(e2, t2, i2) {
-          var n = this && this.__importDefault || function(e3) {
-            return e3 && e3.__esModule ? e3 : { default: e3 };
-          };
-          Object.defineProperty(t2, "__esModule", { value: true });
-          const s = n(i2(961));
-          class o extends s.default {
-            constructor(e3, t3) {
-              super(e3, t3);
-              const i3 = e3.getAttribute("data-hs-theme-switch"), n2 = i3 ? JSON.parse(i3) : {}, s2 = Object.assign(Object.assign({}, n2), t3);
-              this.theme = (null == s2 ? void 0 : s2.theme) || localStorage.getItem("hs_theme") || "default", this.type = (null == s2 ? void 0 : s2.type) || "change", this.themeSet = ["light", "dark", "default"], this.init();
-            }
-            elementChange(e3) {
-              const t3 = e3.target.checked ? "dark" : "default";
-              this.setAppearance(t3), this.toggleObserveSystemTheme();
-            }
-            elementClick(e3) {
-              this.setAppearance(e3), this.toggleObserveSystemTheme();
-            }
-            init() {
-              this.createCollection(window.$hsThemeSwitchCollection, this), "default" !== this.theme && this.setAppearance(), "click" === this.type ? this.buildSwitchTypeOfClick() : this.buildSwitchTypeOfChange();
-            }
-            buildSwitchTypeOfChange() {
-              this.el.checked = "dark" === this.theme, this.toggleObserveSystemTheme(), this.onElementChangeListener = (e3) => this.elementChange(e3), this.el.addEventListener("change", this.onElementChangeListener);
-            }
-            buildSwitchTypeOfClick() {
-              const e3 = this.el.getAttribute("data-hs-theme-click-value");
-              this.toggleObserveSystemTheme(), this.onElementClickListener = () => this.elementClick(e3), this.el.addEventListener("click", this.onElementClickListener);
-            }
-            setResetStyles() {
-              const e3 = document.createElement("style");
-              return e3.innerText = "*{transition: unset !important;}", e3.setAttribute("data-hs-appearance-onload-styles", ""), document.head.appendChild(e3), e3;
-            }
-            addSystemThemeObserver() {
-              window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches: e3 }) => {
-                e3 ? this.setAppearance("dark", false) : this.setAppearance("default", false);
-              });
-            }
-            removeSystemThemeObserver() {
-              window.matchMedia("(prefers-color-scheme: dark)").removeEventListener;
-            }
-            toggleObserveSystemTheme() {
-              "auto" === localStorage.getItem("hs_theme") ? this.addSystemThemeObserver() : this.removeSystemThemeObserver();
-            }
-            setAppearance(e3 = this.theme, t3 = true, i3 = true) {
-              const n2 = document.querySelector("html"), s2 = this.setResetStyles();
-              t3 && localStorage.setItem("hs_theme", e3), "auto" === e3 && (e3 = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "default"), n2.classList.remove("light", "dark", "default", "auto"), n2.classList.add(e3), setTimeout(() => s2.remove()), i3 && window.dispatchEvent(new CustomEvent("on-hs-appearance-change", { detail: e3 }));
-            }
-            destroy() {
-              "change" === this.type && this.el.removeEventListener("change", this.onElementChangeListener), "click" === this.type && this.el.removeEventListener("click", this.onElementClickListener), window.$hsThemeSwitchCollection = window.$hsThemeSwitchCollection.filter(({ element: e3 }) => e3.el !== this.el);
-            }
-            static getInstance(e3, t3) {
-              const i3 = window.$hsThemeSwitchCollection.find((t4) => t4.element.el === ("string" == typeof e3 ? document.querySelector(e3) : e3));
-              return i3 ? t3 ? i3 : i3.element.el : null;
-            }
-            static autoInit() {
-              window.$hsThemeSwitchCollection || (window.$hsThemeSwitchCollection = []), window.$hsThemeSwitchCollection && (window.$hsThemeSwitchCollection = window.$hsThemeSwitchCollection.filter(({ element: e3 }) => document.contains(e3.el))), document.querySelectorAll("[data-hs-theme-switch]:not(.--prevent-on-load-init)").forEach((e3) => {
-                window.$hsThemeSwitchCollection.find((t3) => {
-                  var i3;
-                  return (null === (i3 = null == t3 ? void 0 : t3.element) || void 0 === i3 ? void 0 : i3.el) === e3;
-                }) || new o(e3, { type: "change" });
-              }), document.querySelectorAll("[data-hs-theme-click-value]:not(.--prevent-on-load-init)").forEach((e3) => {
-                window.$hsThemeSwitchCollection.find((t3) => {
-                  var i3;
-                  return (null === (i3 = null == t3 ? void 0 : t3.element) || void 0 === i3 ? void 0 : i3.el) === e3;
-                }) || new o(e3, { type: "click" });
-              });
-            }
-          }
-          window.addEventListener("load", () => {
-            o.autoInit();
-          }), window.$hsThemeSwitchCollection && window.addEventListener("on-hs-appearance-change", (e3) => {
-            window.$hsThemeSwitchCollection.forEach((t3) => {
-              t3.element.el.checked = "dark" === e3.detail;
-            });
-          }), "undefined" != typeof window && (window.HSThemeSwitch = o), t2.default = o;
-        } }, t = {};
-        var i = function i2(n) {
-          var s = t[n];
-          if (void 0 !== s) return s.exports;
-          var o = t[n] = { exports: {} };
-          return e[n].call(o.exports, o, o.exports, i2), o.exports;
-        }(502);
-        return i;
-      })());
-    }
-  });
-
   // node_modules/.pnpm/lucide@0.483.0/node_modules/lucide/dist/esm/defaultAttributes.js
   var defaultAttributes = {
     xmlns: "http://www.w3.org/2000/svg",
@@ -196,7 +54,7 @@
   };
   var combineClassNames = (arrayOfClassnames) => {
     const classNameArray = arrayOfClassnames.flatMap(getClassNames);
-    return classNameArray.map((classItem) => classItem.trim()).filter(Boolean).filter((value, index, self2) => self2.indexOf(value) === index).join(" ");
+    return classNameArray.map((classItem) => classItem.trim()).filter(Boolean).filter((value, index, self) => self.indexOf(value) === index).join(" ");
   };
   var toPascalCase = (string) => string.replace(/(\w)(\w*)(_|-|\s*)/g, (g0, g1, g2) => g1.toUpperCase() + g2.toLowerCase());
   var replaceElement = (element, { nameAttr, icons, attrs }) => {
@@ -225,6 +83,20 @@
     const svgElement = createElement(iconNode, iconAttrs);
     return element.parentNode?.replaceChild(svgElement, element);
   };
+
+  // node_modules/.pnpm/lucide@0.483.0/node_modules/lucide/dist/esm/icons/calendar-days.js
+  var CalendarDays = [
+    ["path", { d: "M8 2v4" }],
+    ["path", { d: "M16 2v4" }],
+    ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2" }],
+    ["path", { d: "M3 10h18" }],
+    ["path", { d: "M8 14h.01" }],
+    ["path", { d: "M12 14h.01" }],
+    ["path", { d: "M16 14h.01" }],
+    ["path", { d: "M8 18h.01" }],
+    ["path", { d: "M12 18h.01" }],
+    ["path", { d: "M16 18h.01" }]
+  ];
 
   // node_modules/.pnpm/lucide@0.483.0/node_modules/lucide/dist/esm/icons/menu.js
   var Menu = [
@@ -305,8 +177,8 @@
     // value, or adding a binding to the end of the map. If `newKey` is
     // given, the key of the binding will be replaced with that key.
     update: function(key, value, newKey) {
-      var self2 = newKey && newKey != key ? this.remove(newKey) : this;
-      var found2 = self2.find(key), content = self2.content.slice();
+      var self = newKey && newKey != key ? this.remove(newKey) : this;
+      var found2 = self.find(key), content = self.content.slice();
       if (found2 == -1) {
         content.push(newKey || key, value);
       } else {
@@ -853,7 +725,7 @@
     */
     toJSON() {
       let obj = { type: this.type.name };
-      for (let _ in this.attrs) {
+      for (let _2 in this.attrs) {
         obj.attrs = this.attrs;
         break;
       }
@@ -1801,7 +1673,7 @@
     */
     toJSON() {
       let obj = { type: this.type.name };
-      for (let _ in this.attrs) {
+      for (let _2 in this.attrs) {
         obj.attrs = this.attrs;
         break;
       }
@@ -2530,7 +2402,7 @@
         throw new RangeError("Schema is missing its top node type ('" + topType + "')");
       if (!result.text)
         throw new RangeError("Every schema needs a 'text' type");
-      for (let _ in result.text.attrs)
+      for (let _2 in result.text.attrs)
         throw new RangeError("The text node type should not have attributes");
       return result;
     }
@@ -6017,7 +5889,7 @@
     and can thus safely be extended.
     */
     get isGeneric() {
-      for (let _ in this.meta)
+      for (let _2 in this.meta)
         return false;
       return true;
     }
@@ -6036,14 +5908,14 @@
       return (this.updated & UPDATED_SCROLL) > 0;
     }
   };
-  function bind(f, self2) {
-    return !self2 || !f ? f : f.bind(self2);
+  function bind(f, self) {
+    return !self || !f ? f : f.bind(self);
   }
   var FieldDesc = class {
-    constructor(name, desc, self2) {
+    constructor(name, desc, self) {
       this.name = name;
-      this.init = bind(desc.init, self2);
-      this.apply = bind(desc.apply, self2);
+      this.init = bind(desc.init, self);
+      this.apply = bind(desc.apply, self);
     }
   };
   var baseFields = [
@@ -6275,13 +6147,13 @@
       return instance;
     }
   };
-  function bindProps(obj, self2, target) {
+  function bindProps(obj, self, target) {
     for (let prop in obj) {
       let val = obj[prop];
       if (val instanceof Function)
-        val = val.bind(self2);
+        val = val.bind(self);
       else if (prop == "handleDOMEvents")
-        val = bindProps(val, self2, {});
+        val = bindProps(val, self, {});
       target[prop] = val;
     }
     return target;
@@ -6457,7 +6329,7 @@
         let pos = doc3.caretPositionFromPoint(x, y);
         if (pos)
           return { node: pos.offsetNode, offset: Math.min(nodeSize(pos.offsetNode), pos.offset) };
-      } catch (_) {
+      } catch (_2) {
       }
     }
     if (doc3.caretRangeFromPoint) {
@@ -6936,7 +6808,7 @@
         sel.collapse(anchorNode, anchorOffset);
         if (oldNode && (oldNode != anchorNode || oldOff != anchorOffset) && sel.extend)
           sel.extend(oldNode, oldOff);
-      } catch (_) {
+      } catch (_2) {
       }
       if (oldBidiLevel != null)
         sel.caretBidiLevel = oldBidiLevel;
@@ -7277,7 +7149,7 @@
           if (anchor != head)
             domSel.extend(headDOM.node, headDOM.offset);
           domSelExtended = true;
-        } catch (_) {
+        } catch (_2) {
         }
       }
       if (!domSelExtended) {
@@ -7341,13 +7213,13 @@
   };
   var WidgetViewDesc = class extends ViewDesc {
     constructor(parent, widget, view, pos) {
-      let self2, dom = widget.type.toDOM;
+      let self, dom = widget.type.toDOM;
       if (typeof dom == "function")
         dom = dom(view, () => {
-          if (!self2)
+          if (!self)
             return pos;
-          if (self2.parent)
-            return self2.parent.posBeforeChild(self2);
+          if (self.parent)
+            return self.parent.posBeforeChild(self);
         });
       if (!widget.type.spec.raw) {
         if (dom.nodeType != 1) {
@@ -7361,7 +7233,7 @@
       super(parent, [], dom, null);
       this.widget = widget;
       this.widget = widget;
-      self2 = this;
+      self = this;
     }
     matchesWidget(widget) {
       return this.dirty == NOT_DIRTY && widget.type.eq(this.widget.type);
@@ -8469,7 +8341,7 @@
       return false;
     try {
       return view.dom.contains(sel.anchorNode.nodeType == 3 ? sel.anchorNode.parentNode : sel.anchorNode) && (view.editable || view.dom.contains(sel.focusNode.nodeType == 3 ? sel.focusNode.parentNode : sel.focusNode));
-    } catch (_) {
+    } catch (_2) {
       return false;
     }
   }
@@ -9640,7 +9512,7 @@
         view.dragging = null;
     }, 50);
   };
-  editHandlers.dragover = editHandlers.dragenter = (_, e) => e.preventDefault();
+  editHandlers.dragover = editHandlers.dragenter = (_2, e) => e.preventDefault();
   editHandlers.drop = (view, _event) => {
     let event = _event;
     let dragging = view.dragging;
@@ -9784,7 +9656,7 @@
       let to = mapping.map(span.to + oldOffset, this.spec.inclusiveEnd ? 1 : -1) - offset;
       return from2 >= to ? null : new Decoration(from2, to, this);
     }
-    valid(_, span) {
+    valid(_2, span) {
       return span.from < span.to;
     }
     eq(other) {
@@ -11469,7 +11341,7 @@
         return true;
       nA++;
     }
-    for (let _ in b)
+    for (let _2 in b)
       nB++;
     return nA != nB;
   }
@@ -14542,7 +14414,7 @@
   function simplifyChangedRanges(changes) {
     const uniqueChanges = removeDuplicates(changes);
     return uniqueChanges.length === 1 ? uniqueChanges : uniqueChanges.filter((change, index) => {
-      const rest = uniqueChanges.filter((_, i) => i !== index);
+      const rest = uniqueChanges.filter((_2, i) => i !== index);
       return !rest.some((otherChange) => {
         return change.oldRange.from >= otherChange.oldRange.from && change.oldRange.to <= otherChange.oldRange.to && change.newRange.from >= otherChange.newRange.from && change.newRange.to <= otherChange.newRange.to;
       });
@@ -15331,7 +15203,7 @@
         new Plugin({
           key: new PluginKey("tiptapDrop"),
           props: {
-            handleDrop: (_, e, slice2, moved) => {
+            handleDrop: (_2, e, slice2, moved) => {
               this.editor.emit("drop", {
                 editor: this.editor,
                 event: e,
@@ -20189,18 +20061,67 @@ img.ProseMirror-separator {
   }
   var editor_init_default = initializeEditor;
 
+  // node_modules/.pnpm/vanilla-calendar-pro@3.0.3/node_modules/vanilla-calendar-pro/utils/index.mjs
+  var getDate$1 = (e) => /* @__PURE__ */ new Date(`${e}T00:00:00`);
+  var getDate = (e) => getDate$1(e);
+
+  // wwwroot/js/forms/form-helpers.js
+  function formatDatePicker() {
+    const datePickers = document.querySelectorAll(".hs-datepicker");
+    for (const inputElement of datePickers) {
+      const { element } = HSDatepicker.getInstance(inputElement, true);
+      element.on("change", (data) => {
+        if (data.selectedDates[0]) {
+          const dateString = data.selectedDates[0];
+          const dateObject = getDate(dateString);
+          const formattedDate = dateObject.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+          });
+          inputElement.value = formattedDate;
+        }
+      });
+    }
+  }
+  function resetDatePickerYear() {
+    const datePickers = document.querySelectorAll(".hs-datepicker");
+    for (const inputElement of datePickers) {
+      inputElement.addEventListener("click", (data) => {
+        const { element } = HSDatepicker.getInstance(inputElement, true);
+        if (element) {
+          setTimeout(() => {
+            console.log(element);
+            const getDateSelector = inputElement.querySelector(
+              ".form-date-picker-years"
+            );
+            console.log(getDateSelector);
+          }, 1e3);
+        }
+      });
+    }
+  }
+
   // wwwroot/js/site.js
-  var import_theme_switch = __toESM(require_theme_switch());
+  var Calendar = window.Calendar || window.VanillaCalendarPro?.Calendar;
+  var _ = window._;
+  window._ = _;
+  window.Calendar = Calendar;
+  window.formatDatePicker = formatDatePicker;
+  window.resetDatePickerYear = resetDatePickerYear;
   createIcons({
     icons: {
       Menu,
       Plus,
       Sun,
-      Moon
+      Moon,
+      CalendarDays
     }
   });
   document.addEventListener("DOMContentLoaded", () => {
-    import_theme_switch.default.autoInit();
+    if (typeof window.HSStaticMethods !== "undefined") {
+      window.HSStaticMethods.autoInit();
+    }
     const updateIconVisibility = (theme) => {
       for (const icon of document.querySelectorAll(".hs-theme-icon-sun")) {
         icon.style.display = theme === "dark" ? "none" : "block";
@@ -20224,19 +20145,13 @@ img.ProseMirror-separator {
     const currentTheme = localStorage.getItem("hs_theme") || "default";
     const isDark = document.documentElement.classList.contains("dark");
     updateIconVisibility(isDark ? "dark" : currentTheme);
+    resetDatePickerYear();
+    formatDatePicker();
     editor_init_default();
+    console.log("Site JS loaded");
   });
 })();
 /*! Bundled license information:
-
-@preline/theme-switch/index.js:
-  (*
-   * HSThemeSwitch
-   * @version: 3.0.0
-   * @author: Preline Labs Ltd.
-   * @license: Licensed under MIT and Preline UI Fair Use License (https://preline.co/docs/license.html)
-   * Copyright 2024 Preline Labs Ltd.
-   *)
 
 lucide/dist/esm/defaultAttributes.js:
   (**
@@ -20255,6 +20170,14 @@ lucide/dist/esm/createElement.js:
    *)
 
 lucide/dist/esm/replaceElement.js:
+  (**
+   * @license lucide v0.483.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide/dist/esm/icons/calendar-days.js:
   (**
    * @license lucide v0.483.0 - ISC
    *
@@ -20301,5 +20224,8 @@ lucide/dist/esm/lucide.js:
    * This source code is licensed under the ISC license.
    * See the LICENSE file in the root directory of this source tree.
    *)
+
+vanilla-calendar-pro/utils/index.mjs:
+  (*! name: vanilla-calendar-pro v3.0.3 | url: https://github.com/uvarov-frontend/vanilla-calendar-pro *)
 */
 //# sourceMappingURL=bundle.js.map

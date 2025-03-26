@@ -1,54 +1,86 @@
 @layer components {
-    .form-input {
-        @apply 
-            p-3 sm:p-4 block
+	/* Form Input */
+	.alpha-form-input {
+		@apply p-3 sm:p-4 block
             min-h-3000 min-w-40000
             
-            /* Border styling */
             border border-alpha-border-100 
             rounded-[var(--spacing-0875)] 
             
-            /* Text styling */
             sm:text-body-regular-15 
             placeholder:text-body-light
             
-            /* States */
             hover:border-alpha-border-200
-            hover:bg-alpha-border-hover
             
             focus:outline-none
             focus:border-accent
 
-            /* Disabled state */
             disabled:pointer-events-none 
-            disabled:bg-grey-100
-            ;
-    }
+            disabled:bg-grey-100;
+	}
 
-
-    .text-editor-input {
-        @apply 
-        p-3 sm:p-4 
+	/* Text Editor Input */
+	.text-editor-input {
+		@apply p-3 sm:p-4 
       placeholder:text-body-light
         min-h-108125 min-w-30625
         bg-transparent
-        rounded-br-none rounded-bl-none
-        ;
-    }
+        rounded-br-none rounded-bl-none;
+	}
 
-    .tiptap-editor-menu {
-        @apply 
-            sticky top-0 bg-none 
+	.tiptap-editor-menu {
+		@apply sticky top-0 bg-none 
             flex align-middle gap-x-0.5  
             rounded-bl-[var(--spacing-0875)]
             rounded-br-[var(--spacing-0875)]
             border-b border-alpha-border-100 p-2
-            border-l border-r
-        ;
-    }
+            border-l border-r;
+	}
 
+	/* Form Date Picker */
+	.form-date-picker-shared {
+		@apply hs-select-disabled:pointer-events-none 
+            hs-select-disabled:opacity-50 relative py-1 px-2 
+            flex text-nowrap w-full cursor-pointer 
+            
+            bg-white text-start text-sm 
+            focus:border-blue-500 focus:ring-blue-500 
+            before:absolute before:inset-0 before:z-1 
+            dark:bg-neutral-900 dark:border-neutral-700;
+	}
 
+	.form-date-picker-months {
+		@apply text-red-600 dark:text-red-500;
+	}
 
+	.form-date-picker-years {
+		@apply text-blue-600 dark:text-blue-500;
+	}
 
-    
+	.form-date-picker-single-month {
+		@apply bg-white flex flex-col overflow-hidden 
+        dark:bg-neutral-900 dark:border-neutral-700;
+	}
+	.form-date-picker-single-month-header {
+		@apply grid grid-cols-5 items-center gap-x-3 mx-1.5 pb-3;
+	}
+
+	.hs-datepicker {
+		@apply min-w-145625;
+	}
+
+	/* Data Select */
+	.hs-select-dropdown {
+		@apply mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 
+		bg-white border border-gray-200 
+		rounded-lg overflow-hidden overflow-y-auto 
+		[&::-webkit-scrollbar]:w-2 
+		[&::-webkit-scrollbar-thumb]:rounded-full 
+		[&::-webkit-scrollbar-track]:bg-gray-100 
+		[&::-webkit-scrollbar-thumb]:bg-gray-300 
+		
+		dark:[&::-webkit-scrollbar-track]:bg-neutral-700 
+		dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 
+		dark:bg-neutral-900 dark:border-neutral-700;
+	}
 }

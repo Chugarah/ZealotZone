@@ -1,26 +1,45 @@
-﻿// Initialize Lucide icons
+﻿// Instead, reference the global objects directly
+// These are already available from your script tags
+const Calendar = window.Calendar || window.VanillaCalendarPro?.Calendar;
+const _ = window._;
+
+// Import other dependencies
+// import _ from 'lodash';
+window._ = _;
+
+// Make Calendar globally available with the correct reference
+window.Calendar = Calendar;
+
+// Initialize Lucide icons
 import { createIcons } from "lucide";
-import { Menu, Plus, Sun, Moon } from "lucide";
+import { Menu, Plus, Sun, Moon, CalendarDays } from "lucide";
 import initializeEditor from "./text-editor/editor-init";
 
+// You can import your own modules to be bundled
+import { formatDatePicker, resetDatePickerYear } from './forms/form-helpers';
 
+// Make formatDatePicker available globally if needed
+window.formatDatePicker = formatDatePicker;
+window.resetDatePickerYear = resetDatePickerYear;
+// Initialize icons
 createIcons({
 	icons: {
 		Menu,
 		Plus,
 		Sun,
 		Moon,
+		CalendarDays,
 	},
 });
 
 // Theme Switcher
 // https://preline.co/docs/dark-mode.html
-// Import Preline's HSThemeSwitch
-import HSThemeSwitch from "@preline/theme-switch";
-
 document.addEventListener("DOMContentLoaded", () => {
-	// Initialize theme switch
-	HSThemeSwitch.autoInit();
+
+    // Initialize Preline components - using the global object
+    if (typeof window.HSStaticMethods !== 'undefined') {
+        window.HSStaticMethods.autoInit();
+    }
 
 	// Handle icon visibility function
 	const updateIconVisibility = (theme) => {
@@ -59,26 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	const isDark = document.documentElement.classList.contains("dark");
 	updateIconVisibility(isDark ? "dark" : currentTheme);
 
+	// Format the date picker
+	resetDatePickerYear();
+	formatDatePicker();
 
-    // Initialize the editor
-    initializeEditor();
+	// Initialize the editor
+	initializeEditor();
+
+	console.log('Site JS loaded');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
- 

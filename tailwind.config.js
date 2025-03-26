@@ -8,9 +8,7 @@ module.exports = {
 		"./Components/**/*.{cshtml,razor,cs,js}",
 		"./Pages/**/*.cshtml.css",
 		"./Views/**/*.cshtml.css",
-		"./Components/**/*.razor.css",
-		'node_modules/preline/dist/*.js',
-		'node_modules/lucide-react/dist/cjs/*.js'
+		"./Components/**/*.razor.css"
 	],
 	darkMode: 'class',
 	theme: {
@@ -21,6 +19,5 @@ module.exports = {
 		require('@tailwindcss/typography'),
 		require('@tailwindcss/aspect-ratio'),
 		require('@tailwindcss/container-queries'),
-		require('preline/plugin'),
 	],
 };

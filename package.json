@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/style.css -m",
+    "build:css": "tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/style.css --minify",
     "watch:css": "tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/style.css --watch",
-    "build:js": "esbuild ./wwwroot/js/site.js --bundle --outfile=./wwwroot/js/bundle.js --sourcemap --log-level=debug",
-    "watch:js": "esbuild ./wwwroot/js/site.js --bundle --outfile=./wwwroot/js/bundle.js --sourcemap --watch",
+    "build:js": "esbuild ./wwwroot/js/site.js --bundle --outfile=./wwwroot/js/bundle.js --sourcemap --loader:.css=css",
+    "build:js:prod": "esbuild ./wwwroot/js/site.js --bundle --outfile=./wwwroot/js/bundle.js --minify",
+    "watch:js": "esbuild ./wwwroot/js/site.js --bundle --outfile=./wwwroot/js/bundle.js --sourcemap --watch --loader:.css=css",
     "browser-sync": "browser-sync start --proxy  'https://localhost:7170/' --files 'wwwroot/css/*.css, wwwroot/js/*.js, **/*.cshtml, **/*.html' --reload-delay 2000 --no-inject-changes",
     "mvc-watch-run": "concurrently \"dotnet watch run --launch-profile https\" \"pnpm run watch:css\" \"pnpm run watch:js\" \"pnpm run browser-sync\"",
     "rider-debug": "concurrently \"pnpm run watch:css\" \"pnpm run watch:js\" \"pnpm run browser-sync\""
@@ -39,11 +40,13 @@
     "browser-sync": "^3.0.3",
     "concurrently": "^9.1.2",
     "esbuild": "^0.25.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
     "preline": "^3.0.1",
     "tailwindcss": "^4.0.12",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vanilla-calendar-pro": "^3.0.3"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.12",

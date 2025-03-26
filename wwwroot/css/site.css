@@ -6,8 +6,13 @@
 
 @import "tailwindcss";
 
-/* Importing the Preline css */
-@import "../../node_modules/preline/variants.css";
+/* Vendor CSS Imports */
+/* Optional Preline UI Datepicker Plugin */
+@import "preline/variants.css";
+@import "preline/src/plugins/datepicker/styles.css"; 
+
+/* Plugins */
+/* @plugin "@tailwindcss/forms"; */
 
 /* Importing the Layout css */
 @import "./layout/base.css";
@@ -48,3 +53,4 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+@plugin "@tailwindcss/forms";
