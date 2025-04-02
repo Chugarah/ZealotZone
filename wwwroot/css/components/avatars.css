@@ -1,0 +1,21 @@
+@layer components {
+    .avatar-container {
+        @apply inline-block relative rounded-full size-9375 overflow-hidden;
+    }
+
+    /* Pseudo-element to hold the gradient background */
+    .gradient-generator::before {
+        @apply z-[-1] absolute inset-0 bg-gradient-to-br from-[var(--gradient-color-1)] to-[var(--gradient-color-2)];
+        content: '';
+    }
+
+    .avatar-container img, svg {
+        @apply block relative w-full h-full object-bottom object-cover; /* Ensure content is relative for z-index */
+    }
+
+    /* Keep old static gradient class for reference if needed, but it's not used by the JS */
+    .avatar-gradient-orange {
+        @apply bg-gradient-to-br from-red-400 to-red-600;
+    }
+}
+

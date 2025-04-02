@@ -20108,6 +20108,41 @@ img.ProseMirror-separator {
     }
   }
 
+  // wwwroot/js/components/random-gradient.js
+  var cssColorVariables = [
+    "--color-alpha-accent",
+    "--color-alpha-green",
+    "--color-alpha-orange",
+    "--color-alpha-red",
+    "--color-alpha-yellow",
+    "--color-alpha-blue-1",
+    "--color-alpha-blue-dark",
+    "--color-alpha-purple",
+    "--color-alpha-dark-green",
+    // Include dark variants if desired
+    "--color-alpha-dark-orange",
+    "--color-alpha-dark-yellow",
+    "--color-alpha-dark-red",
+    "--color-alpha-dark-purple",
+    "--color-alpha-dark-accent"
+  ];
+  function applyRandomCssGradient() {
+    const gradientGenerators = document.querySelectorAll(".element-gradient-random");
+    if (!gradientGenerators) {
+      console.warn("No elements found to apply gradient to.");
+      return;
+    }
+    for (const element of gradientGenerators) {
+      const color1 = cssColorVariables[Math.floor(Math.random() * cssColorVariables.length)];
+      let color2 = cssColorVariables[Math.floor(Math.random() * cssColorVariables.length)];
+      while (color1 === color2) {
+        color2 = cssColorVariables[Math.floor(Math.random() * cssColorVariables.length)];
+      }
+      element.style.setProperty("--gradient-color-1", `var(${color1})`);
+      element.style.setProperty("--gradient-color-2", `var(${color2})`);
+    }
+  }
+
   // wwwroot/js/site.js
   var Calendar = window.Calendar || window.VanillaCalendarPro?.Calendar;
   var _ = window._;
@@ -20155,7 +20190,8 @@ img.ProseMirror-separator {
     resetDatePickerYear();
     formatDatePicker();
     editor_init_default();
-    console.log("Site JS loaded");
+    applyRandomCssGradient();
+    console.log("Site JS loaded and avatars generated");
   });
 })();
 /*! Bundled license information:

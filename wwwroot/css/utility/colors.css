@@ -75,10 +75,12 @@
     --color-alpha-accent-hover: rgba(var(--base-accent), var(--opacity-medium));
     --color-alpha-border-hover: rgba(var(--color-green), var(--opacity-low));
 
-    /* Gradients */
-    --gradient-avatar-orange: radial-gradient(36% 100%,
-            rgb(255 208 128 / 1),
-            rgb(255 187 128 / 1));
+    /* Gradients
+    https://stackoverflow.com/questions/70773146/how-do-i-change-the-direction-of-a-gradient-in-tailwind-css
+    */
+    --color-alpha-gradient-orange: rgba(255, 208, 128, 1);
+    --color-alpha-gradient-orange-dark: rgba(255, 187, 128, 1);
+
 }
 
 
@@ -127,4 +129,11 @@
 /* Color utilities */
 /* https://tailwindcss.com/docs/functions-and-directives#utility-directive */
 /* https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities */
+
+@layer utilities {
+    .element-gradient-random::before {
+        @apply z-[-1] absolute inset-0 bg-gradient-to-br from-[var(--gradient-color-1)] to-[var(--gradient-color-2)];
+        content: '';
+    }
+}
 

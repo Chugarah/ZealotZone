@@ -17,6 +17,7 @@ import initializeEditor from "./text-editor/editor-init";
 
 // You can import your own modules to be bundled
 import { formatDatePicker, resetDatePickerYear } from './forms/form-helpers';
+import { applyRandomCssGradient } from './components/random-gradient.js';
 
 // Make formatDatePicker available globally if needed
 window.formatDatePicker = formatDatePicker;
@@ -86,5 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Initialize the editor
 	initializeEditor();
 
-	console.log('Site JS loaded');
+	// Apply random gradients to designated elements
+	applyRandomCssGradient();
+
+
+	console.log('Site JS loaded and avatars generated'); 
 });

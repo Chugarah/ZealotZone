@@ -42,6 +42,7 @@
 @import "./components/text-components.css";
 @import "./components/button.css";
 @import "./components/forms.css";
+@import "./components/avatars.css";
 
 /* Smooth theme transition , Refactored by Phind AI */
 /* https://preline.co/docs/dark-mode.html */
