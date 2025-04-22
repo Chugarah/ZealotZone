@@ -2,109 +2,131 @@
 /* Refactored and optimized by Phind AI */
 /* https://tailwindcss.com/docs/box-shadow */
 :root {
-    /* Shadow RGB base colors */
-    --shadow-color-light: 4, 15, 21;
-    --shadow-color-dark: 0, 0, 0;
-    --shadow-color-accent: 0, 129, 255;
+	/* Shadow RGB base colors */
+	--shadow-color-light: 4, 15, 21;
+	--shadow-color-dark: 0, 0, 0;
+	--shadow-color-accent: 0, 129, 255;
 
-    /* Common shadow offsets and blurs - format: x-offset y-offset blur-radius */
-    /* Surface shadows */
-    --shadow-offset-surface-1: -16px 30px 25px;
-    --shadow-offset-surface-2: 0px 20px 30px;
-    --shadow-offset-surface-3: 0px 40px 30px;
+	/* Common shadow offsets and blurs - format: x-offset y-offset blur-radius */
+	/* Surface shadows */
+	--shadow-offset-1: 0 40px 30px -30px;
+	--shadow-offset-2: -16px 30px 25px 0;
+	--shadow-offset-3: 0px 40px 30px;
 
-    /* Popup shadows */
-    --shadow-offset-popup-1: 0px 50px 50px;
-    --shadow-offset-popup-2: 0px 40px 30px;
+	/* Popup shadows */
+	--shadow-offset-popup-1: 0px 50px 50px;
+	--shadow-offset-popup-2: 0px 40px 30px;
 
-    /* Popover shadows */
-    --shadow-offset-popover-1: 0px 8px 30px;
-    --shadow-offset-popover-2: 0px 40px 20px;
-    --shadow-offset-popover-3: 0px 16px 80px;
+	/* Popover shadows */
+	--shadow-offset-popover-1: 0px 8px 30px;
+	--shadow-offset-popover-2: 0px 40px 20px;
+	--shadow-offset-popover-3: 0px 16px 80px;
 
-    /* Button shadows */
-    --shadow-offset-button: 0px 4px 16px;
+	/* Button shadows */
+	--shadow-offset-button: 0px 4px 16px;
 }
 
 @theme {
-    /* Shadow opacity values for light theme */
-    --shadow-opacity-lowest: 0.02;
-    --shadow-opacity-low: 0.06;
-    --shadow-opacity-medium: 0.1;
-    --shadow-opacity-high: 0.15;
-    --shadow-opacity-highest: 0.18;
+	/* Shadow opacity values for light theme */
+	--shadow-opacity-lowest: 0.06;
+	--shadow-opacity-low: 0.06;
+	--shadow-opacity-medium: 0.1;
+	--shadow-opacity-high: 0.15;
+	--shadow-opacity-highest: 0.18;
 
-    /* Shadow color with opacity */
-    --shadow-color-low: rgba(var(--shadow-color-light), var(--shadow-opacity-lowest));
-    --shadow-color-medium: rgba(var(--shadow-color-light), var(--shadow-opacity-medium));
-    --shadow-color-high: rgba(var(--shadow-color-light), var(--shadow-opacity-high));
-    --shadow-color-button: rgba(var(--shadow-color-accent), var(--shadow-opacity-highest));
+	/* Shadow color with opacity */
+	--shadow-color-low: rgba(
+		var(--shadow-color-light),
+		var(--shadow-opacity-lowest)
+	);
+	--shadow-color-medium: rgba(
+		var(--shadow-color-light),
+		var(--shadow-opacity-medium)
+	);
+	--shadow-color-high: rgba(
+		var(--shadow-color-light),
+		var(--shadow-opacity-high)
+	);
+	--shadow-color-button: rgba(
+		var(--shadow-color-accent),
+		var(--shadow-opacity-highest)
+	);
 
-    /* Composed shadows using the components */
-    /* Multiple box-shadow values combined for layered effects */
-    --shadow-surface-1:
-        var(--shadow-offset-surface-1) var(--shadow-color-low),
-        var(--shadow-offset-surface-2) rgba(var(--shadow-color-light), var(--shadow-opacity-medium));
+	/* Composed shadows using the components */
+	/* Multiple box-shadow values combined for layered effects */
+	--shadow-surface-1: var(--shadow-offset-1) var(--shadow-color-low),
+		var(--shadow-offset-2)
+		rgba(var(--shadow-color-light), var(--shadow-opacity-medium));
 
-    --shadow-surface-2:
-        var(--shadow-offset-surface-1) var(--shadow-color-low),
-        var(--shadow-offset-surface-3) rgba(var(--shadow-color-light), var(--shadow-opacity-low));
+	--shadow-surface-2: var(--shadow-offset-1) var(--shadow-color-low),
+		var(--shadow-offset-2)
+		rgba(var(--shadow-color-light), var(--shadow-opacity-low));
 
-    --shadow-popup:
-        var(--shadow-offset-popup-1) var(--shadow-color-high),
-        var(--shadow-offset-popup-2) var(--shadow-color-high);
+	--shadow-popup: var(--shadow-offset-popup-1) var(--shadow-color-high),
+		var(--shadow-offset-popup-2) var(--shadow-color-high);
 
-    --shadow-popover-30:
-        var(--shadow-offset-popover-1) var(--shadow-color-medium);
+	--shadow-popover-30: var(--shadow-offset-popover-1) var(--shadow-color-medium);
 
-    --shadow-popover-80:
-        var(--shadow-offset-popover-2) var(--shadow-color-medium),
-        var(--shadow-offset-popover-3) var(--shadow-color-high);
+	--shadow-popover-80: var(--shadow-offset-popover-2) var(--shadow-color-medium),
+		var(--shadow-offset-popover-3) var(--shadow-color-high);
 
-    --shadow-button:
-        var(--shadow-offset-button) var(--shadow-color-button);
+	--shadow-button: var(--shadow-offset-button) var(--shadow-color-button);
 }
 
-@theme dark {
-    /* Shadow opacity values for dark theme - higher for more pronounced shadows */
-    --shadow-opacity-lowest: 0.1;
-    --shadow-opacity-low: 0.2;
-    --shadow-opacity-medium: 0.25;
-    --shadow-opacity-high: 0.3;
-    --shadow-opacity-highest: 0.25;
+@layer base {
+	@variant dark {
+		/* Shadow opacity values for dark theme - higher for more pronounced shadows */
+		--shadow-opacity-lowest: 0.1;
+		--shadow-opacity-low: 0.2;
+		--shadow-opacity-medium: 0.25;
+		--shadow-opacity-high: 0.3;
+		--shadow-opacity-highest: 0.25;
 
-    /* Shadow color with opacity - using dark shadow color */
-    --shadow-color-low: rgba(var(--shadow-color-dark), var(--shadow-opacity-low));
-    --shadow-color-medium: rgba(var(--shadow-color-dark), var(--shadow-opacity-medium));
-    --shadow-color-high: rgba(var(--shadow-color-dark), var(--shadow-opacity-high));
-    --shadow-color-button: rgba(var(--shadow-color-accent), var(--shadow-opacity-highest));
+		/* Shadow color with opacity - using dark shadow color */
+		--shadow-color-low: rgba(
+			var(--shadow-color-dark),
+			var(--shadow-opacity-low)
+		);
+		--shadow-color-medium: rgba(
+			var(--shadow-color-dark),
+			var(--shadow-opacity-medium)
+		);
+		--shadow-color-high: rgba(
+			var(--shadow-color-dark),
+			var(--shadow-opacity-high)
+		);
+		--shadow-color-button: rgba(
+			var(--shadow-color-accent),
+			var(--shadow-opacity-highest)
+		);
 
-    /* No need to redefine the composed shadows as they reference the variables we just updated */
+        
+
+		/* No need to redefine the composed shadows as they reference the variables we just updated */
+	}
 }
-
-
 
 /* Creating Shadow Utilities */
 @utility shadow-surface-1 {
-    box-shadow: var(--shadow-surface-1);
+	box-shadow: var(--shadow-surface-1);
 }
 
 @utility shadow-surface-2 {
-    box-shadow: var(--shadow-surface-2);
+	box-shadow: var(--shadow-surface-2);
 }
 
 @utility shadow-popup {
-    box-shadow: var(--shadow-popup);
+	box-shadow: var(--shadow-popup);
 }
 
 @utility shadow-popover-30 {
-    box-shadow: var(--shadow-popover-30);
+	box-shadow: var(--shadow-popover-30);
 }
 
 @utility shadow-popover-80 {
-    box-shadow: var(--shadow-popover-80);
+	box-shadow: var(--shadow-popover-80);
 }
 
 @utility shadow-button {
-    box-shadow: var(--shadow-button);
+	box-shadow: var(--shadow-button);
 }

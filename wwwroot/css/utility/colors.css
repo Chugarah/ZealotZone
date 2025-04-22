@@ -81,6 +81,11 @@
     --color-alpha-gradient-orange: rgba(255, 208, 128, 1);
     --color-alpha-gradient-orange-dark: rgba(255, 187, 128, 1);
 
+
+    /* Extra Colors */
+    --color-alpha-time-left: rgba(197,197,201,255);
+    --color-alpha-time-left-bg-red: rgba(255,240,236,255);
+
 }
 
 
@@ -130,7 +135,7 @@
 /* https://tailwindcss.com/docs/functions-and-directives#utility-directive */
 /* https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities */
 
-@layer utilities {
+@layer components {
     .element-gradient-random::before {
         @apply z-[-1] absolute inset-0 bg-gradient-to-br from-[var(--gradient-color-1)] to-[var(--gradient-color-2)];
         content: '';

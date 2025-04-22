@@ -1,7 +1,18 @@
-<div class="avatar-container">
-    <img src="~/media/avatars/avatar_01.svg" alt="Avatar">
+@{
+    var avatarCSSVariant = Model.AvatarSizeVariantClass ?? "";
+    var avatarUrl = Model.AvatarImageUrl ?? "/media/avatars/upload_avatar.svg";
+    var avatarAltText = Model.AvatarAltText ?? "";
+}
+
+
+@model ListAvatarViewModel
+
+<div class="avatar-container @avatarCSSVariant">
+    <img src="@Url.Content(avatarUrl)" alt="@avatarAltText">
 </div>
 
+<!--
 <div class="element-gradient-random p-40 ">
     dsfd sads d
 </div>
+-->

@@ -38,11 +38,14 @@
 /* Importing the Font css */
 @import "./utility/typography.css";
 
-/* Importing the Text Components css */
+/* Importing Components css */
 @import "./components/text-components.css";
 @import "./components/button.css";
 @import "./components/forms.css";
 @import "./components/avatars.css";
+@import "./components/cards.css";
+@import "./components/others.css";
+
 
 /* Smooth theme transition , Refactored by Phind AI */
 /* https://preline.co/docs/dark-mode.html */

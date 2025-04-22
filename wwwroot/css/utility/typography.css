@@ -179,6 +179,7 @@
 
     --font-weight-regular: 400;
     --font-weight-medium: 500;
+    --font-weight-semibold: 600;
     --font-weight-bold: 700;
 
 
@@ -228,6 +229,7 @@
     h6{
         font-size: var(--text-h6);
         color: var(--color-alpha-heading);
+        font-weight: var(--font-weight-semibold);
     }
 
 }

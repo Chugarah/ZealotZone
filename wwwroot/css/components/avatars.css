@@ -3,7 +3,11 @@
         @apply inline-block relative rounded-full size-9375 overflow-hidden;
     }
 
-    /* Pseudo-element to hold the gradient background */
+    .avatar-container--project-card {
+        @apply size-1875; 
+    }
+
+    /* Pseudo-element to hold the gradient background Used Phind AI to generate this lines below */
     .gradient-generator::before {
         @apply z-[-1] absolute inset-0 bg-gradient-to-br from-[var(--gradient-color-1)] to-[var(--gradient-color-2)];
         content: '';

@@ -21,6 +21,7 @@
 
     
     <ItemGroup>
+      <Folder Include="ViewModels\Projects\" />
       <Folder Include="wwwroot\lib\" />
     </ItemGroup>
 

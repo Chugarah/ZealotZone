@@ -1,0 +1,4 @@
+.icon-gradient {
+ @apply pb-[0.6em] pt-[0.9em] px-[0.59375em] z-50
+ absolute rounded-[var(--spacing-0875)] overflow-hidden object-cover;
+}
