@@ -22,6 +22,7 @@
     
     <ItemGroup>
       <Folder Include="ViewModels\Projects\" />
+      <Folder Include="Views\Authentication\" />
       <Folder Include="wwwroot\lib\" />
     </ItemGroup>
 
@@ -154,6 +155,11 @@
       <_ContentIncludedByDefault Remove="wwwroot\js\vendor\preline-main\src\utils\index.ts" />
       <_ContentIncludedByDefault Remove="wwwroot\js\vendor\preline-main\src\utils\interfaces.ts" />
       <_ContentIncludedByDefault Remove="wwwroot\js\vendor\preline-main\src\utils\types.ts" />
+    </ItemGroup>
+
+    
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Authentication\Views\UserLogin\Index.cshtml" />
     </ItemGroup>
 
 

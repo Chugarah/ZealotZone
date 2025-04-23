@@ -3,14 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using ZealotZone.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder
+    .Services.AddDefaultIdentity<IdentityUser>(options =>
+        options.SignIn.RequireConfirmedAccount = true
+    )
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -35,12 +39,28 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+app.MapControllers();
 app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}")
+        name: "Authentication",
+        pattern: "{area:exists}/{controller=UserLogin}/{action=Index}/{id?}"
+    )
+    .WithStaticAssets();
+app.MapControllerRoute(
+        name: "Administration",
+        pattern: "{area:exists}/{controller=TeamMembers}/{action=Index}/{id?}"
+    )
+    .WithStaticAssets();
+app.MapControllerRoute(
+        name: "Registrations",
+        pattern: "{area:exists}/{controller=UserRegistration}/{action=Index}/{id?}"
+    )
     .WithStaticAssets();
 
-app.MapRazorPages()
+
+app.MapControllerRoute(name: "default", pattern: "{controller=UserLogin}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+
+app.MapRazorPages().WithStaticAssets();
 
 app.Run();
