@@ -65,6 +65,8 @@
 	--shadow-popup: var(--shadow-offset-popup-1) var(--shadow-color-high),
 		var(--shadow-offset-popup-2) var(--shadow-color-high);
 
+		
+	/* TODO: Shadows seems not correct from Figma */
 	--shadow-popover-30: var(--shadow-offset-popover-1) var(--shadow-color-medium);
 
 	--shadow-popover-80: var(--shadow-offset-popover-2) var(--shadow-color-medium),

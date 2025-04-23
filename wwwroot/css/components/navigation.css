@@ -1,0 +1,39 @@
+@layer components {
+	.card-navigation-button {
+		@apply flex justify-center items-center 
+        size-2500 text-body-regular-15 font-semibold bg-alpha-surface 
+        hover:rounded-[var(--spacing-0875)] 
+        hover:bg-alpha-grey-100 focus:outline-hidden focus:bg-alpha-grey-100 
+        disabled:opacity-50 disabled:pointer-events-none 
+        rounded-[var(--spacing-0875)] 
+        
+        dark:hover:bg-alpha-accent-opacity
+        dark:text-alpha-heading  dark:hover:text-alpha-heading
+        dark:focus:bg-alpha-grey-100;
+	}
+
+	.card-navigation-menu {
+		@apply transition-[opacity,margin] hs-dropdown-open:opacity-100 opacity-0 hidden 
+        min-w-145625 bg-alpha-surface shadow-popover-80 rounded-[var(--spacing-0875)]  
+        dark:bg-alpha-surface dark:border dark:border-neutral-700  z-50;
+	}
+
+	.card-navigation-divider {
+		@apply  border-t border-alpha-border-100 dark:border-alpha-border-100;
+	}
+
+	.card-navigation-hover {
+		@apply hover:bg-alpha-grey-100 focus:outline-hidden focus:bg-alpha-grey-100 
+        dark:text-alpha-heading dark:hover:bg-alpha-accent-opacity dark:hover:text-alpha-heading dark:focus:bg-neutral-700;
+	}
+
+	& a {
+		@apply flex items-center 
+        gap-x-3.5 py-1000 px-3 rounded-[var(--spacing-0875)] 
+        text-body-regular-15 text-alpha-heading;
+	}
+
+	& a.card-navigation-menu--red {
+		@apply text-alpha-red dark:text-alpha-red;
+	}
+}

@@ -1,8 +1,28 @@
 /* Importing the tailwindcss */
-.header_menu{
-    @apply flex justify-end items-center;
+.header_menu {
+	@apply flex justify-end items-center;
 }
 
-.header_container{
-    @apply pr-1875;
+.header_container {
+	@apply pr-1875;
+}
+
+.header-menu-settings {
+	@apply flex justify-start items-center
+    mt-0500 mb-0500 mx-0500
+    gap-x-3.5 py-1000 px-3
+    rounded-[var(--spacing-0875)];
+}
+
+.header-menu-button {
+    @apply flex justify-center items-center 
+    size-2500 text-body-regular-15 font-semibold
+    hover:rounded-[var(--spacing-0875)] 
+    hover:bg-alpha-accent-hover focus:outline-hidden focus:bg-alpha-accent-hover 
+    disabled:opacity-50 disabled:pointer-events-none 
+    rounded-[var(--spacing-0875)] 
+    
+    dark:hover:bg-alpha-accent-opacity
+    dark:text-alpha-heading  dark:hover:text-alpha-heading
+    dark:focus:bg-alpha-accent-hover;
 }

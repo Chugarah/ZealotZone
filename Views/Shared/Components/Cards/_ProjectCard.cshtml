@@ -15,8 +15,9 @@
                 EPN Sverige AB
             </p>
         </div>
-        <div>
-            Menu
+        <!-- Just an override of the menu placement-->
+        <div class="self-start">
+            @await Html.PartialAsync("Navigation/_ProjectCardNavigation")
         </div>
     </div>
     <!-- #endregion -->

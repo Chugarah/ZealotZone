@@ -232,6 +232,11 @@
         font-weight: var(--font-weight-semibold);
     }
 
+    .navigation-card-menu{
+        font-size: var(--text-body-regular-15);
+        color: var(--color-alpha-body-dark);
+    }
+
 }
 
 

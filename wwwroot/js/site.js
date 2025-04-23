@@ -11,13 +11,28 @@ window._ = _;
 window.Calendar = Calendar;
 
 // Initialize Lucide icons
-import { createIcons } from "lucide";
-import { Menu, Plus, Sun, Moon, CalendarDays, DollarSign } from "lucide";
+// https://lucide.dev/icons/
+import {
+	Menu,
+	Plus,
+	Sun,
+	Moon,
+	CalendarDays,
+	DollarSign,
+	Clock,
+	Pencil,
+	UserPlus,
+	Trash2,
+	Ellipsis,
+	LogOut,
+	Settings,
+} from "lucide";
+import { createIcons, icons } from "lucide";
 import initializeEditor from "./text-editor/editor-init";
 
 // You can import your own modules to be bundled
-import { formatDatePicker, resetDatePickerYear } from './forms/form-helpers';
-import { applyRandomCssGradient } from './components/random-gradient.js';
+import { formatDatePicker, resetDatePickerYear } from "./forms/form-helpers";
+import { applyRandomCssGradient } from "./components/random-gradient.js";
 
 // Make formatDatePicker available globally if needed
 window.formatDatePicker = formatDatePicker;
@@ -31,17 +46,23 @@ createIcons({
 		Moon,
 		CalendarDays,
 		DollarSign,
+		Clock,
+		Pencil,
+		UserPlus,
+		Trash2,
+		Ellipsis,
+		LogOut,
+		Settings,
 	},
 });
 
 // Theme Switcher
 // https://preline.co/docs/dark-mode.html
 document.addEventListener("DOMContentLoaded", () => {
-
-    // Initialize Preline components - using the global object
-    if (typeof window.HSStaticMethods !== 'undefined') {
-        window.HSStaticMethods.autoInit();
-    }
+	// Initialize Preline components - using the global object
+	if (typeof window.HSStaticMethods !== "undefined") {
+		window.HSStaticMethods.autoInit();
+	}
 
 	// Handle icon visibility function
 	const updateIconVisibility = (theme) => {
@@ -90,6 +111,5 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Apply random gradients to designated elements
 	applyRandomCssGradient();
 
-
-	console.log('Site JS loaded and avatars generated'); 
+	console.log("Site JS loaded and avatars generated");
 });
