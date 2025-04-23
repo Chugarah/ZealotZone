@@ -26,6 +26,8 @@ import {
 	Ellipsis,
 	LogOut,
 	Settings,
+	Bell,
+	X,
 } from "lucide";
 import { createIcons, icons } from "lucide";
 import initializeEditor from "./text-editor/editor-init";
@@ -53,6 +55,8 @@ createIcons({
 		Ellipsis,
 		LogOut,
 		Settings,
+		Bell,
+		X,
 	},
 });
 

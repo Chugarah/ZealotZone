@@ -29,6 +29,7 @@
     --spacing-3250: 3.25rem; /* 52px */
     --spacing-3375: 3.375rem; /* 54px */
     --spacing-3500: 3.5rem; /* 56px */
+    --spacing-3625: 3.625rem; /* 58px */
     --spacing-3750: 3.75rem; /* 60px */
     --spacing-4000: 4rem; /* 64px */
     --spacing-4125: 4.125rem; /* 66px */
@@ -44,6 +45,14 @@
     --spacing-9375: 9.375rem; /* 150px */   
     --spacing-108125: 10.8125rem; /* 173px */
     --spacing-145625: 14.5625rem; /* 233px */
+    --spacing-15000: 15rem; /* 240px */
+    --spacing-16250: 16.25rem; /* 260px */
+    --spacing-17500: 17.5rem; /* 280px */
+    --spacing-18750: 18.75rem; /* 300px */
+    --spacing-20000: 20rem; /* 320px */
+    --spacing-21250: 21.25rem; /* 340px */
+    --spacing-22500: 22.5rem; /* 360px */
+    --spacing-23750: 23.75rem; /* 380px */
     --spacing-40000: 25rem; /* 400px */
     --spacing-30625: 30.625rem; /* 490px */
 

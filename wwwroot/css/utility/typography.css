@@ -198,7 +198,7 @@
 
     p{
         font-size: var(--text-body-regular-15);
-        color: inherit;
+        color: var(--color-alpha-heading);
     }
 
     h1{

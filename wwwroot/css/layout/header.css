@@ -8,14 +8,27 @@
 }
 
 .header-menu-settings {
-	@apply flex justify-start items-center
-    mt-0500 mb-0500 mx-0500
-    gap-x-3.5 py-1000 px-3
-    rounded-[var(--spacing-0875)];
+    @apply flex items-center;
 }
 
+.header-menu-settings--rounded {
+    @apply rounded-[var(--spacing-0875)];
+}
+
+.header-menu-settings--menu-padding {
+    @apply mt-0500 mb-0500 mx-0500 gap-x-3.5 px-3 py-1000;
+}
+
+.header-menu-settings--flex-start {
+    @apply justify-start;
+}
+.header-menu-settings--flex-space {
+    @apply justify-between;
+}
+
+
 .header-menu-button {
-    @apply flex justify-center items-center 
+	@apply flex justify-center items-center 
     size-2500 text-body-regular-15 font-semibold
     hover:rounded-[var(--spacing-0875)] 
     hover:bg-alpha-accent-hover focus:outline-hidden focus:bg-alpha-accent-hover 
@@ -25,4 +38,11 @@
     dark:hover:bg-alpha-accent-opacity
     dark:text-alpha-heading  dark:hover:text-alpha-heading
     dark:focus:bg-alpha-accent-hover;
+}
+
+.header-notifications-item {
+    @apply 
+    flex items-center
+    
+    ;
 }

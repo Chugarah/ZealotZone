@@ -7,7 +7,8 @@ new ListAvatarViewModel
 {
 AvatarImageUrl = "~/media/avatars/avatar_04.svg",
 AvatarAltText = "Logged in User",
-AvatarSizeVariantClass = "avatar-container--project-card"
+AvatarSizeVariantClass = "avatar-container--project-card",
+AvatarSize = ""
 }
 };
 }
@@ -18,7 +19,7 @@ AvatarSizeVariantClass = "avatar-container--project-card"
         <i data-lucide="settings" class="size-1250"></i>
     </button>
 
-    <div class="card-navigation-menu hs-dropdown-menu" role="menu" aria-orientation="vertical"
+    <div class="card-navigation-menu min-w-18750 hs-dropdown-menu" role="menu" aria-orientation="vertical"
         aria-labelledby="hs-dropdown-with-title">
         <div class="p-0500 space-y-0500">
             <!-- This will be dynamic based if user is logged in or not -->
@@ -33,7 +34,11 @@ AvatarSizeVariantClass = "avatar-container--project-card"
             </a>
         </div>
 
-        <div class="header-menu-settings card-navigation-hover">
+        <div class="header-menu-settings 
+            header-menu-settings--menu-padding 
+            header-menu-settings--rounded 
+            header-menu-settings--flex-start
+            card-navigation-hover">
             <!-- Used AI To generate margin-block-end end code part -->
             <i data-lucide="settings" class="size-1250 !mb-0 ![margin-block-end:0]"></i>
             Dark Mode
@@ -50,7 +55,7 @@ AvatarSizeVariantClass = "avatar-container--project-card"
 
 
         <!-- This will change based if user is logged in or not  -->
-        <div class="p-1 space-y-0.5 card-navigation-divider">
+        <div class="p-0500 space-y-0500 card-navigation-divider ">
             <a href="#" class="card-navigation-hover">
                 <i data-lucide="log-out" class="size-1250"></i>
                 Logout

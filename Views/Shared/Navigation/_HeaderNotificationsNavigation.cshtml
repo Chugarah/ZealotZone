@@ -1,0 +1,76 @@
+@{
+    // An simple List, this will be extracted from somewhere else
+    // TODO: This list creating need to be moved out later
+    var projectAvatars = new List<ListAvatarViewModel>
+{
+new ListAvatarViewModel
+{
+AvatarImageUrl = "~/media/avatars/avatar_04.svg",
+AvatarAltText = "Logged in User",
+AvatarSizeVariantClass = "avatar-container--project-notification",
+AvatarSize = ""
+}
+};
+}
+
+<div class="hs-dropdown relative inline-flex">
+    <button id="hs-dropdown-custom-icon-trigger" type="button" class="header-menu-button z-10 hs-dropdown-toggle"
+        aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+        <i data-lucide="bell" class="size-1250"></i>
+        <span class="flex absolute top-1 end-2.5 size-1.5 -mt-0.1 -me-0.1">
+            <span
+                class="animate-ping absolute inline-flex size-full rounded-full bg-alpha-red opacity-75 dark:bg-alpha-red"></span>
+            <span class="relative inline-flex rounded-full size-1.5 bg-alpha-red"></span>
+        </span>
+    </button>
+
+    <div class="card-navigation-menu min-w-23750 hs-dropdown-menu" role="menu" aria-orientation="vertical"
+        aria-labelledby="hs-dropdown-with-title">
+        <div
+            class="header-menu-settings header-menu-settings--flex-space card-navigation-divider-bottom mt-0500 mb-0500 px-3 py-1000 ">
+            <span class="block font-semibold text-[1.25rem]">
+                Notifications
+            </span>
+            <span
+                class="inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-alpha-red text-white ">
+                2
+            </span>
+        </div>
+
+        <div
+            class="header-notifications-item header-menu-settings--menu-padding card-navigation-hover header-menu-settings--rounded">
+            <!-- This will be dynamic based if user is logged in or not -->
+            @foreach (var avatar in projectAvatars)
+            {
+                await Html.RenderPartialAsync("Components/Avatars/_Avatar", avatar);
+            }
+            <div>
+                <p>Tommy Mattin-Lassei updated</p>
+                <p class="font-regular text-0875 text-alpha-body-light">1 year ago</p>
+
+            </div>
+            <a href="#" class=" ml-auto card-navigation-hover--ascent">
+                <i data-lucide="x" class="size-1250"></i>
+            </a>
+        </div>
+        <div
+            class="header-notifications-item header-menu-settings--menu-padding card-navigation-hover header-menu-settings--rounded">
+            <!-- This will be dynamic based if user is logged in or not -->
+            <div class="project-card-icon">
+                <!-- Hardcoded shit, the SVG icon is not square and Hardcoded 4 px padding bottom because shadow" ..-->
+                <div class="icon-gradient element-gradient-random">
+                    <img src="~/media/images/alpha.svg" alt="Alpha">
+                </div>
+            </div>
+            <div>
+                <p>ASP.NET Web App added</p>
+                <p class=" font-regular text-0875 text-alpha-body-light ">1 week ago</p>
+
+            </div>
+            <a href="#" class=" ml-auto card-navigation-hover--ascent">
+                <i data-lucide="x" class="size-1250"></i>
+            </a>
+        </div>
+
+    </div>
+</div>

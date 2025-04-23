@@ -7,6 +7,10 @@
         @apply size-1875; 
     }
 
+    .avatar-container--project-notification {
+        @apply size-3500; 
+    }
+
     /* Pseudo-element to hold the gradient background Used Phind AI to generate this lines below */
     .gradient-generator::before {
         @apply z-[-1] absolute inset-0 bg-gradient-to-br from-[var(--gradient-color-1)] to-[var(--gradient-color-2)];
