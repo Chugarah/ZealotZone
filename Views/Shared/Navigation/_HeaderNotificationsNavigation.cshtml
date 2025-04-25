@@ -42,7 +42,7 @@ AvatarSize = ""
             <!-- This will be dynamic based if user is logged in or not -->
             @foreach (var avatar in projectAvatars)
             {
-                await Html.RenderPartialAsync("Components/Avatars/_Avatar", avatar);
+                await Html.RenderPartialAsync("Components/_Avatar", avatar);
             }
             <div>
                 <p>Tommy Mattin-Lassei updated</p>

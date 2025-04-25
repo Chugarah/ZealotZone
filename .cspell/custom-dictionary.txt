@@ -1,3 +1,4 @@
+aspnetcore
 augmentignore
 dbmdl
 dgspec
@@ -7,12 +8,15 @@ elease
 eleases
 eslintcache
 haspopup
+Hsts
+HSTS
 labelledby
 Lassei
 linecap
 linejoin
 lucide
 Mattin
+nowrap
 nuxt
 packagespec
 Phind
@@ -21,7 +25,9 @@ preline
 Preline
 publishsettings
 staticwebassets
+stylesheet
 svclog
+tablist
 userosscache
 userprefs
 vspscc

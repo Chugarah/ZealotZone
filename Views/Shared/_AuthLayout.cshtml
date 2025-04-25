@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>@ViewData["Title"] - ZealotZone Login</title>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
+
 <body>
 
-@RenderBody()
+    @RenderBody()
 
-<!-- Scripts - now only bundle.js -->
-<script src="~/js/vendor/lodash/lodash.js" asp-append-version="true"></script>
-<script src="~/js/vendor/vanilla-calendar-pro/index.js" asp-append-version="true"></script>
-<script src="~/js/vendor/preline/preline.js" asp-append-version="true"></script>
-<script src="~/js/bundle.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <!-- Scripts - now only bundle.js -->
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
+    <script src="~/js/vendor/lodash/lodash.js" asp-append-version="true"></script>
+    <script src="~/js/vendor/vanilla-calendar-pro/index.js" asp-append-version="true"></script>
+    <script src="~/js/vendor/preline/preline.js" asp-append-version="true"></script>
+    <script src="~/js/bundle.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

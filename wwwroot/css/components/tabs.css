@@ -1,0 +1,21 @@
+@layer components {
+	/* Tabs */
+	.tabs-wrapper {
+		@apply border-b border-alpha-border-200 dark:border-neutral-700;
+	}
+
+	.tabs-wrapper button {
+		@apply hs-tab-active:font-semibold 
+        hs-tab-active:border-alpha-accent 
+        hs-tab-active:text-alpha-accent
+        
+        py-4 px-0875 inline-flex items-center 
+        border-b-2 border-transparent 
+        whitespace-nowrap text-alpha-body-light 
+       
+        hover:text-alpha-accent-hover focus:outline-hidden focus:text-alpha-accent-hover 
+        disabled:opacity-50 disabled:pointer-events-none 
+        
+        dark:text-alpha-body-light dark:hover:text-alpha-accent-hover;
+	}
+}

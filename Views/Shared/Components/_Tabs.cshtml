@@ -1,0 +1,29 @@
+<div class="tabs-wrapper">
+    <nav class="flex gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
+        <button type="button" class="active menu-horizontal" id="tab-project-all" aria-selected="true"
+            data-hs-tab="#tab-nav-project-all" aria-controls="tab-nav-project-all" role="tab">
+            ALL [9]
+        </button>
+        <button class="menu-horizontal" type="button" id="tab-project-started" aria-selected="false"
+            data-hs-tab="#tab-nav-project-started" aria-controls="tab-nav-project-started" role="tab">
+            STARTED [27]
+        </button>
+        <button type="button" class="menu-horizontal" id="tab-project-completed" aria-selected="false"
+            data-hs-tab="#tab-nav-project-completed" aria-controls="tab-nav-project-completed" role="tab">
+            COMPLETED [1]
+        </button>
+    </nav>
+</div>
+
+<!-- TODO: Remember to add an loader when user click started or completed,# the all options will laod 9 then pagination will be created-->
+<div class="mt-3">
+    <div id="tab-nav-project-all" role="tabpanel" aria-labelledby="tab-project-all">
+        @await Html.PartialAsync("Components/_ProjectCard")
+    </div>
+    <div id="tab-nav-project-started" class="hidden" role="tabpanel" aria-labelledby="tab-project-started">
+        @await Html.PartialAsync("Components/_ProjectCard")
+    </div>
+    <div id="tab-nav-project-completed" class="hidden" role="tabpanel" aria-labelledby="tab-project-completed">
+        @await Html.PartialAsync("Components/_ProjectCard")
+    </div>
+</div>
