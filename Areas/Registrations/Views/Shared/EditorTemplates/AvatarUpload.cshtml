@@ -1,0 +1,32 @@
+@model IFormFile
+@{
+    var defaultImageUrl = ViewData["DefaultImageUrl"]?.ToString() ?? "";
+    var defaultImageAltText = ViewData["DefaultImageAltText"]?.ToString() ?? "";
+    var fieldId = Html.IdFor(m => m);
+}
+
+<!-- Got assisted by Google Gemini Pro AI to refactor and improve this code.
+https://learn.microsoft.com/en-us/aspnet/core/mvc/views/display-templates?view=aspnetcore-9.0
+-->
+<div class="avatar-upload-container avatar-upload-container--circle avatar-preview"
+    x-data="avatarUploader({ initialImageUrl: '@(defaultImageAltText)', inputid: '@(fieldId)' })">
+
+    @* Wrap visual elements in a label linked to the input *@
+    <label for="@fieldId" class="cursor-pointer w-full h-full flex items-center justify-center relative">
+        <img x-ref="preview" :src="imageUrl || '@defaultImageUrl'" alt="@defaultImageAltText"
+            :class="{ 'hidden': !imageUrl && !'@defaultImageUrl' }"
+            class="w-full h-full object-cover absolute inset-0" />
+
+        @* Show camera icon only when no image is loaded/selected *@
+        <i data-lucide="camera" class="avatar-preview-icon z-10" :class="{ 'hidden': imageUrl }"></i>
+        <i data-lucide="pen-line" class="avatar-preview-selected z-10" :class="{ 'hidden': !imageUrl }"></i>
+    </label>
+
+    @* Use standard input for better Alpine compatibility TODO: This need to be refactored *@
+    <input type="file" id="@fieldId" @* Ensure ID matches label's 'for' *@
+       name="@Html.NameFor(m => m)" class="hidden"
+        accept="image/*" x-ref="fileInput" @@change="showPreview($event)" />
+
+    @Html.ValidationMessageFor(m => m, "",
+    new { @class = "alpha-form-error-message text-xs absolute -bottom-5 left-0" })
+</div>

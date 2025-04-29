@@ -28,17 +28,36 @@ import {
 	Settings,
 	Bell,
 	X,
+	OctagonAlert,
+	Camera,
+	PenLine,
 } from "lucide";
 import { createIcons, icons } from "lucide";
 import initializeEditor from "./text-editor/editor-init";
 
+// Imporitng AlpineJS
+import Alpine from "alpinejs";
+window.Alpine = Alpine;
 // You can import your own modules to be bundled
-import { formatDatePicker, resetDatePickerYear } from "./forms/form-helpers";
+import {
+	formatDatePicker,
+	resetDatePickerYear,
+	avatarUploader,
+	memberFormValidation,
+	ajaxFormValidation,
+	birthDateValidationCallback,
+} from "./forms/form-helpers";
 import { applyRandomCssGradient } from "./components/random-gradient.js";
 
 // Make formatDatePicker available globally if needed
 window.formatDatePicker = formatDatePicker;
 window.resetDatePickerYear = resetDatePickerYear;
+window.avatarUploader = avatarUploader;
+window.memberFormValidation = memberFormValidation;
+window.ajaxFormValidation = ajaxFormValidation;
+window.birthDateValidationCallback = birthDateValidationCallback; 
+
+
 // Initialize icons
 createIcons({
 	icons: {
@@ -57,6 +76,9 @@ createIcons({
 		Settings,
 		Bell,
 		X,
+		OctagonAlert,
+		Camera,
+		PenLine,
 	},
 });
 
@@ -67,6 +89,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (typeof window.HSStaticMethods !== "undefined") {
 		window.HSStaticMethods.autoInit();
 	}
+
+	// --- Register Alpine Component ---
+	// https://github.com/colinaut/alpinejs-plugin-simple-validate?tab=readme-ov-file
+	document.addEventListener("alpine:init", () => {
+		Alpine.data("avatarUpload", avatarUploader);
+        Alpine.data("ajaxFormValidation", ajaxFormValidation);
+		console.log("Alpine initialized, registering component."); // Debug log
+	});
+	Alpine.start();
 
 	// Handle icon visibility function
 	const updateIconVisibility = (theme) => {
@@ -114,6 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Apply random gradients to designated elements
 	applyRandomCssGradient();
-
 	console.log("Site JS loaded and avatars generated");
 });
+
+
+

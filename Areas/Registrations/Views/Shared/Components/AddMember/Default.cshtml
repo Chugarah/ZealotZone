@@ -1,0 +1,150 @@
+@model AddMemberViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@* This is needed for Alpinejs to be able to validate the form This part of code was Generated
+https://stackoverflow.com/questions/77300208/i-cant-use-alpine-js-change-submit-and-keyup-with-asp-net-razor-pages
+https://github.com/colinaut/alpinejs-plugin-simple-validate
+https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/minlength
+https://github.com/markmead/alpinejs-form-validation
+*@
+
+@{
+    // Get antiforgery token
+    var antiforgeryToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+
+    // Prepare initial data matching the flat structure expected by ajaxFormValidation's formData
+    var initialData = new Dictionary<string, string?>
+{
+{ "FirstName", Model?.FirstName },
+{ "LastName", Model?.LastName },
+{ "EmailAddress", Model?.EmailAddress },
+{ "PhoneNumber", Model?.PhoneNumber },
+{ "JobTitle", Model?.JobTitle },
+{ "Adress", Model?.Adress },
+// Flatten BirthDate properties
+{ "BirthDate.Day", Model?.BirthDate?.Day?.ToString() },
+{ "BirthDate.Month", Model?.BirthDate?.Month?.ToString() },
+{ "BirthDate.Year", Model?.BirthDate?.Year?.ToString() }
+// Avatar is handled via fileInputNames, not initialData
+};
+}
+
+<form x-data="ajaxFormValidation({
+    formRefName: 'addMemberForm',
+    validationEndpoint: '/add-member', 
+    antiforgeryToken: '@ViewData["AntiforgeryToken"]',
+    unselectedValue: null,
+    groups: {
+        birthDate:{
+            fields: ['BirthDate.Day', 'BirthDate.Month', 'BirthDate.Year'],
+            allOrNoneMessage: 'Please provide all parts of the birth date or leave all blank.',
+            validationCallback: birthDateValidationCallback,
+            unselectedValue: '0'
+        }
+    },
+    initialData: {
+        FirstName: '@(Model?.FirstName ?? null)',
+        LastName: '@(Model?.LastName ?? null)',
+        EmailAddress: '@(Model?.EmailAddress ?? null)',
+        PhoneNumber: '@(Model?.PhoneNumber ?? null)',
+        JobTitle: '@(Model?.JobTitle ?? null)',
+        Adress: '@(Model?.Adress ?? null)',
+          BirthDate: { // Use a nested object for clarity
+             Day: '@(Model?.BirthDate?.Day.ToString() ?? null)',
+             Month: '@(Model?.BirthDate?.Month?.ToString() ?? null)',
+             Year: '@(Model?.BirthDate?.Year.ToString() ?? null)',
+        }
+    },
+})" novalidate="novalidate" method="POST" enctype="multipart/form-data" x-on:submit.prevent="submitForm"
+    x-ref="addMemberForm" id="addMemberForm">
+
+    @Html.AntiForgeryToken()
+    <div class="w-full m-auto flex flex-col justify-center px-20 py-10" aria-label="Form Add Member">
+
+        <fieldset :disabled="isSubmitting">
+            <div class="flex gap-1500">
+                <div class="w-full">
+                    @Html.EditorFor(m => m.Avatar)
+                </div>
+            </div>
+            <div class="flex gap-1500">
+                <div class="w-full">
+                    <label asp-for="FirstName" class="form-label alpha-form-label"></label>
+                    <input asp-for="FirstName" type="text" class="alpha-form-input" x-model="formData.FirstName"
+                        x-on:input="validateField('FirstName')" x-on:blur="validateField('FirstName')">
+                    <i class=" alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="FirstNameIconRef"
+                        x-transition></i>
+                    <span asp-validation-for="FirstName" class="alpha-form-error-message"></span>
+                </div>
+                <div class="w-full">
+                    <label asp-for="LastName" class="form-label alpha-form-label"></label>
+                    <input asp-for="LastName" type="text" class="alpha-form-input" x-model="formData.LastName"
+                        x-on:input="validateField('LastName')" x-on:blur="validateField('LastName')">
+                    <i class=" alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="LastNameIconRef"
+                        x-transition></i>
+                    <span asp-validation-for="LastName" class="alpha-form-error-message"></span>
+                </div>
+            </div>
+            <div class="flex gap-1500">
+                <div class="w-full">
+                    <label asp-for="EmailAddress" class="form-label alpha-form-label"></label>
+                    <input asp-for="EmailAddress" type="email" class="alpha-form-input" x-model="formData.EmailAddress"
+                        x-on:input="validateField('EmailAddress')" x-on:blur="validateField('EmailAddress')">
+                    <i class=" alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="EmailAddressIconRef"
+                        x-transition></i>
+                    <span asp-validation-for="EmailAddress" class="alpha-form-error-message"></span>
+                </div>
+            </div>
+            <div class="flex gap-1500">
+                <div class="w-full">
+                    <label asp-for="PhoneNumber" class="form-label alpha-form-label"></label>
+                    <input asp-for="PhoneNumber" type="text" class="alpha-form-input" x-model="formData.PhoneNumber"
+                        x-on:input="validateField('PhoneNumber')" x-on:blur="validateField('PhoneNumber')">
+                    <i class=" alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="PhoneNumberIconRef"
+                        x-transition></i>
+                    <span asp-validation-for="PhoneNumber" class="alpha-form-error-message"></span>
+                </div>
+            </div>
+            <div class="flex gap-1500">
+                <div class="w-full">
+                    <label asp-for="JobTitle" class="form-label alpha-form-label"></label>
+                    <input asp-for="JobTitle" type="text" class="alpha-form-input" x-model="formData.JobTitle"
+                        x-on:input="validateField('JobTitle')" x-on:blur="validateField('JobTitle')">
+                    <i class=" alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="JobTitleIconRef"
+                        x-transition></i>
+                    <span asp-validation-for="JobTitle" class="alpha-form-error-message"></span>
+                </div>
+            </div>
+            <div class="flex gap-1500">
+                <div class="w-full">
+                    <label asp-for="Adress" class="form-label alpha-form-label"></label>
+                    <input asp-for="Adress" type="text" class="alpha-form-input" x-model="formData.Adress"
+                        x-on:input="validateField('Adress')" x-on:blur="validateField('Adress')">
+                    <i class=" alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="AdressIconRef"
+                        x-transition></i>
+                    <span asp-validation-for="Adress" class="alpha-form-error-message"></span>
+                </div>
+            </div>
+            <div class="flex gap-1500">
+                <div class="w-full">
+                    <label class="form-label alpha-form-label">Date Of Birth</label>
+                    @Html.EditorFor(m => m.BirthDate)
+                </div>
+            </div>
+        </fieldset>
+        <div class="flex py-1500">
+            <button class="btn-primary w-full" :disabled="isSubmitting" :tabindex="isSubmitting ? '-1' : '0'">
+                <!-- Add this line -->
+                <span class="spinner-secondary" x-show="isSubmitting" role="status" aria-label="loading">
+                </span>
+                <span x-show="!isSubmitting">
+                    Add Contact
+                </span>
+            </button>
+        </div>
+        <div class="flex py-1500">
+            <div x-show="errors[formRefName]" x-text="errors[formRefName]?.join('\n')"
+                class="alpha-form-error-message mt-2" role="alert"></div>
+        </div>
+    </div>
+</form>

@@ -1,29 +1,67 @@
 @layer components {
-    .avatar-container {
-        @apply inline-block relative rounded-full size-9375 overflow-hidden;
-    }
+	.avatar-container {
+		@apply inline-block relative rounded-full size-9375 overflow-hidden;
+	}
 
-    .avatar-container--project-card {
-        @apply size-1875; 
-    }
+	.avatar-container--project-card {
+		@apply size-1875;
+	}
 
-    .avatar-container--project-notification {
-        @apply size-3500; 
-    }
+	.avatar-container--project-notification {
+		@apply size-3500;
+	}
 
-    /* Pseudo-element to hold the gradient background Used Phind AI to generate this lines below */
-    .gradient-generator::before {
-        @apply z-[-1] absolute inset-0 bg-gradient-to-br from-[var(--gradient-color-1)] to-[var(--gradient-color-2)];
-        content: '';
-    }
+	/* Pseudo-element to hold the gradient background Used Phind AI to generate this lines below */
+	.gradient-generator::before {
+		@apply z-[-1] absolute inset-0 bg-gradient-to-br from-[var(--gradient-color-1)] to-[var(--gradient-color-2)];
+		content: "";
+	}
 
-    .avatar-container img, svg {
-        @apply block relative w-full h-full object-bottom object-cover; /* Ensure content is relative for z-index */
-    }
+	.avatar-container img,
+	svg {
+		@apply block relative w-full h-full object-bottom object-cover; /* Ensure content is relative for z-index */
+	}
 
-    /* Keep old static gradient class for reference if needed, but it's not used by the JS */
-    .avatar-gradient-orange {
-        @apply bg-gradient-to-br from-red-400 to-red-600;
-    }
+	/* Keep old static gradient class for reference if needed, but it's not used by the JS */
+	.avatar-gradient-orange {
+		@apply bg-gradient-to-br from-red-400 to-red-600;
+	}
+
+	/* Avatar Upload Inspired by Hans */
+	.avatar-upload-container {
+		@apply border-dashed border-2 relative
+      border-alpha-border-300
+        max-w-9375 m-auto overflow-hidden
+        w-9375 h-9375 cursor-pointer  flex justify-center items-center;
+	}
+
+	.avatar-upload-container--square {
+		@apply rounded-2xl;
+	}
+	.avatar-upload-container--circle {
+		@apply rounded-full;
+	}
+	.avatar-preview-icon {
+		@apply size-3125
+               bg-alpha-form-user-bg/70
+               text-alpha-background
+               rounded-full p-3.5;
+		/*Got some assisting from Google Gemini AI*/
+		& > * {
+			@apply size-1250;
+		}
+	}
+    /* When We are selecting preview-icon should be hidden, this will be done via Javascript*/
+    .avatar-preview-selected {
+		@apply size-3125
+               bg-alpha-form-user-bg/70 absolute
+               text-alpha-background
+               bottom-0250
+               rounded-full p-3.5;
+		/*Got some assisting from Google Gemini AI*/
+		& > * {
+			@apply size-1250;
+		}
+	}
 }
 

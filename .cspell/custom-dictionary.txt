@@ -1,8 +1,11 @@
+alpinejs
 aspnetcore
 augmentignore
 dbmdl
 dgspec
 docstates
+droppdown
+Dumpage
 ebug
 elease
 eleases
@@ -16,6 +19,7 @@ linecap
 linejoin
 lucide
 Mattin
+novalidate
 nowrap
 nuxt
 packagespec
@@ -23,11 +27,16 @@ Phind
 pidb
 preline
 Preline
+Projectmanager
+Protossn
 publishsettings
+samia
+Samia
 staticwebassets
 stylesheet
 svclog
 tablist
+tiptap
 userosscache
 userprefs
 vspscc

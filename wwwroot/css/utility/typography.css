@@ -243,6 +243,12 @@
         font-weight: var(--font-weight-bold);
     }
 
+    .form-label{
+        font-size: var(--text-body-medium-15);
+        color: var(--color-alpha-heading);
+        font-weight: var(--font-weight-semibold);
+    }
+
 }
 
 

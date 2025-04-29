@@ -9,13 +9,14 @@
             border border-white 
             bg-alpha-accent text-white 
             
-            hover:bg-alpha-accent-hover
+            hover:bg-alpha-accent/85
             focus:outline-hidden 
-            focus:bg-alpha-accent-hover
+            focus:bg-alpha-accent/70
 
             drop-shadow-[var(--shadow-button)]
-            disabled:bg-alpha-accent-opacity
-            disabled:pointer-events-none;
+            disabled:bg-alpha-accent/75
+            disabled:pointer-events-none
+            ;
 	}
 
     /* Secondary button, mostly for login and signup */
@@ -29,12 +30,13 @@
             border border-white 
             bg-alpha-accent text-white 
             
-            hover:bg-alpha-accent-hover
+            hover:bg-alpha-accent/85
             focus:outline-hidden 
-            focus:bg-alpha-accent-hover
+            focus:bg-alpha-accent/70
 
             drop-shadow-[var(--shadow-button)]
-            disabled:bg-alpha-accent-opacity
-            disabled:pointer-events-none;
+            disabled:bg-alpha-accent/85
+            disabled:pointer-events-none
+            ;
 	}
 }

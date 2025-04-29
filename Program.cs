@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ZealotZone.Data;
+using ZealotZone.Interfaces;
+using ZealotZone.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,10 @@ builder
     )
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+// Lets register our DI containers
+builder.Services.AddScoped<IDateService, DateService>();
+
 
 var app = builder.Build();
 
@@ -48,7 +54,7 @@ app.MapControllerRoute(
     .WithStaticAssets();
 app.MapControllerRoute(
         name: "Administration",
-        pattern: "{area:exists}/{controller=TeamMembers}/{action=Index}/{id?}"
+        pattern: "{area:exists}/{controller=TeamMembersManagement}/{action=Index}/{id?}"
     )
     .WithStaticAssets();
 app.MapControllerRoute(

@@ -1,0 +1,59 @@
+@using ZealotZone.Interfaces
+@*
+Important that the file is the same as the Viewcomponent
+https://softwareengineering.stackexchange.com/questions/344224/asp-net-core-viewcomponent-vs-editortemplate-displaytemplate-vs-inject
+First Time I am actually injecting an Service pritty Cool Actually
+*@
+@inject IDateService DateService
+@model BirthDateInputViewModel
+
+@{
+    @*
+    I got helped from Google Pro Gemini to solve the issue data
+    was not in the payload. First we use Html.NameFor to get the name of the field
+    and then we use ToString() to convert it to a string.
+
+    And then when we change the value it updates corresponding property in Alpinejs
+*@
+    var daySelectionOption = DateService.GetDayOptions();
+    var monthSelectionOption = DateService.GetMonthOptions();
+    var yearSelectionOption = DateService.GetYearOptions();
+
+    var dayFieldName = Html.NameFor(m => m.Day).ToString();
+    var monthFieldName = Html.NameFor(m => m.Month).ToString();
+    var yearFieldName = Html.NameFor(m => m.Year).ToString();
+}
+
+
+<div class="flex gap-1500">
+    <div class="w-full">
+        <select asp-for="Day" asp-items="daySelectionOption" class="alpha-form-input" title="Day"
+                x-on:change="formData['@dayFieldName'] = $event.target.value; validateField('@dayFieldName')"
+                x-on:blur="validateField('@dayFieldName')">
+            <option value="">Day</option>
+        </select>
+        <i class="alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="DayIconRef"
+           x-transition></i>
+        <span asp-validation-for="Day" class="alpha-form-error-message"></span>
+    </div>
+    <div class="w-full">
+        <select asp-for="Month" asp-items="monthSelectionOption" class="alpha-form-input" title="Month"
+                x-on:change="formData['@monthFieldName'] = $event.target.value; validateField('@monthFieldName')"
+                x-on:blur="validateField('@monthFieldName')">
+            <option value="">Month</option>
+        </select>
+        <i class="alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="MonthIconRef"
+           x-transition></i>
+        <span asp-validation-for="Month" class="alpha-form-error-message"></span>
+    </div>
+    <div class="w-full">
+        <select asp-for="Year" asp-items="yearSelectionOption" class="alpha-form-input" title="Year"
+                x-on:change="formData['@yearFieldName'] = $event.target.value; validateField('@yearFieldName')"
+                x-on:blur="validateField('@yearFieldName')">
+            <option value="">Year</option>
+        </select>
+        <i class="alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="YearIconRef"
+           x-transition></i>
+        <span asp-validation-for="Year" class="alpha-form-error-message"></span>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 @layer components {
 	/* Form Input */
+	/* min-h-3000 min-w-40000 */
 	.alpha-form-input {
 		@apply p-3 sm:p-4 block
-            min-h-3000 min-w-40000
-            
+			w-full
             border border-alpha-border-100 
 			bg-alpha-form-bg dark:bg-alpha-form-bg
             rounded-[var(--spacing-0875)] 
@@ -18,7 +18,7 @@
             focus:border-alpha-accent
 
             disabled:pointer-events-none 
-            disabled:bg-alpha-grey-100;
+            disabled:bg-alpha-grey-200;
 	}
 
 	/* Text Editor Input */
@@ -126,4 +126,34 @@
 	}
 
 	/* Multi Select End */
+
+	/* Label */
+	.alpha-form-label {
+		@apply block py-0875;
+	}
+
+
+	/* Displaying Errors Inspired by Hans Refactored by Google Gemini AI */ 
+    .alpha-form-validation-icon {
+        @apply hidden mr-1 align-middle size-1000 text-alpha-dark-red;
+    }
+
+    .alpha-form-error-message {
+        @apply hidden text-alpha-red dark:text-alpha-red align-middle;
+    }
+
+    /* When input has error, style sibling span */
+    .input-validation-error ~ .alpha-form-error-message {
+        @apply whitespace-pre-line inline-flex items-center gap-x-1.5 px-3 py-1 my-0250 rounded-lg bg-alpha-red-opacity;
+    }
+
+	.field-validation-valid{
+		@apply border border-alpha-green;
+	}
+	.field-validation-invalid{
+		@apply border border-alpha-dark-red;
+	}
+ 
+
+
 }

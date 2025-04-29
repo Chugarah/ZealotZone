@@ -1,5 +1,5 @@
 .project-card {
-	@apply flex flex-col gap-3 sm:flex p-1500 z-10 w-full
+	@apply flex flex-col gap-3 sm:flex p-1500  w-full
     bg-alpha-surface rounded-[var(--spacing-1000)] shadow-surface-2
 	hover:shadow-lg focus:outline-hidden focus:shadow-lg
 	;

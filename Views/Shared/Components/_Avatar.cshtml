@@ -1,5 +1,5 @@
 @{
-    var avatarCSSVariant = Model.AvatarSizeVariantClass ?? "";
+    var avatarCssVariant = Model.AvatarSizeVariantClass ?? "";
     var avatarUrl = Model.AvatarImageUrl ?? "/media/avatars/upload_avatar.svg";
     var avatarAltText = Model.AvatarAltText ?? "";
     var avatarSize = Model.AvatarSize ?? "";
@@ -8,7 +8,7 @@
 
 @model ListAvatarViewModel
 
-<div class="avatar-container @avatarCSSVariant @avatarSize">
+<div class="avatar-container @avatarCssVariant @avatarSize">
     <img src="@Url.Content(avatarUrl)" alt="@avatarAltText">
 </div>
 

@@ -45,7 +45,7 @@
     --color-alpha-background: rgba(241, 243, 247, 1);
     --color-alpha-surface: rgba(255, 255, 255, 1);
     --color-alpha-form-bg: rgba(255, 255, 255, 1);
-    --color-alpha-form-user-bg: rgba(49, 49, 51, 1);
+    --color-alpha-form-user-bg: rgba(51,51,51, 1);
 
     /* Primary colors - using base variables */
     --color-alpha-accent: rgba(var(--base-accent), 1);
@@ -113,7 +113,7 @@
     --color-alpha-background: rgba(21, 21, 23, 1);
     --color-alpha-surface: rgba(30, 30, 40, 1);
     --color-alpha-form-bg: rgba(32, 33, 35, 1);
-    --color-alpha-form-user-bg: rgba(49, 49, 51, 1);
+    --color-alpha-form-user-bg: rgba(51,51,51, 1);
     
     /* Primary colors - using dark variants */
     --color-alpha-green: rgba(var(--base-dark-green), 1);

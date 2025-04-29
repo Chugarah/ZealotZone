@@ -15,7 +15,7 @@
 	.card-navigation-menu {
 		@apply transition-[opacity,margin] hs-dropdown-open:opacity-100 opacity-0 hidden 
         bg-alpha-surface shadow-popover-80 rounded-[var(--spacing-0875)]  
-        dark:bg-alpha-surface dark:border dark:border-neutral-700  z-50;
+        dark:bg-alpha-surface dark:border dark:border-neutral-700 z-50;
 	}
 
 	.card-navigation-menu--card-size {
