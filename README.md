@@ -49,6 +49,10 @@ pnpm add -D @tiptap/extension-bold @tiptap/extension-underline  @tiptap/extensio
 pnpm add -D @tiptap/extension-bullet-list @tiptap/extension-list-item @tiptap/extension-ordered-list @tiptap/extension-list-item @tiptap/extension-blockquote
 pnpm add -D @tiptap/extension-text-align
 pnpm add -D @colinaut/alpinejs-plugin-simple-validate
+pnpm add -D prettier-plugin-tailwindcss
+
+
+
 
 
 

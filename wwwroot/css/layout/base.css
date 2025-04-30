@@ -1,39 +1,31 @@
 /* Container */
 /* https://stackoverflow.com/questions/59812003/tailwindcss-fixed-sticky-footer-on-the-bottom */
 .container {
-    @apply
-    max-w-[var(--breakpoint-large)]
+	@apply max-w-[var(--breakpoint-large)]
     m-auto h-screen
-    flex flex-col
+    flex flex-col;
 }
 
 /* Main Skeleton */
 .main-skeleton {
-	@apply grid flex-grow
-    px-1000
-    grid-flow-col auto-rows-auto ;
+	@apply grid flex-grow grid-flow-col px-1000 auto-rows-auto;
 }
 
 /* Header Skeleton */
 .header-skeleton {
-    /* Nothing yet */
+	/* Nothing yet */
+	@apply bg-alpha-border-200;
 }
 
 /* Main Content Skeleton */
 .main-content-skeleton {
-    @apply
-    overflow-clip;
+	@apply overflow-clip;
 }
 
 .main-content-footer-skeleton {
-    @apply
-    text-center;
+	@apply text-center;
 }
 
-
 .main-content-nav {
-    @apply
-    col-start-1
-    row-start-1 row-end-2
-    pr-1000;
+	@apply flex col-start-1 row-start-1 row-end-2 pr-1000;
 }

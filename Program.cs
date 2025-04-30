@@ -23,7 +23,6 @@ builder.Services.AddControllersWithViews();
 // Lets register our DI containers
 builder.Services.AddScoped<IDateService, DateService>();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

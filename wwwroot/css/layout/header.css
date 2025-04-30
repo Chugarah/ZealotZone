@@ -1,4 +1,3 @@
-/* Importing the tailwindcss */
 .header_menu {
 	@apply flex justify-end items-center;
 }
@@ -8,24 +7,23 @@
 }
 
 .header-menu-settings {
-    @apply flex items-center;
+	@apply flex items-center;
 }
 
 .header-menu-settings--rounded {
-    @apply rounded-[var(--spacing-0875)];
+	@apply rounded-[var(--spacing-0875)];
 }
 
 .header-menu-settings--menu-padding {
-    @apply mt-0500 mb-0500 mx-0500 gap-x-3.5 px-3 py-1000;
+	@apply mt-0500 mb-0500 mx-0500 gap-x-3.5 px-3 py-1000;
 }
 
 .header-menu-settings--flex-start {
-    @apply justify-start;
+	@apply justify-start;
 }
 .header-menu-settings--flex-space {
-    @apply justify-between;
+	@apply justify-between;
 }
-
 
 .header-menu-button {
 	@apply flex justify-center items-center 
@@ -41,8 +39,5 @@
 }
 
 .header-notifications-item {
-    @apply 
-    flex items-center
-    
-    ;
+	@apply flex items-center;
 }

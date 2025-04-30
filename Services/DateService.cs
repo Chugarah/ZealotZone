@@ -14,7 +14,9 @@ public class DateService : IDateService
     public List<SelectListItem> GetDayOptions()
     {
         // Let's generate the days
-        return Enumerable.Range(1, 31).Select(d => new SelectListItem { Value = d.ToString(), Text = d.ToString() })
+        return Enumerable
+            .Range(1, 31)
+            .Select(d => new SelectListItem { Value = d.ToString(), Text = d.ToString() })
             .ToList();
     }
 
@@ -23,8 +25,13 @@ public class DateService : IDateService
         // Generate Months
         // We are using Culture info (Your Locale)
         // https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo?view=net-9.0
-        return Enumerable.Range(1, 12).Select(m => new SelectListItem
-                { Value = m.ToString(), Text = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m) })
+        return Enumerable
+            .Range(1, 12)
+            .Select(m => new SelectListItem
+            {
+                Value = m.ToString(),
+                Text = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m),
+            })
             .ToList();
     }
 
@@ -49,10 +56,11 @@ public class DateService : IDateService
     {
         var currentYear = DateTime.UtcNow.Year;
         var startYear = currentYear - startYearOffset;
-       var endYear = currentYear - endYearOffset;
-       return Enumerable.Range(startYear, endYear - startYear + 1)
-           .Reverse()
-           .Select(y => new SelectListItem { Value = y.ToString(), Text = y.ToString() })
-           .ToList();
+        var endYear = currentYear - endYearOffset;
+        return Enumerable
+            .Range(startYear, endYear - startYear + 1)
+            .Reverse()
+            .Select(y => new SelectListItem { Value = y.ToString(), Text = y.ToString() })
+            .ToList();
     }
 }

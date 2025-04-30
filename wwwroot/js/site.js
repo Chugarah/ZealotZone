@@ -31,6 +31,7 @@ import {
 	OctagonAlert,
 	Camera,
 	PenLine,
+	BriefcaseBusiness,
 } from "lucide";
 import { createIcons, icons } from "lucide";
 import initializeEditor from "./text-editor/editor-init";
@@ -79,6 +80,7 @@ createIcons({
 		OctagonAlert,
 		Camera,
 		PenLine,
+		BriefcaseBusiness,
 	},
 });
 

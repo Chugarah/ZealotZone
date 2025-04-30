@@ -1,65 +1,62 @@
 @{
-    // An simple List, this will be extracted from somewhere else
-    // TODO: This list creating need to be moved out later
-    var projectAvatars = new List<ListAvatarViewModel>
-{
-new ListAvatarViewModel
-{
-AvatarImageUrl = "~/media/avatars/avatar_04.svg",
-AvatarAltText = "Logged in User",
-AvatarSizeVariantClass = "avatar-container--project-card",
-AvatarSize = ""
-}
-};
-}
+// An simple List, this will be extracted from somewhere else
+// TODO: This list creating need to be moved out later
+var projectAvatars = new List<ListAvatarViewModel>
+    {
+    new ListAvatarViewModel
+    {
+    AvatarImageUrl = "~/media/avatars/avatar_04.svg",
+    AvatarAltText = "Logged in User",
+    AvatarSizeVariantClass = "avatar-container--project-card",
+    AvatarSize = ""
+    }
+    };
+    }
 
-<div class="hs-dropdown relative inline-flex">
-    <button id="hs-dropdown-custom-icon-trigger" type="button" class="header-menu-button z-10 hs-dropdown-toggle"
-        aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-        <i data-lucide="settings" class="size-1250"></i>
-    </button>
+    <div class="relative inline-flex hs-dropdown">
+        <button id="hs-dropdown-custom-icon-trigger" type="button" class="z-10 header-menu-button hs-dropdown-toggle"
+            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+            <i data-lucide="settings" class="size-1250"></i>
+        </button>
 
-    <div class="card-navigation-menu min-w-18750 hs-dropdown-menu" role="menu" aria-orientation="vertical"
-        aria-labelledby="hs-dropdown-with-title">
-        <div class="p-0500 space-y-0500">
-            <!-- This will be dynamic based if user is logged in or not -->
-            <a href="#" class="card-navigation-hover">
-                <!-- #region Render Partial -->
-                @foreach (var avatar in projectAvatars)
-                {
+        <div class="card-navigation-menu transition-[opacity, margin] min-w-18750 hs-dropdown-menu" role="menu"
+            aria-orientation="vertical" aria-labelledby="hs-dropdown-with-title">
+            <div class="p-0500 space-y-0500">
+                <!-- This will be dynamic based if user is logged in or not -->
+                <a href="#" class="card-navigation-hover">
+                    <!-- #region Render Partial -->
+                    @foreach (var avatar in projectAvatars)
+                    {
                     await Html.RenderPartialAsync("Components/_Avatar", avatar);
-                }
-                Tommy Mattin-Lassei
-                <!-- #endregion -->
-            </a>
-        </div>
+                    }
+                    Tommy Mattin-Lassei
+                    <!-- #endregion -->
+                </a>
+            </div>
 
-        <div class="header-menu-settings 
-            header-menu-settings--menu-padding 
-            header-menu-settings--rounded 
-            header-menu-settings--flex-start
-            card-navigation-hover">
-            <!-- Used AI To generate margin-block-end end code part -->
-            <i data-lucide="settings" class="size-1250 !mb-0 ![margin-block-end:0]"></i>
-            Dark Mode
-            <!-- This is template from Preline Component -->
-            <label for="darkSwitch" class="relative inline-block w-11 h-6 cursor-pointer ml-auto">
-                <input data-hs-theme-switch="" type="checkbox" id="darkSwitch" class="peer sr-only">
-                <span
-                    class="absolute inset-0 bg-gray-200 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-blue-600 dark:bg-neutral-700 dark:peer-checked:bg-blue-500 peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                <span
-                    class="absolute top-1/2 start-0.5 -translate-y-1/2 size-5 bg-white rounded-full shadow-sm !transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:bg-neutral-400 dark:peer-checked:bg-white"></span>
-            </label>
-            <!-- -->
-        </div>
+            <div
+                class="header-menu-settings header-menu-settings--menu-padding header-menu-settings--rounded header-menu-settings--flex-start card-navigation-hover">
+                <!-- Used AI To generate margin-block-end end code part -->
+                <i data-lucide="settings" class="size-1250 !mb-0 ![margin-block-end:0]"></i>
+                Dark Mode
+                <!-- This is template from Preline Component -->
+                <label for="darkSwitch" class="relative inline-block h-6 ml-auto cursor-pointer w-11">
+                    <input data-hs-theme-switch="" type="checkbox" id="darkSwitch" class="sr-only peer">
+                    <span
+                        class="absolute inset-0 transition-colors duration-200 ease-in-out bg-gray-200 rounded-full peer-checked:bg-blue-600 dark:bg-neutral-700 dark:peer-checked:bg-blue-500 peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                    <span
+                        class="absolute top-1/2 start-0.5 -translate-y-1/2 size-5 bg-white rounded-full shadow-sm !transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:bg-neutral-400 dark:peer-checked:bg-white"></span>
+                </label>
+                <!-- -->
+            </div>
 
 
-        <!-- This will change based if user is logged in or not  -->
-        <div class="p-0500 space-y-0500 card-navigation-divider ">
-            <a href="#" class="card-navigation-hover">
-                <i data-lucide="log-out" class="size-1250"></i>
-                Logout
-            </a>
+            <!-- This will change based if user is logged in or not  -->
+            <div class="p-0500 space-y-0500 card-navigation-divider ">
+                <a href="#" class="card-navigation-hover">
+                    <i data-lucide="log-out" class="size-1250"></i>
+                    Logout
+                </a>
+            </div>
         </div>
     </div>
-</div>

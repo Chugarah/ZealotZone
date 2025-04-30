@@ -1,7 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ZealotZone.Areas.Registrations.ViewModels;
 
 namespace ZealotZone.Areas.Registrations.ViewComponents;

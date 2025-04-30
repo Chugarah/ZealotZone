@@ -1,14 +1,61 @@
-<div class="header-navigation">
+<!-- Navigation Toggle -->
+<div class="py-16 text-center lg:hidden">
+    <button type="button" class="btn-primary" aria-haspopup="dialog" aria-expanded="false"
+        aria-controls="hs-sidebar-empty-content" aria-label="Toggle navigation"
+        data-hs-overlay="#hs-sidebar-empty-content">
+        Open
+    </button>
+</div>
+<!-- End Navigation Toggle -->
 
-    <div class="py-1875">
-        LOGO HERE
+<!-- Sidebar -->
+<div id="hs-sidebar-empty-content" class="alpha-side-navigation-container 
+hs-overlay [--auto-close:lg] lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 hs-overlay-open:translate-x-0 
+hidden sm:fixed lg:relative" role="dialog" tabindex="-1" aria-label="Sidebar">
+    <div class="relative flex flex-col h-full max-h-full ">
+        <!-- Header -->
+        <header class="flex items-center justify-between py-1625 ">
+            <!-- TODO: Dark mode implementation logo-->
+            <a class="flex-none focus:outline-hidden focus:opacity-80 dark:text-white" href="@Url.Action("Projects", "Projects" )" aria-label="Alpha Logo"><img src="~/media/images/alpha-logo.svg"
+                    alt="Alpha Logo"></a>
+
+            <!-- Close Button -->
+            <div class="lg:hidden -me-2">
+                <button type="button"
+                    class="flex items-center justify-center text-sm text-gray-600 bg-white border border-gray-200 rounded-full gap-x-3 size-6 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                    data-hs-overlay="#hs-sidebar-empty-content">
+                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <!-- End Close Button -->
+        </header>
+        <!-- End Header -->
+
+        <!-- Body -->
+        <!-- TODO: Style and test Scrollbar -->
+        <!-- Ignoring the Scrollbar styling for now -->
+        <nav class="alpha-side-navigation-nav [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full 
+        [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 
+        dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+            <div class="flex flex-col flex-wrap w-full px-2 pb-0 ">
+                <ul class="space-y-1 ">
+                    <li>
+                        <a href="@Url.Action("Projects", "Projects" )" class="selected">
+                            <i data-lucide="briefcase-business" class="size-1375"></i>
+                            Projects
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- End Body -->
     </div>
 
-    <div class="header-navigation-menu">
-        <ul>
-            <li>
-                <a href="#">Projects</a>
-            </li>
-        </ul>
-    </div>
+    <!-- End Sidebar -->
 </div>

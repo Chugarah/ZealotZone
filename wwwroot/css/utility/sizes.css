@@ -1,70 +1,69 @@
+@theme {
+	/* Adding custom spacing */
+	--spacing-0250: 0.25rem; /* 4px */
+	--spacing-04375: 0.4375rem; /* 7px */
+	--spacing-0500: 0.5rem; /* 8px */
+	--spacing-05625: 0.5625rem; /* 9px */
+	--spacing-0625: 0.625rem; /* 10px */
+	--spacing-0750: 0.75rem; /* 12px */
+	--spacing-08125: 0.8125rem; /* 13px */
+	--spacing-0875: 0.875rem; /* 14px */
+	--spacing-09375: 0.9375rem; /* 15px */
+	--spacing-1000: 1rem; /* 16px */
+	--spacing-10625: 1.0625rem; /* 17px */
+	--spacing-1125: 1.125rem; /* 18px */
+	--spacing-1250: 1.25rem; /* 20px */
+	--spacing-1375: 1.375rem; /* 22px */
+	--spacing-14375: 1.4375rem; /* 23px */
+	--spacing-1500: 1.5rem; /* 24px */
+	--spacing-1625: 1.625rem; /* 26px */
+	--spacing-1750: 1.75rem; /* 28px */
+	--spacing-1875: 1.875rem; /* 30px */
+	--spacing-2125: 2.125rem; /* 34px */
+	--spacing-21875: 2.1875rem; /* 35px */
+	--spacing-2250: 2.25rem; /* 36px */
+	--spacing-2500: 2.5em; /* 40px */
+	--spacing-2625: 2.625rem; /* 42px */
+	--spacing-2750: 2.75rem; /* 44px */
+	--spacing-28125: 2.8125rem; /* 45px */
+	--spacing-2875: 2.875rem; /* 46px */
+	--spacing-3000: 3rem; /* 48px */
+	--spacing-3125: 3.125rem; /* 50px */
+	--spacing-3250: 3.25rem; /* 52px */
+	--spacing-3375: 3.375rem; /* 54px */
+	--spacing-3500: 3.5rem; /* 56px */
+	--spacing-3625: 3.625rem; /* 58px */
+	--spacing-3750: 3.75rem; /* 60px */
+	--spacing-4000: 4rem; /* 64px */
+	--spacing-4125: 4.125rem; /* 66px */
+	--spacing-4250: 4.25rem; /* 68px */
+	--spacing-4375: 4.375rem; /* 70px */
+	--spacing-4500: 4.5rem; /* 72px */
+	--spacing-4625: 4.625rem; /* 74px */
+	--spacing-46875: 4.6875rem; /* 75px */
+	--spacing-4750: 4.75rem; /* 76px */
+	--spacing-4875: 4.875rem; /* 78px */
+	--spacing-5000: 5rem; /* 80px */
 
-@theme{
-    /* Adding custom spacing */
-    --spacing-0250: 0.25rem; /* 4px */
-    --spacing-04375: 0.4375rem; /* 7px */
-    --spacing-0500: 0.5rem; /* 8px */
-    --spacing-05625: 0.5625rem; /* 9px */   
-    --spacing-0625: 0.625rem; /* 10px */
-    --spacing-0750: 0.75rem; /* 12px */
-    --spacing-08125: 0.8125rem; /* 13px */
-    --spacing-0875: 0.875rem; /* 14px */
-    --spacing-09375: 0.9375rem; /* 15px */
-    --spacing-1000: 1rem; /* 16px */
-    --spacing-10625: 1.0625rem; /* 17px */
-    --spacing-1250: 1.25rem; /* 20px */
-    --spacing-1375: 1.375rem; /* 22px */
-    --spacing-14375: 1.4375rem; /* 23px */
-    --spacing-1500: 1.5rem; /* 24px */
-    --spacing-1625: 1.625rem; /* 26px */
-    --spacing-1750: 1.75rem; /* 28px */
-    --spacing-1875: 1.875rem; /* 30px */
-    --spacing-2125: 2.125rem; /* 34px */
-    --spacing-21875: 2.1875rem; /* 35px */
-    --spacing-2250: 2.25rem; /* 36px */
-    --spacing-2500: 2.5em; /* 40px */
-    --spacing-2625: 2.625rem; /* 42px */
-    --spacing-2750: 2.75rem; /* 44px */
-    --spacing-28125: 2.8125rem; /* 45px */
-    --spacing-2875: 2.875rem; /* 46px */
-    --spacing-3000: 3rem; /* 48px */
-    --spacing-3125: 3.125rem; /* 50px */
-    --spacing-3250: 3.25rem; /* 52px */
-    --spacing-3375: 3.375rem; /* 54px */
-    --spacing-3500: 3.5rem; /* 56px */
-    --spacing-3625: 3.625rem; /* 58px */
-    --spacing-3750: 3.75rem; /* 60px */
-    --spacing-4000: 4rem; /* 64px */
-    --spacing-4125: 4.125rem; /* 66px */
-    --spacing-4250: 4.25rem; /* 68px */
-    --spacing-4375: 4.375rem; /* 70px */
-    --spacing-4500: 4.5rem; /* 72px */
-    --spacing-4625: 4.625rem; /* 74px */
-    --spacing-46875: 4.6875rem; /* 75px */
-    --spacing-4750: 4.75rem; /* 76px */
-    --spacing-4875: 4.875rem; /* 78px */
-    --spacing-5000: 5rem; /* 80px */
+	/* Big sizes */
+	--spacing-9375: 9.375rem; /* 150px */
+	--spacing-108125: 10.8125rem; /* 173px */
+	--spacing-145625: 14.5625rem; /* 233px */
+	--spacing-15000: 15rem; /* 240px */
+	--spacing-16250: 16.25rem; /* 260px */
+	--spacing-16875: 16.875rem; /* 270px */
+	--spacing-17500: 17.5rem; /* 280px */
+	--spacing-18750: 18.75rem; /* 300px */
+	--spacing-20000: 20rem; /* 320px */
+	--spacing-21250: 21.25rem; /* 340px */
+	--spacing-22500: 22.5rem; /* 360px */
+	--spacing-23750: 23.75rem; /* 380px */
+	--spacing-40000: 25rem; /* 400px */
+	--spacing-30625: 30.625rem; /* 490px */
 
-    /* Big sizes */
-    --spacing-9375: 9.375rem; /* 150px */   
-    --spacing-108125: 10.8125rem; /* 173px */
-    --spacing-145625: 14.5625rem; /* 233px */
-    --spacing-15000: 15rem; /* 240px */
-    --spacing-16250: 16.25rem; /* 260px */
-    --spacing-17500: 17.5rem; /* 280px */
-    --spacing-18750: 18.75rem; /* 300px */
-    --spacing-20000: 20rem; /* 320px */
-    --spacing-21250: 21.25rem; /* 340px */
-    --spacing-22500: 22.5rem; /* 360px */
-    --spacing-23750: 23.75rem; /* 380px */
-    --spacing-40000: 25rem; /* 400px */
-    --spacing-30625: 30.625rem; /* 490px */
-
-
-    /* Adding custom breakpoints */
-    --breakpoint-mobile: 480px;
-    --breakpoint-tablet: 768px;
-    --breakpoint-desktop: 1024px;
-    --breakpoint-large: 90rem; /* 1440px */
-
+	/* Adding custom breakpoints */
+	--breakpoint-mobile: 480px;
+	--breakpoint-tablet: 768px;
+	--breakpoint-desktop: 1024px;
+	--breakpoint-large: 90rem; /* 1440px */
 }

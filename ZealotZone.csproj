@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\Projects\" />
-    <Folder Include="Views\Authentication\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
   <ItemGroup>
@@ -151,5 +150,7 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\vendor\preline-main\src\utils\index.ts" />
     <_ContentIncludedByDefault Remove="wwwroot\js\vendor\preline-main\src\utils\interfaces.ts" />
     <_ContentIncludedByDefault Remove="wwwroot\js\vendor\preline-main\src\utils\types.ts" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Components\AvatarUpload\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
   </ItemGroup>
 </Project>
