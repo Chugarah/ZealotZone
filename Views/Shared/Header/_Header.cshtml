@@ -1,14 +1,32 @@
-<div class="header_container">
+@{
+    // An simple List, this will be extracted from somewhere else
+    // TODO: This list creating need to be moved out later
+    var projectAvatars = new List<ListAvatarViewModel>
+{
+new ListAvatarViewModel
+    {
+    AvatarImageUrl = "~/media/avatars/avatar_02.svg",
+    AvatarAltText = "Avatar 02",
+    AvatarSizeVariantClass = "avatar-container--header-card"
+    }};
+}
 
-    <div class="header_menu">
+<div class="header-container">
+
+    <div class="header-menu">
         <div class="pr-0875">
             @await Html.PartialAsync("Navigation/_HeaderNotificationsNavigation")
         </div>
         <div>
             @await Html.PartialAsync("Navigation/_HeaderSettingsNavigation")
         </div>
-        <p class="pr-1500 pl-14375"> | </p>
-        <div class="py-2500">Icon Menu</div>
+        <p class="pr-1375 pl-0750"> <span class="block h-1875 w-[1px] bg-alpha-border-200"></span> </p>
+        <div>
+            @foreach (var avatar in projectAvatars)
+            {
+                await Html.RenderPartialAsync("Components/_Avatar", avatar);
+            }
+        </div>
     </div>
 
 </div>

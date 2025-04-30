@@ -1,9 +1,9 @@
-.header_menu {
-	@apply flex justify-end items-center;
+.header-menu {
+	@apply flex items-center justify-end py-1125 px-1875;
 }
 
-.header_container {
-	@apply pr-1875;
+.header-container {
+	@apply border-b border-alpha-border-200;
 }
 
 .header-menu-settings {

@@ -1,13 +1,9 @@
 .main-content-body {
-    @apply
-    px-1875 py-2625;
+	@apply px-1875 pb-2625;
 }
 
 .main-content-project-nav {
-    @apply pb-1875;
-
-    span {
-        @apply
-        pr-10625;
-    }
+	span {
+		@apply pr-10625;
+	}
 }

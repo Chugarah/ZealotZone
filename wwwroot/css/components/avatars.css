@@ -1,10 +1,13 @@
 @layer components {
 	.avatar-container {
-		@apply inline-block relative rounded-full size-9375 overflow-hidden;
+		@apply relative inline-block overflow-hidden rounded-full size-9375;
 	}
 
 	.avatar-container--project-card {
 		@apply size-1875;
+	}
+	.avatar-container--header-card {
+		@apply size-2500;
 	}
 
 	.avatar-container--project-notification {
@@ -19,7 +22,7 @@
 
 	.avatar-container img,
 	svg {
-		@apply block relative w-full h-full object-bottom object-cover; /* Ensure content is relative for z-index */
+		@apply relative block object-cover object-bottom w-full h-full; /* Ensure content is relative for z-index */
 	}
 
 	/* Keep old static gradient class for reference if needed, but it's not used by the JS */
@@ -29,10 +32,7 @@
 
 	/* Avatar Upload Inspired by Hans */
 	.avatar-upload-container {
-		@apply border-dashed border-2 relative
-      border-alpha-border-300
-        max-w-9375 m-auto overflow-hidden
-        w-9375 h-9375 cursor-pointer  flex justify-center items-center;
+		@apply relative flex items-center justify-center m-auto overflow-hidden border-2 border-dashed cursor-pointer border-alpha-border-300 max-w-9375 w-9375 h-9375;
 	}
 
 	.avatar-upload-container--square {
@@ -51,8 +51,8 @@
 			@apply size-1250;
 		}
 	}
-    /* When We are selecting preview-icon should be hidden, this will be done via Javascript*/
-    .avatar-preview-selected {
+	/* When We are selecting preview-icon should be hidden, this will be done via Javascript*/
+	.avatar-preview-selected {
 		@apply size-3125
                bg-alpha-form-user-bg/70 absolute
                text-alpha-background
@@ -64,4 +64,3 @@
 		}
 	}
 }
-

@@ -15,7 +15,7 @@
             <!-- #region Main Nav -->
             <div class="main-content-nav">
                 <section title="Main Nav">
-                    <partial name="Navigation/_HeaderNavigation" />
+                    @await Html.PartialAsync("Navigation/_HeaderNavigation")
                 </section>
             </div>
             <!-- #endregion -->
@@ -27,8 +27,7 @@
                 <div class="header-skeleton">
                     <section title="Header">
                         <header>
-                            <!-- Header using ASP tag-helper :) -->
-                            <partial name="Header/_Header" />
+                            @await Html.PartialAsync("Header/_Header")
                         </header>
                     </section>
                 </div>
@@ -36,8 +35,7 @@
 
 
                 <div class="main-content-project-nav ">
-                    <h1>Projects</h1>
-                    Add Project Button
+                    @await Html.PartialAsync("Header/_Breadcrumb")
                 </div>
 
 
@@ -55,11 +53,6 @@
             </div>
             <!-- #endregion -->
 
-            <div class="main-content-footer">
-                <section title="Footer">
-                    Footer Here
-                </section>
-            </div>
 
         </div>
         <!-- #region Footer -->

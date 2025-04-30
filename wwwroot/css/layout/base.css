@@ -8,13 +8,7 @@
 
 /* Main Skeleton */
 .main-skeleton {
-	@apply grid flex-grow grid-flow-col px-1000 auto-rows-auto;
-}
-
-/* Header Skeleton */
-.header-skeleton {
-	/* Nothing yet */
-	@apply bg-alpha-border-200;
+	@apply grid flex-grow grid-flow-col auto-rows-auto;
 }
 
 /* Main Content Skeleton */
@@ -27,5 +21,5 @@
 }
 
 .main-content-nav {
-	@apply flex col-start-1 row-start-1 row-end-2 pr-1000;
+	@apply flex col-start-1 row-start-1 row-end-2;
 }
