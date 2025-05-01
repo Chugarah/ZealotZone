@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using ZealotZone.Features.TeamRegistration.ViewModels;
 
-namespace ZealotZone.Features.TeamRegistration;
+namespace ZealotZone.Features.Team.TeamRegistration;
 
 public class TeamRegistrationController : Controller
 {
+    [Area("Team")]
     [HttpGet]
     [Route("/add-member")]
     public IActionResult Index()

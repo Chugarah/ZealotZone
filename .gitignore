@@ -1,0 +1,86 @@
+# JetBrains Rider/Resharper specific
+*.DotSettings.user
+.idea/
+
+# Visual Studio specific
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# ASP.NET Core specific
+Properties/PublishProfiles/
+Properties/launchSettings.json
+appsettings.Development.json
+appsettings.*.json
+
+# User Secrets
+secrets.json
+
+# Node.js / PNPM specific
+node_modules/
+pnpm-lock.yaml # Usually committed, but ignore if your team prefers not to.
+pnpm-debug.log*
+npm-debug.log*
+yarn-error.log
+lerna-debug.log
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+*.pid
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid.lock
+
+# Tailwind CSS build output (adjust if your output directory is different)
+# Example: /wwwroot/css/output/ or /dist/
+# /wwwroot/dist/
+
+# Misc
+*.DS_Store
+Thumbs.db
+
+# Database migrations (if using EF Core and prefer not to commit migrations)
+# Migrations/
+
+# Test results
+TestResults/
+*.trx
+*.kwd
+
+# Build server files
+*.deployment.*
+*.Publish.xml
+*.pubxml
+
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Uncomment if you don't want to check in NuGet packages restored using package restore.
+#!**/[Pp]ackages/repositories.config
+
+# Cache files
+*.cache
+project.lock.json
+project.assets.json
+
+# Coverlet coverage output files
+coverage.*.json
+coverage.*.xml
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+
+# Managed Intermediate Language Files
+*.ildb
+*.pdb
