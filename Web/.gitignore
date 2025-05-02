@@ -9,6 +9,14 @@
 *.userosscache
 *.sln.docstates
 
+# Sensitive files
+.env
+*.env
+*.local
+.appsettings.json
+*.local.json
+
+
 # Build results
 [Bb]in/
 [Oo]bj/

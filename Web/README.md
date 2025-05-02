@@ -2,6 +2,11 @@
 
 Projectmanager for my Protossn units
 
+MJaao!!
+Clean..Yummi!
+https://medium.com/@roshikanayanadhara/clean-architecture-in-net-a-practical-guide-with-examples-817568b3f42e
+https://medium.com/@roshikanayanadhara/understanding-clean-architecture-with-a-chef-example-2878005abd4d
+
 sudo dnf install dotnet-sdk-9.0
 
 ## Installation Dumpage

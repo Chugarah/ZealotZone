@@ -1,4 +1,9 @@
+
+using Infrastructure.Contexts;
+using Infrastructure.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using ZealotZone.Interfaces;
 using ZealotZone.Services;
 
@@ -9,6 +14,36 @@ var builder = WebApplication.CreateBuilder(args);
 
 // MVC add this Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+// Let's add support for Entity Framework Core and connect to a database
+var connectionString = builder.Configuration.GetConnectionString("SQLServer");
+builder.Services.AddDbContext<DataContext>(
+    d => d.UseAzureSql(connectionString)
+    );
+
+// Inspired by Hands, Configuring requirements and setting regarding registration
+builder.Services.AddIdentity<UserEntity, IdentityRole>(
+    i =>
+    {
+        i.User.RequireUniqueEmail = true;
+        i.Password.RequiredLength = 4;
+    });
+// Yummi Cookies
+builder.Services.ConfigureApplicationCookie(c =>
+{
+    c.LoginPath = "/user-login";
+    c.LogoutPath = "/user-login";
+    c.AccessDeniedPath = "/user-denied";
+    c.Cookie.Name = "ZealotZone.Cookie";
+    c.Cookie.IsEssential = true;
+    c.Cookie.HttpOnly = true;
+    c.Cookie.SameSite = SameSiteMode.Strict;
+    c.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    c.ExpireTimeSpan = TimeSpan.FromDays(7);
+    c.SlidingExpiration = true;
+});
+
+
 
 // Changing Razor Engine to look for Features location
 // Changing to Features' Folder Inspiration
@@ -80,9 +115,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// We can protect our pages with this directive
-
-// Add here Auth later:D
+// We can protect our pages with these directives
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Pointing to Log in Form
 app.MapControllerRoute(
