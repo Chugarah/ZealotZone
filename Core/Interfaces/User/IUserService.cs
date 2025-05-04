@@ -1,10 +1,19 @@
 using Core.Dto.User;
-using Core.Factories.User;
-using Core.Interfaces.DTos;
+using Domain;
 
 namespace Core.Interfaces.User;
 
 public interface IUserService
 {
-    Task<IUserDtoFactory> CreateUserAsync(UserInsertDto userInsertDto);
+    Task<RepositoryResult<UserDisplay>> CreateUserAsync(
+        UserInsertDto? userInsertDto,
+        string userPassword
+    );
+    Task<RepositoryResult<bool>> LoginUserAsync(UserLoginDto userLoginDto, string userPassword);
+    Task<RepositoryResult<bool>> LogoutUserAsync();
+
+    Task<RepositoryResult<UserDisplay>> GetUserAsync(UserLoginDto userLoginDto);
+
+
+
 }

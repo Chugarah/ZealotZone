@@ -397,7 +397,7 @@
   };
   var dist_default = OrderedMap;
 
-  // node_modules/.pnpm/prosemirror-model@1.25.0/node_modules/prosemirror-model/dist/index.js
+  // node_modules/.pnpm/prosemirror-model@1.25.1/node_modules/prosemirror-model/dist/index.js
   function findDiffStart(a, b, pos) {
     for (let i = 0; ; i++) {
       if (i == a.childCount || i == b.childCount)
@@ -3014,7 +3014,7 @@
           value = value.replace(/\r\n?/g, "\n");
         }
         if (value)
-          this.insertNode(this.parser.schema.text(value), marks);
+          this.insertNode(this.parser.schema.text(value), marks, !/\S/.test(value));
         this.findInText(dom);
       } else {
         this.findInside(dom);
@@ -3072,7 +3072,7 @@
     // Called for ignored nodes
     ignoreFallback(dom, marks) {
       if (dom.nodeName == "BR" && (!this.top.type || !this.top.type.inlineContent))
-        this.findPlace(this.parser.schema.text("-"), marks);
+        this.findPlace(this.parser.schema.text("-"), marks, true);
     }
     // Run any style parser associated with the node's styles. Either
     // return an updated array of marks, or null to indicate some of the
@@ -3114,7 +3114,7 @@
             sync = true;
             marks = inner;
           }
-        } else if (!this.insertNode(nodeType.create(rule.attrs), marks)) {
+        } else if (!this.insertNode(nodeType.create(rule.attrs), marks, dom.nodeName == "BR")) {
           this.leafFallback(dom, marks);
         }
       } else {
@@ -3128,7 +3128,7 @@
         this.addElement(dom, marks, continueAfter);
       } else if (rule.getContent) {
         this.findInside(dom);
-        rule.getContent(dom, this.parser.schema).forEach((node) => this.insertNode(node, marks));
+        rule.getContent(dom, this.parser.schema).forEach((node) => this.insertNode(node, marks, false));
       } else {
         let contentDOM = dom;
         if (typeof rule.contentElement == "string")
@@ -3158,19 +3158,22 @@
     // Try to find a way to fit the given node type into the current
     // context. May add intermediate wrappers and/or leave non-solid
     // nodes that we're in.
-    findPlace(node, marks) {
+    findPlace(node, marks, cautious) {
       let route, sync;
-      for (let depth = this.open; depth >= 0; depth--) {
+      for (let depth = this.open, penalty = 0; depth >= 0; depth--) {
         let cx = this.nodes[depth];
         let found2 = cx.findWrapping(node);
-        if (found2 && (!route || route.length > found2.length)) {
+        if (found2 && (!route || route.length > found2.length + penalty)) {
           route = found2;
           sync = cx;
           if (!found2.length)
             break;
         }
-        if (cx.solid)
-          break;
+        if (cx.solid) {
+          if (cautious)
+            break;
+          penalty += 2;
+        }
       }
       if (!route)
         return null;
@@ -3180,13 +3183,13 @@
       return marks;
     }
     // Try to insert the given node, adjusting the context when needed.
-    insertNode(node, marks) {
+    insertNode(node, marks, cautious) {
       if (node.isInline && this.needsBlock && !this.top.type) {
         let block = this.textblockFromContext();
         if (block)
           marks = this.enterInner(block, null, marks);
       }
-      let innerMarks = this.findPlace(node, marks);
+      let innerMarks = this.findPlace(node, marks, cautious);
       if (innerMarks) {
         this.closeExtra();
         let top = this.top;
@@ -3204,7 +3207,7 @@
     // Try to start a node of the given type, adjusting the context when
     // necessary.
     enter(type, attrs, marks, preserveWS) {
-      let innerMarks = this.findPlace(type.create(attrs), marks);
+      let innerMarks = this.findPlace(type.create(attrs), marks, false);
       if (innerMarks)
         innerMarks = this.enterInner(type, attrs, marks, true, preserveWS);
       return innerMarks;
@@ -3593,7 +3596,7 @@
     return { dom, contentDOM };
   }
 
-  // node_modules/.pnpm/prosemirror-transform@1.10.3/node_modules/prosemirror-transform/dist/index.js
+  // node_modules/.pnpm/prosemirror-transform@1.10.4/node_modules/prosemirror-transform/dist/index.js
   var lower16 = 65535;
   var factor16 = Math.pow(2, 16);
   function makeRecover(index, offset) {
@@ -4185,7 +4188,7 @@
       let from2 = mapping.mapResult(this.from, 1), to = mapping.mapResult(this.to, -1);
       if (from2.deletedAcross && to.deletedAcross)
         return null;
-      return new _ReplaceStep(from2.pos, Math.max(from2.pos, to.pos), this.slice);
+      return new _ReplaceStep(from2.pos, Math.max(from2.pos, to.pos), this.slice, this.structure);
     }
     merge(other) {
       if (!(other instanceof _ReplaceStep) || other.structure || this.structure)
@@ -5347,19 +5350,25 @@
       return this;
     }
     /**
-    Remove a mark (or a mark of the given type) from the node at
+    Remove a mark (or all marks of the given type) from the node at
     position `pos`.
     */
     removeNodeMark(pos, mark) {
-      if (!(mark instanceof Mark)) {
-        let node = this.doc.nodeAt(pos);
-        if (!node)
-          throw new RangeError("No node at position " + pos);
-        mark = mark.isInSet(node.marks);
-        if (!mark)
-          return this;
+      let node = this.doc.nodeAt(pos);
+      if (!node)
+        throw new RangeError("No node at position " + pos);
+      if (mark instanceof Mark) {
+        if (mark.isInSet(node.marks))
+          this.step(new RemoveNodeMarkStep(pos, mark));
+      } else {
+        let set3 = node.marks, found2, steps = [];
+        while (found2 = mark.isInSet(set3)) {
+          steps.push(new RemoveNodeMarkStep(pos, found2));
+          set3 = found2.removeFromSet(set3);
+        }
+        for (let i = steps.length - 1; i >= 0; i--)
+          this.step(steps[i]);
       }
-      this.step(new RemoveNodeMarkStep(pos, mark));
       return this;
     }
     /**
@@ -6329,7 +6338,7 @@
     }
   };
 
-  // node_modules/.pnpm/prosemirror-view@1.38.1/node_modules/prosemirror-view/dist/index.js
+  // node_modules/.pnpm/prosemirror-view@1.39.2/node_modules/prosemirror-view/dist/index.js
   var domIndex = function(node) {
     for (var index = 0; ; index++) {
       node = node.previousSibling;
@@ -8994,7 +9003,7 @@
     if (!trustedTypes)
       return html;
     if (!_policy)
-      _policy = trustedTypes.createPolicy("ProseMirrorClipboard", { createHTML: (s) => s });
+      _policy = trustedTypes.defaultPolicy || trustedTypes.createPolicy("ProseMirrorClipboard", { createHTML: (s) => s });
     return _policy.createHTML(html);
   }
   function readHTML(html) {
@@ -9601,6 +9610,10 @@
     }
   };
   var dragCopyModifier = mac ? "altKey" : "ctrlKey";
+  function dragMoves(view, event) {
+    let moves = view.someProp("dragCopies", (test) => !test(event));
+    return moves != null ? moves : !event[dragCopyModifier];
+  }
   handlers.dragstart = (view, _event) => {
     let event = _event;
     let mouseDown = view.input.mouseDown;
@@ -9627,7 +9640,7 @@
     event.dataTransfer.effectAllowed = "copyMove";
     if (!brokenClipboardAPI)
       event.dataTransfer.setData("text/plain", text);
-    view.dragging = new Dragging(slice2, !event[dragCopyModifier], node);
+    view.dragging = new Dragging(slice2, dragMoves(view, event), node);
   };
   handlers.dragend = (view) => {
     let dragging = view.dragging;
@@ -9655,7 +9668,7 @@
     } else {
       slice2 = parseFromClipboard(view, getText(event.dataTransfer), brokenClipboardAPI ? null : event.dataTransfer.getData("text/html"), false, $mouse);
     }
-    let move = !!(dragging && !event[dragCopyModifier]);
+    let move = !!(dragging && dragMoves(view, event));
     if (view.someProp("handleDrop", (f) => f(view, event, slice2 || Slice.empty, move))) {
       event.preventDefault();
       return;
@@ -10798,7 +10811,7 @@
     let $fromA = doc3.resolve(change.start);
     let inlineChange = $from.sameParent($to) && $from.parent.inlineContent && $fromA.end() >= change.endA;
     let nextSel;
-    if ((ios && view.input.lastIOSEnter > Date.now() - 225 && (!inlineChange || addedNodes.some((n) => n.nodeName == "DIV" || n.nodeName == "P")) || !inlineChange && $from.pos < parse.doc.content.size && !$from.sameParent($to) && (nextSel = Selection.findFrom(parse.doc.resolve($from.pos + 1), 1, true)) && nextSel.head == $to.pos) && view.someProp("handleKeyDown", (f) => f(view, keyEvent(13, "Enter")))) {
+    if ((ios && view.input.lastIOSEnter > Date.now() - 225 && (!inlineChange || addedNodes.some((n) => n.nodeName == "DIV" || n.nodeName == "P")) || !inlineChange && $from.pos < parse.doc.content.size && (!$from.sameParent($to) || !$from.parent.inlineContent) && !/\S/.test(parse.doc.textBetween($from.pos, $to.pos, "", "")) && (nextSel = Selection.findFrom(parse.doc.resolve($from.pos + 1), 1, true)) && nextSel.head > $from.pos) && view.someProp("handleKeyDown", (f) => f(view, keyEvent(13, "Enter")))) {
       view.input.lastIOSEnter = 0;
       return;
     }
@@ -11657,7 +11670,7 @@
     };
   }
 
-  // node_modules/.pnpm/prosemirror-commands@1.7.0/node_modules/prosemirror-commands/dist/index.js
+  // node_modules/.pnpm/prosemirror-commands@1.7.1/node_modules/prosemirror-commands/dist/index.js
   var deleteSelection = (state, dispatch2) => {
     if (state.selection.empty)
       return false;
@@ -11994,6 +12007,8 @@
         types[0] = deflt ? { type: deflt } : null;
         can = canSplit(tr2.doc, splitPos, types.length, types);
       }
+      if (!can)
+        return false;
       tr2.split(splitPos, types.length, types);
       if (!atEnd && atStart && $from.node(splitDepth).type != deflt) {
         let first2 = tr2.mapping.map($from.before(splitDepth)), $first = tr2.doc.resolve(first2);
@@ -12305,7 +12320,7 @@
     };
   }
 
-  // node_modules/.pnpm/@tiptap+core@2.11.5_@tiptap+pm@2.11.5/node_modules/@tiptap/core/dist/index.js
+  // node_modules/.pnpm/@tiptap+core@2.11.9_@tiptap+pm@2.11.9/node_modules/@tiptap/core/dist/index.js
   function createChainableState(config) {
     const { state, transaction } = config;
     let { selection } = transaction;
@@ -15353,13 +15368,14 @@
       ];
     }
   });
+  var focusEventsPluginKey = new PluginKey("focusEvents");
   var FocusEvents = Extension.create({
     name: "focusEvents",
     addProseMirrorPlugins() {
       const { editor } = this;
       return [
         new Plugin({
-          key: new PluginKey("focusEvents"),
+          key: focusEventsPluginKey,
           props: {
             handleDOMEvents: {
               focus: (view, event) => {
@@ -15947,7 +15963,7 @@ img.ProseMirror-separator {
       let plugins = prevPlugins;
       [].concat(nameOrPluginKeyToRemove).forEach((nameOrPluginKey) => {
         const name = typeof nameOrPluginKey === "string" ? `${nameOrPluginKey}$` : nameOrPluginKey.key;
-        plugins = prevPlugins.filter((plugin2) => !plugin2.key.startsWith(name));
+        plugins = plugins.filter((plugin2) => !plugin2.key.startsWith(name));
       });
       if (prevPlugins.length === plugins.length) {
         return void 0;
@@ -16429,7 +16445,7 @@ img.ProseMirror-separator {
     });
   }
 
-  // node_modules/.pnpm/@tiptap+extension-blockquote@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-blockquote/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-blockquote@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-blockquote/dist/index.js
   var inputRegex = /^\s*>\s$/;
   var Blockquote = Node2.create({
     name: "blockquote",
@@ -16477,7 +16493,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-bold@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-bold/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-bold@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-bold/dist/index.js
   var starInputRegex = /(?:^|\s)(\*\*(?!\s+\*\*)((?:[^*]+))\*\*(?!\s+\*\*))$/;
   var starPasteRegex = /(?:^|\s)(\*\*(?!\s+\*\*)((?:[^*]+))\*\*(?!\s+\*\*))/g;
   var underscoreInputRegex = /(?:^|\s)(__(?!\s+__)((?:[^_]+))__(?!\s+__))$/;
@@ -16556,7 +16572,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-bullet-list@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-bullet-list/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-bullet-list@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-bullet-list/dist/index.js
   var ListItemName = "listItem";
   var TextStyleName = "textStyle";
   var inputRegex2 = /^\s*([-+*])\s$/;
@@ -16620,7 +16636,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-code@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-code/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-code@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-code/dist/index.js
   var inputRegex3 = /(^|[^`])`([^`]+)`(?!`)/;
   var pasteRegex = /(^|[^`])`([^`]+)`(?!`)/g;
   var Code = Mark2.create({
@@ -16677,7 +16693,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-code-block@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5__@tiptap+pm@2.11.5/node_modules/@tiptap/extension-code-block/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-code-block@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9__@tiptap+pm@2.11.9/node_modules/@tiptap/extension-code-block/dist/index.js
   var backtickInputRegex = /^```([a-z]+)?[\s\n]$/;
   var tildeInputRegex = /^~~~([a-z]+)?[\s\n]$/;
   var CodeBlock = Node2.create({
@@ -16867,14 +16883,14 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-document@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-document/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-document@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-document/dist/index.js
   var Document = Node2.create({
     name: "doc",
     topNode: true,
     content: "block+"
   });
 
-  // node_modules/.pnpm/prosemirror-dropcursor@1.8.1/node_modules/prosemirror-dropcursor/dist/index.js
+  // node_modules/.pnpm/prosemirror-dropcursor@1.8.2/node_modules/prosemirror-dropcursor/dist/index.js
   function dropCursor(options = {}) {
     return new Plugin({
       view(editorView) {
@@ -16925,6 +16941,8 @@ img.ProseMirror-separator {
     updateOverlay() {
       let $pos = this.editorView.state.doc.resolve(this.cursorPos);
       let isBlock = !$pos.parent.inlineContent, rect;
+      let editorDOM = this.editorView.dom, editorRect = editorDOM.getBoundingClientRect();
+      let scaleX = editorRect.width / editorDOM.offsetWidth, scaleY = editorRect.height / editorDOM.offsetHeight;
       if (isBlock) {
         let before = $pos.nodeBefore, after = $pos.nodeAfter;
         if (before || after) {
@@ -16934,13 +16952,15 @@ img.ProseMirror-separator {
             let top = before ? nodeRect.bottom : nodeRect.top;
             if (before && after)
               top = (top + this.editorView.nodeDOM(this.cursorPos).getBoundingClientRect().top) / 2;
-            rect = { left: nodeRect.left, right: nodeRect.right, top: top - this.width / 2, bottom: top + this.width / 2 };
+            let halfWidth = this.width / 2 * scaleY;
+            rect = { left: nodeRect.left, right: nodeRect.right, top: top - halfWidth, bottom: top + halfWidth };
           }
         }
       }
       if (!rect) {
         let coords = this.editorView.coordsAtPos(this.cursorPos);
-        rect = { left: coords.left - this.width / 2, right: coords.left + this.width / 2, top: coords.top, bottom: coords.bottom };
+        let halfWidth = this.width / 2 * scaleX;
+        rect = { left: coords.left - halfWidth, right: coords.left + halfWidth, top: coords.top, bottom: coords.bottom };
       }
       let parent = this.editorView.dom.offsetParent;
       if (!this.element) {
@@ -16960,13 +16980,14 @@ img.ProseMirror-separator {
         parentTop = -pageYOffset;
       } else {
         let rect2 = parent.getBoundingClientRect();
-        parentLeft = rect2.left - parent.scrollLeft;
-        parentTop = rect2.top - parent.scrollTop;
+        let parentScaleX = rect2.width / parent.offsetWidth, parentScaleY = rect2.height / parent.offsetHeight;
+        parentLeft = rect2.left - parent.scrollLeft * parentScaleX;
+        parentTop = rect2.top - parent.scrollTop * parentScaleY;
       }
-      this.element.style.left = rect.left - parentLeft + "px";
-      this.element.style.top = rect.top - parentTop + "px";
-      this.element.style.width = rect.right - rect.left + "px";
-      this.element.style.height = rect.bottom - rect.top + "px";
+      this.element.style.left = (rect.left - parentLeft) / scaleX + "px";
+      this.element.style.top = (rect.top - parentTop) / scaleY + "px";
+      this.element.style.width = (rect.right - rect.left) / scaleX + "px";
+      this.element.style.height = (rect.bottom - rect.top) / scaleY + "px";
     }
     scheduleRemoval(timeout) {
       clearTimeout(this.timeout);
@@ -16997,12 +17018,12 @@ img.ProseMirror-separator {
       this.scheduleRemoval(20);
     }
     dragleave(event) {
-      if (event.target == this.editorView.dom || !this.editorView.dom.contains(event.relatedTarget))
+      if (!this.editorView.dom.contains(event.relatedTarget))
         this.setCursor(null);
     }
   };
 
-  // node_modules/.pnpm/@tiptap+extension-dropcursor@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5__@tiptap+pm@2.11.5/node_modules/@tiptap/extension-dropcursor/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-dropcursor@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9__@tiptap+pm@2.11.9/node_modules/@tiptap/extension-dropcursor/dist/index.js
   var Dropcursor = Extension.create({
     name: "dropCursor",
     addOptions() {
@@ -17230,7 +17251,7 @@ img.ProseMirror-separator {
     return DecorationSet.create(state.doc, [Decoration.widget(state.selection.head, node, { key: "gapcursor" })]);
   }
 
-  // node_modules/.pnpm/@tiptap+extension-gapcursor@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5__@tiptap+pm@2.11.5/node_modules/@tiptap/extension-gapcursor/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-gapcursor@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9__@tiptap+pm@2.11.9/node_modules/@tiptap/extension-gapcursor/dist/index.js
   var Gapcursor = Extension.create({
     name: "gapCursor",
     addProseMirrorPlugins() {
@@ -17251,7 +17272,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-hard-break@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-hard-break/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-hard-break@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-hard-break/dist/index.js
   var HardBreak = Node2.create({
     name: "hardBreak",
     addOptions() {
@@ -17308,7 +17329,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-heading@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-heading/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-heading@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-heading/dist/index.js
   var Heading = Node2.create({
     name: "heading",
     addOptions() {
@@ -17912,7 +17933,7 @@ img.ProseMirror-separator {
   var undoNoScroll = buildCommand(false, false);
   var redoNoScroll = buildCommand(true, false);
 
-  // node_modules/.pnpm/@tiptap+extension-history@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5__@tiptap+pm@2.11.5/node_modules/@tiptap/extension-history/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-history@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9__@tiptap+pm@2.11.9/node_modules/@tiptap/extension-history/dist/index.js
   var History = Extension.create({
     name: "history",
     addOptions() {
@@ -17948,7 +17969,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-horizontal-rule@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5__@tiptap+pm@2.11.5/node_modules/@tiptap/extension-horizontal-rule/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-horizontal-rule@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9__@tiptap+pm@2.11.9/node_modules/@tiptap/extension-horizontal-rule/dist/index.js
   var HorizontalRule = Node2.create({
     name: "horizontalRule",
     addOptions() {
@@ -18020,7 +18041,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-italic@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-italic/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-italic@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-italic/dist/index.js
   var starInputRegex2 = /(?:^|\s)(\*(?!\s+\*)((?:[^*]+))\*(?!\s+\*))$/;
   var starPasteRegex2 = /(?:^|\s)(\*(?!\s+\*)((?:[^*]+))\*(?!\s+\*))/g;
   var underscoreInputRegex2 = /(?:^|\s)(_(?!\s+_)((?:[^_]+))_(?!\s+_))$/;
@@ -18098,7 +18119,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-list-item@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-list-item/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-list-item@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-list-item/dist/index.js
   var ListItem = Node2.create({
     name: "listItem",
     addOptions() {
@@ -18129,7 +18150,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-ordered-list@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-ordered-list/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-ordered-list@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-ordered-list/dist/index.js
   var ListItemName2 = "listItem";
   var TextStyleName2 = "textStyle";
   var inputRegex4 = /^(\d+)\.\s$/;
@@ -18156,7 +18177,7 @@ img.ProseMirror-separator {
           }
         },
         type: {
-          default: void 0,
+          default: null,
           parseHTML: (element) => element.getAttribute("type")
         }
       };
@@ -18211,7 +18232,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-paragraph@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-paragraph/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-paragraph@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-paragraph/dist/index.js
   var Paragraph = Node2.create({
     name: "paragraph",
     priority: 1e3,
@@ -18244,7 +18265,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-strike@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-strike/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-strike@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-strike/dist/index.js
   var inputRegex5 = /(?:^|\s)(~~(?!\s+~~)((?:[^~]+))~~(?!\s+~~))$/;
   var pasteRegex2 = /(?:^|\s)(~~(?!\s+~~)((?:[^~]+))~~(?!\s+~~))/g;
   var Strike = Mark2.create({
@@ -18311,77 +18332,76 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-text@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-text/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-text@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-text/dist/index.js
   var Text = Node2.create({
     name: "text",
     group: "inline"
   });
 
-  // node_modules/.pnpm/@tiptap+starter-kit@2.11.5/node_modules/@tiptap/starter-kit/dist/index.js
+  // node_modules/.pnpm/@tiptap+starter-kit@2.11.9/node_modules/@tiptap/starter-kit/dist/index.js
   var StarterKit = Extension.create({
     name: "starterKit",
     addExtensions() {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
       const extensions = [];
       if (this.options.bold !== false) {
-        extensions.push(Bold.configure((_a = this.options) === null || _a === void 0 ? void 0 : _a.bold));
+        extensions.push(Bold.configure(this.options.bold));
       }
       if (this.options.blockquote !== false) {
-        extensions.push(Blockquote.configure((_b = this.options) === null || _b === void 0 ? void 0 : _b.blockquote));
+        extensions.push(Blockquote.configure(this.options.blockquote));
       }
       if (this.options.bulletList !== false) {
-        extensions.push(BulletList.configure((_c = this.options) === null || _c === void 0 ? void 0 : _c.bulletList));
+        extensions.push(BulletList.configure(this.options.bulletList));
       }
       if (this.options.code !== false) {
-        extensions.push(Code.configure((_d = this.options) === null || _d === void 0 ? void 0 : _d.code));
+        extensions.push(Code.configure(this.options.code));
       }
       if (this.options.codeBlock !== false) {
-        extensions.push(CodeBlock.configure((_e = this.options) === null || _e === void 0 ? void 0 : _e.codeBlock));
+        extensions.push(CodeBlock.configure(this.options.codeBlock));
       }
       if (this.options.document !== false) {
-        extensions.push(Document.configure((_f = this.options) === null || _f === void 0 ? void 0 : _f.document));
+        extensions.push(Document.configure(this.options.document));
       }
       if (this.options.dropcursor !== false) {
-        extensions.push(Dropcursor.configure((_g = this.options) === null || _g === void 0 ? void 0 : _g.dropcursor));
+        extensions.push(Dropcursor.configure(this.options.dropcursor));
       }
       if (this.options.gapcursor !== false) {
-        extensions.push(Gapcursor.configure((_h = this.options) === null || _h === void 0 ? void 0 : _h.gapcursor));
+        extensions.push(Gapcursor.configure(this.options.gapcursor));
       }
       if (this.options.hardBreak !== false) {
-        extensions.push(HardBreak.configure((_j = this.options) === null || _j === void 0 ? void 0 : _j.hardBreak));
+        extensions.push(HardBreak.configure(this.options.hardBreak));
       }
       if (this.options.heading !== false) {
-        extensions.push(Heading.configure((_k = this.options) === null || _k === void 0 ? void 0 : _k.heading));
+        extensions.push(Heading.configure(this.options.heading));
       }
       if (this.options.history !== false) {
-        extensions.push(History.configure((_l = this.options) === null || _l === void 0 ? void 0 : _l.history));
+        extensions.push(History.configure(this.options.history));
       }
       if (this.options.horizontalRule !== false) {
-        extensions.push(HorizontalRule.configure((_m = this.options) === null || _m === void 0 ? void 0 : _m.horizontalRule));
+        extensions.push(HorizontalRule.configure(this.options.horizontalRule));
       }
       if (this.options.italic !== false) {
-        extensions.push(Italic.configure((_o = this.options) === null || _o === void 0 ? void 0 : _o.italic));
+        extensions.push(Italic.configure(this.options.italic));
       }
       if (this.options.listItem !== false) {
-        extensions.push(ListItem.configure((_p = this.options) === null || _p === void 0 ? void 0 : _p.listItem));
+        extensions.push(ListItem.configure(this.options.listItem));
       }
       if (this.options.orderedList !== false) {
-        extensions.push(OrderedList.configure((_q = this.options) === null || _q === void 0 ? void 0 : _q.orderedList));
+        extensions.push(OrderedList.configure(this.options.orderedList));
       }
       if (this.options.paragraph !== false) {
-        extensions.push(Paragraph.configure((_r = this.options) === null || _r === void 0 ? void 0 : _r.paragraph));
+        extensions.push(Paragraph.configure(this.options.paragraph));
       }
       if (this.options.strike !== false) {
-        extensions.push(Strike.configure((_s = this.options) === null || _s === void 0 ? void 0 : _s.strike));
+        extensions.push(Strike.configure(this.options.strike));
       }
       if (this.options.text !== false) {
-        extensions.push(Text.configure((_t = this.options) === null || _t === void 0 ? void 0 : _t.text));
+        extensions.push(Text.configure(this.options.text));
       }
       return extensions;
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-placeholder@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5__@tiptap+pm@2.11.5/node_modules/@tiptap/extension-placeholder/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-placeholder@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9__@tiptap+pm@2.11.9/node_modules/@tiptap/extension-placeholder/dist/index.js
   var Placeholder = Extension.create({
     name: "placeholder",
     addOptions() {
@@ -18436,7 +18456,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-underline@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-underline/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-underline@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-underline/dist/index.js
   var Underline = Mark2.create({
     name: "underline",
     addOptions() {
@@ -19635,7 +19655,7 @@ img.ProseMirror-separator {
     return filtered;
   }
 
-  // node_modules/.pnpm/@tiptap+extension-link@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5__@tiptap+pm@2.11.5/node_modules/@tiptap/extension-link/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-link@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9__@tiptap+pm@2.11.9/node_modules/@tiptap/extension-link/dist/index.js
   function isValidLinkStructure(tokens) {
     if (tokens.length === 1) {
       return tokens[0].isLink;
@@ -19982,7 +20002,7 @@ img.ProseMirror-separator {
     }
   });
 
-  // node_modules/.pnpm/@tiptap+extension-text-align@2.11.5_@tiptap+core@2.11.5_@tiptap+pm@2.11.5_/node_modules/@tiptap/extension-text-align/dist/index.js
+  // node_modules/.pnpm/@tiptap+extension-text-align@2.11.9_@tiptap+core@2.11.9_@tiptap+pm@2.11.9_/node_modules/@tiptap/extension-text-align/dist/index.js
   var TextAlign = Extension.create({
     name: "textAlign",
     addOptions() {
@@ -20024,6 +20044,15 @@ img.ProseMirror-separator {
         },
         unsetTextAlign: () => ({ commands: commands2 }) => {
           return this.options.types.map((type) => commands2.resetAttributes(type, "textAlign")).every((response) => response);
+        },
+        toggleTextAlign: (alignment) => ({ editor, commands: commands2 }) => {
+          if (!this.options.alignments.includes(alignment)) {
+            return false;
+          }
+          if (editor.isActive({ textAlign: alignment })) {
+            return commands2.unsetTextAlign();
+          }
+          return commands2.setTextAlign(alignment);
         }
       };
     },
@@ -23467,7 +23496,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   var src_default = alpine_default;
   var module_default = src_default;
 
-  // node_modules/.pnpm/vanilla-calendar-pro@3.0.3/node_modules/vanilla-calendar-pro/utils/index.mjs
+  // node_modules/.pnpm/vanilla-calendar-pro@3.0.4/node_modules/vanilla-calendar-pro/utils/index.mjs
   var getDate$1 = (e) => /* @__PURE__ */ new Date(`${e}T00:00:00`);
   var getDate = (e) => getDate$1(e);
 
@@ -23527,334 +23556,6 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       }
     };
   }
-  function memberFormValidation(config) {
-    return {
-      formData: {
-        FirstName: config.initialData?.FirstName ?? null,
-        LastName: config.initialData?.LastName ?? null,
-        EmailAddress: config.initialData?.EmailAddress ?? null,
-        PhoneNumber: config.initialData?.PhoneNumber ?? null,
-        JobTitle: config.initialData?.JobTitle ?? null,
-        Adress: config.initialData?.Adress ?? null,
-        // Match the actual input names generated by the Editor Template
-        "BirthDate.Day": config.initialData?.BirthDate?.Day ?? null,
-        "BirthDate.Month": config.initialData?.BirthDate?.Month ?? null,
-        "BirthDate.Year": config.initialData?.BirthDate?.Year ?? null
-        // We are handling our Avatar file upload below, not needed in the formdata :D and also its value isnt managed using x-model (Alpinejs)
-        // Avatar: config.initialData?.Avatar ?? null
-      },
-      loadingFields: {},
-      errors: {},
-      validationEndpoint: config.validationEndpoint,
-      antiforgeryToken: config.antiforgeryToken,
-      isSubmitting: false,
-      // Helper function to update validation UI for a field
-      // This clode block was 100% generated by Google Gemini Pro
-      // This function updates the validation UI for a specific field based on the
-      // provided error message by finding the corresponding input, span, and icon elements.
-      updateValidationUI(fieldName, errorMessages = null) {
-        const form = this.$refs.addMemberForm;
-        if (!form) return;
-        const inputElement = form.elements[fieldName];
-        const validationSpan = form.querySelector(`#error-msg-${fieldName}`) || form.querySelector(`[data-valmsg-for="${fieldName}"]`);
-        const iconElement = this.$refs[`${fieldName}IconRef`];
-        const hasErrors = errorMessages && errorMessages.length > 0;
-        if (inputElement) {
-          if (hasErrors) {
-            inputElement.classList.add("input-validation-error");
-            inputElement.classList.add("field-validation-invalid");
-            inputElement.classList.remove("field-validation-valid");
-            inputElement.setAttribute("aria-invalid", "true");
-          } else {
-            inputElement.classList.remove("input-validation-error");
-            inputElement.classList.add("field-validation-valid");
-            inputElement.classList.remove("field-validation-invalid");
-            inputElement.removeAttribute("aria-invalid");
-          }
-        }
-        if (validationSpan) {
-          validationSpan.textContent = hasErrors ? errorMessages.map((msg) => `\u2022 ${msg}`).join("\n") : "";
-          if (hasErrors) {
-            validationSpan.removeAttribute("hidden");
-            validationSpan.classList.add("field-validation-invalid");
-            validationSpan.classList.remove("field-validation-valid");
-          } else {
-            validationSpan.setAttribute("hidden", "");
-            validationSpan.classList.remove("field-validation-invalid");
-            validationSpan.classList.add("field-validation-valid");
-          }
-        }
-        if (iconElement) {
-          iconElement.style.display = hasErrors ? "inline-block" : "none";
-        }
-      },
-      /**
-       * This Code was 100% generated by Google Gemini Pro
-       * Generic function to validate a group of related fields.
-       * Handles "all or none" requirements and runs custom validation logic if all are filled.
-       * @param {string[]} fieldNames - Array of field names belonging to the group.
-       * @param {string} allOrNoneMessage - Error message if the "all or none" rule is violated.
-       * @param {function|null} groupValidationLogic - A callback function that receives an object
-       *                                               with fieldName:value pairs for the group.
-       *                                               It should return null if valid, or an array
-       *                                               of error messages if invalid. Can be null
-       *                                               if only the "all or none" check is needed.
-       * @param {string} [unselectedValue="0"] - The value representing an unselected state. Also checks for empty string.
-       * @returns {boolean} - True if the group is valid, false otherwise.
-       */
-      validateFieldGroup(fieldNames, allOrNoneMessage, groupValidationLogic, unselectedValue = "0") {
-        let selectedCount = 0;
-        const groupValues = {};
-        let groupErrorMessages = null;
-        let isGroupValid = true;
-        for (const fieldName of fieldNames) {
-          const value = this.formData[fieldName];
-          groupValues[fieldName] = value;
-          if (value && value !== unselectedValue && String(value).trim() !== "") {
-            selectedCount++;
-          }
-        }
-        const allSelected = selectedCount === fieldNames.length;
-        const noneSelected = selectedCount === 0;
-        if (!allSelected && !noneSelected) {
-          isGroupValid = false;
-          groupErrorMessages = [allOrNoneMessage];
-        } else if (allSelected && typeof groupValidationLogic === "function") {
-          const validationResult = groupValidationLogic(groupValues);
-          if (validationResult !== null && Array.isArray(validationResult) && validationResult.length > 0) {
-            isGroupValid = false;
-            groupErrorMessages = validationResult;
-          }
-        }
-        for (const fieldName of fieldNames) {
-          this.updateValidationUI(
-            fieldName,
-            isGroupValid ? null : groupErrorMessages
-          );
-          if (!isGroupValid) {
-            this.errors[fieldName] = groupErrorMessages;
-          } else {
-            const currentError = this.errors[fieldName]?.[0];
-            const potentialGroupError1 = allOrNoneMessage;
-            if (this.errors[fieldName] && currentError === potentialGroupError1) {
-              delete this.errors[fieldName];
-            }
-          }
-        }
-        return isGroupValid;
-      },
-      /**
-       * This code was Refactored by Google Gemini Pro
-       * Specific validation logic callback for the Birth Date group.
-       * @param {object} values - Object containing { "BirthDate.Day": value, "BirthDate.Month": value, "BirthDate.Year": value }
-       * @returns {string[]|null} - Array with error message if invalid, null if valid.
-       */
-      birthDateValidationCallback(values) {
-        const dayField2 = "BirthDate.Day";
-        const monthField2 = "BirthDate.Month";
-        const yearField2 = "BirthDate.Year";
-        const dayNumber = Number.parseInt(values[dayField2], 10);
-        const monthNumber = Number.parseInt(values[monthField2], 10);
-        const yearNumber = Number.parseInt(values[yearField2], 10);
-        const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
-        if (Number.isNaN(dayNumber) || Number.isNaN(monthNumber) || Number.isNaN(yearNumber)) {
-          return ["Invalid numeric value for Day, Month, or Year."];
-        }
-        const dateObj = new Date(yearNumber, monthNumber - 1, dayNumber);
-        if (dateObj.getFullYear() !== yearNumber || dateObj.getMonth() !== monthNumber - 1 || dateObj.getDate() !== dayNumber || // Check for invalid dates (e.g., Feb 30)
-        yearNumber < 1900 || yearNumber > currentYear) {
-          return ["The selected Day, Month, and Year do not form a valid date."];
-        }
-        return null;
-      },
-      extentedValidator(fieldName) {
-        const form = this.$refs.addMemberForm;
-        if (!form) return;
-        const inputElement = form.elements[fieldName];
-        const inputValues = inputElement.value;
-        const inputDataset = inputElement.dataset;
-        const unselectedValue = null;
-        if (!inputElement) return;
-        const groups = {
-          birthDate: {
-            fields: ["BirthDate.Day", "BirthDate.Month", "BirthDate.Year"],
-            allOrNoneMessage: "Please provide all parts of the birth date (Day, Month, Year) or leave all blank.",
-            validationCallback: this.birthDateValidationCallback.bind(this),
-            unselectedValue: null
-          }
-        };
-        let isFieldValid = true;
-        let fieldBelongsToGroup = false;
-        for (const groupName in groups) {
-          const group = groups[groupName];
-          if (group.fields.includes(fieldName)) {
-            fieldBelongsToGroup = true;
-            isFieldValid = this.validateFieldGroup(
-              group.fields,
-              group.allOrNoneMessage,
-              group.validationCallback,
-              group.unselectedValue
-            );
-            break;
-          }
-        }
-        if (!fieldBelongsToGroup) {
-          const inputErrors = [];
-          if (inputDataset.valRequired && (!inputValues || inputValues === unselectedValue || String(inputValues).trim() === "")) {
-            inputErrors.push(inputDataset.valRequired);
-          }
-          if (inputDataset.valMinlength && inputValues && String(inputValues).trim() !== "" && inputValues.length < Number.parseInt(inputDataset.valMinlengthMin, 10)) {
-            if (inputValues.length > 0) {
-              inputErrors.push(inputDataset.valMinlength);
-            }
-          }
-          if (inputDataset.valLength && inputValues.length > Number.parseInt(inputDataset.valLengthMax, 10)) {
-            inputErrors.push(inputDataset.valLength);
-          } else if (inputDataset.valMaxlength && inputValues.length > Number.parseInt(inputDataset.valMaxlengthMax, 10)) {
-            inputErrors.push(inputDataset.valMaxlength);
-          }
-          if (inputDataset.valRange && inputDataset.valRangeMin && inputDataset.valRangeMax && inputValues && inputValues !== unselectedValue && String(inputValues).trim() !== "") {
-            const numValue = Number.parseFloat(inputValues);
-            const min = Number.parseFloat(inputDataset.valRangeMin);
-            const max = Number.parseFloat(inputDataset.valRangeMax);
-            if (Number.isNaN(numValue) || numValue < min || numValue > max) {
-              inputErrors.push(inputDataset.valRange);
-            }
-          }
-          if (inputDataset.valRegex && inputDataset.valRegexPattern) {
-            const regex = new RegExp(inputDataset.valRegexPattern);
-            if (inputValues && !regex.test(inputValues)) {
-              inputErrors.push(inputDataset.valRegex);
-            }
-          }
-          if (inputErrors.length > 0) {
-            this.errors[fieldName] = inputErrors;
-            this.updateValidationUI(fieldName, inputErrors);
-            isFieldValid = false;
-          } else {
-            if (this.errors[fieldName]) {
-              delete this.errors[fieldName];
-              this.updateValidationUI(fieldName, null);
-            }
-            isFieldValid = true;
-          }
-        }
-        return isFieldValid;
-      },
-      // Validate the entire form
-      validateEntireForm() {
-        let isFormValid = true;
-        for (const fieldName of Object.keys(this.formData)) {
-          const isFieldValid = this.extentedValidator(fieldName);
-          isFormValid = isFieldValid && isFormValid;
-        }
-        const day = this.formData["BirthDate.Day"];
-        const month = this.formData["BirthDate.Month"];
-        const year = this.formData["BirthDate.Year"];
-        const birthDateFieldsSelected = day && day !== "0" && day !== null && month && month !== "0" && month !== null && year && year !== "0" && year !== null;
-        if (birthDateFieldsSelected) {
-          const dayNumber = Number.parseInt(day, 10);
-          const monthNumber = Number.parseInt(month, 10);
-          const yearNumber = Number.parseInt(year, 10);
-          const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
-          const dateObj = new Date(yearNumber, monthNumber - 1, dayNumber);
-          let isCombinedDateValid = true;
-          let birthDateErrorMessage = null;
-          if (dateObj.getFullYear() !== yearNumber || dateObj.getMonth() !== monthNumber - 1 || // Compare with 0-indexed month
-          dateObj.getDate() !== dayNumber) {
-            isCombinedDateValid = false;
-            birthDateErrorMessage = ["The selected date does not exist."];
-          }
-          if (!isCombinedDateValid) {
-            this.updateValidationUI(dayField, birthDateErrorMessage);
-            this.updateValidationUI(monthField, birthDateErrorMessage);
-            this.updateValidationUI(yearField, birthDateErrorMessage);
-            isFormValid = false;
-          }
-        }
-        return isFormValid;
-      },
-      // Lets start with CLientside validation before sending it further
-      async validateField(fieldName) {
-        this.$nextTick(() => {
-          this.extentedValidator(fieldName);
-        });
-      },
-      // Submit the form using Alpine.js Ajax
-      async submitForm() {
-        if (this.isSubmitting) {
-          return;
-        }
-        if (!this.validateEntireForm()) {
-          console.log("Client-side validation failed. Submission stopped.");
-          const firstErrorField = Object.keys(this.errors)[0];
-          if (firstErrorField && this.$refs.addMemberForm.elements[firstErrorField]) {
-            try {
-              this.$refs.addMemberForm.elements[firstErrorField].focus();
-            } catch (e) {
-              console.warn(`Could not focus on field: ${firstErrorField}`, e);
-            }
-          }
-          return;
-        }
-        this.isSubmitting = true;
-        this.errors = {};
-        for (const fieldName of Object.keys(this.formData)) {
-          this.updateValidationUI(fieldName, null);
-        }
-        const payLoad = new FormData();
-        for (const key in this.formData) {
-          if (key !== "Avatar") {
-            const value = this.formData[key];
-            if (value !== null && value !== void 0 && String(value).trim() !== "") {
-              payLoad.append(key, value);
-            }
-          }
-        }
-        const avatarInput = this.$refs.addMemberForm.elements.Avatar;
-        if (avatarInput?.files?.length > 0) {
-          payLoad.append("Avatar", avatarInput.files[0]);
-        } else {
-          payLoad.append("Avatar", null);
-        }
-        try {
-          await new Promise((r) => setTimeout(r, 5e3));
-          const ajaxResponce = await fetch(this.validationEndpoint, {
-            method: "POST",
-            headers: {
-              RequestVerificationToken: this.antiforgeryToken
-            },
-            body: payLoad
-          });
-          if (!ajaxResponce.ok) {
-            if (ajaxResponce.status === 400) {
-              const errorData = await ajaxResponce.json();
-              if (errorData?.errors) {
-                this.errors = errorData.errors;
-                for (const fieldName of Object.keys(this.errors)) {
-                  this.updateValidationUI(fieldName, this.errors[fieldName]);
-                }
-              } else {
-                this.updateValidationUI("form", "Ajax Validation Error");
-              }
-            } else {
-              this.updateValidationUI(
-                "form",
-                `Server error: ${ajaxResponce.status}`
-              );
-            }
-          } else {
-            const result = await ajaxResponce.json();
-            console.log("Form submitted successfully!");
-          }
-        } catch (error2) {
-          this.updateValidationUI("form", "Could not submit form. Server error.");
-        } finally {
-          this.isSubmitting = false;
-        }
-      }
-    };
-  }
   function ajaxFormValidation(config) {
     if (!config.formRefName)
       throw new Error("ajaxFormValidation requires config.formRefName.");
@@ -23872,7 +23573,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       // --- Core Properties ---
       formRefName: config.formRefName,
       formData: initialFormData,
-      // Use provided groups or default to empty
+      // Use provided groups or defaulted to empty
       groups: config.groups || {},
       // Use provided callbacks or default
       validationCallbacks: config.validationCallbacks || {},
@@ -23887,36 +23588,42 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       // Keep if used elsewhere
       loadingFields: {},
       // --- Helper Methods ---
-      updateValidationUI(fieldName, errorMessages = null) {
-        const form = this.$refs[this.formRefName];
-        if (!form) return;
-        const inputElement = form.elements[fieldName];
-        const validationSpan = form.querySelector(`[data-valmsg-for="${fieldName}"]`) || form.querySelector(`#error-msg-${fieldName}`);
-        const iconElement = this.$refs[`${fieldName}IconRef`];
-        const hasErrors = errorMessages && errorMessages.length > 0;
-        if (inputElement) {
-          if (hasErrors) {
-            inputElement.classList.add("input-validation-error");
-            inputElement.classList.add("field-validation-invalid");
-            inputElement.classList.remove("field-validation-valid");
-            inputElement.setAttribute("aria-invalid", "true");
-          } else {
-            inputElement.classList.remove("input-validation-error");
-            inputElement.classList.add("field-validation-valid");
-            inputElement.classList.remove("field-validation-invalid");
-            inputElement.removeAttribute("aria-invalid");
-          }
+      // Refactored v1.4
+      updateValidationUI(fieldName, errors, inputElement) {
+        if (!inputElement) {
+          console.warn(
+            `updateValidationUI: Input element for field "${fieldName}" not provided.`
+          );
+          return;
         }
-        if (validationSpan) {
-          validationSpan.textContent = hasErrors ? errorMessages.map((msg) => `\u2022 ${msg}`).join("\n") : "";
-          if (hasErrors) {
-            validationSpan.removeAttribute("hidden");
-            validationSpan.classList.add("field-validation-invalid");
-            validationSpan.classList.remove("field-validation-valid");
-          } else {
-            validationSpan.setAttribute("hidden", "");
-            validationSpan.classList.remove("field-validation-invalid");
-            validationSpan.classList.add("field-validation-valid");
+        const errorMsgId = inputElement.getAttribute("aria-describedby");
+        const getErrorElement = errorMsgId ? document.getElementById(errorMsgId) : document.querySelector(
+          `[data-valmsg-for="${fieldName}"], #${fieldName}-error`
+        );
+        const iconElement = this.$refs[`${fieldName}IconRef`];
+        const errorClassInput = "input-validation-error";
+        const validClassInput = "alpha-field-validation-valid";
+        const errorClassMsg = "alpha-field-validation-invalid";
+        const hasErrors = errors && errors.length > 0;
+        if (hasErrors) {
+          inputElement.classList.add(errorClassInput);
+          inputElement.classList.add(errorClassMsg);
+          inputElement.classList.remove(validClassInput);
+          inputElement.setAttribute("aria-invalid", "true");
+          if (getErrorElement) {
+            getErrorElement.textContent = errors.join(" ");
+            getErrorElement.classList.add(errorClassMsg);
+            getErrorElement.style.display = "";
+          }
+        } else {
+          inputElement.classList.remove(errorClassMsg);
+          inputElement.classList.remove(errorClassInput);
+          inputElement.classList.add(validClassInput);
+          inputElement.setAttribute("aria-invalid", "false");
+          if (getErrorElement) {
+            getErrorElement.textContent = "";
+            getErrorElement.classList.remove(errorClassMsg);
+            getErrorElement.classList.remove(errorClassInput);
           }
         }
         if (iconElement) {
@@ -23968,9 +23675,11 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           }
         }
         for (const fieldName of fieldNames) {
+          const inputElement = this.$refs[fieldName];
           this.updateValidationUI(
             fieldName,
-            isGroupValid ? null : groupErrorMessages
+            isGroupValid ? null : groupErrorMessages,
+            inputElement
           );
           if (!isGroupValid) {
             this.errors[fieldName] = groupErrorMessages;
@@ -23987,7 +23696,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       /**
        * Validates a specific form field based on configured rules.
        *
-       * Dockmentation generated by Google Gemini Pro
+       * Documentation generated by Google Gemini Pro
        *
        * This function checks if the field belongs to a validation group defined in `this.groups`.
        * If it does, it delegates validation to `validateFieldGroup` using the group's configuration
@@ -24011,9 +23720,16 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       extendedValidator(fieldName) {
         const form = this.$refs[this.formRefName];
         if (!form) return true;
-        const inputElement = form.elements[fieldName];
+        let inputElement = form.elements[fieldName];
         if (!inputElement) return true;
-        const inputValues = inputElement.value;
+        if (inputElement instanceof RadioNodeList) {
+          if (inputElement.length > 0) {
+            inputElement = inputElement[0];
+          } else {
+            inputElement = null;
+          }
+        }
+        const inputValues = inputElement.type === "checkbox" ? inputElement.checked : inputElement.value;
         const inputDataset = inputElement.dataset;
         const currentUnselectedValue = this.unselectedValue;
         let isFieldValid = true;
@@ -24036,8 +23752,12 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         }
         if (!fieldBelongsToGroup) {
           const inputErrors = [];
-          if (inputDataset.valRequired && (!inputValues || inputValues === currentUnselectedValue || String(inputValues).trim() === "")) {
-            inputErrors.push(inputDataset.valRequired);
+          if (inputDataset?.valRequired) {
+            if (inputElement.type === "checkbox" && !inputElement.checked) {
+              inputErrors.push(inputDataset.valRequired);
+            } else if (inputElement.type !== "checkbox" && (!inputValues || inputValues === currentUnselectedValue || String(inputValues).trim() === "")) {
+              inputErrors.push(inputDataset.valRequired);
+            }
           }
           if (inputDataset.valMinlength && inputValues && String(inputValues).trim() !== "" && inputValues.length < Number.parseInt(inputDataset.valMinlengthMin, 10)) {
             inputErrors.push(inputDataset.valMinlength);
@@ -24055,6 +23775,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
               inputErrors.push(inputDataset.valRange);
             }
           }
+          if (inputDataset.valEqualto && inputDataset.valEqualtoOther) {
+            const otherFieldName = inputDataset.valEqualtoOther.replace("*.", "");
+            const otherFieldValue = this.formData[otherFieldName];
+            if (inputValues && inputValues !== otherFieldValue) {
+              inputErrors.push(inputDataset.valEqualto);
+            }
+          }
           if (inputDataset.valRegex && inputDataset.valRegexPattern) {
             const regex = new RegExp(inputDataset.valRegexPattern);
             if (inputValues && !regex.test(inputValues)) {
@@ -24063,12 +23790,12 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           }
           if (inputErrors.length > 0) {
             this.errors[fieldName] = inputErrors;
-            this.updateValidationUI(fieldName, inputErrors);
+            this.updateValidationUI(fieldName, inputErrors, inputElement);
             isFieldValid = false;
           } else {
             if (this.errors[fieldName]) {
               delete this.errors[fieldName];
-              this.updateValidationUI(fieldName, null);
+              this.updateValidationUI(fieldName, null, inputElement);
             }
             isFieldValid = true;
           }
@@ -24154,7 +23881,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         this.isSubmitting = true;
         this.errors = {};
         for (const fieldName of Object.keys(this.formData)) {
-          this.updateValidationUI(fieldName, null);
+          const inputElement = document.querySelector(`[name="${fieldName}"]`);
+          this.updateValidationUI(fieldName, null, inputElement);
         }
         const payLoad = new FormData();
         const formElement = this.$refs[this.formRefName];
@@ -24186,23 +23914,50 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             if (ajaxResponse.status === 400) {
               const errorData = await ajaxResponse.json();
               if (errorData?.errors) {
-                this.errors = errorData.errors;
-                for (const fieldName of Object.keys(this.errors)) {
-                  this.updateValidationUI(fieldName, this.errors[fieldName]);
+                const serverErrors = errorData.errors;
+                const generalErrorMessages = [];
+                this.errors = {};
+                for (const key in serverErrors) {
+                  if (key === "") {
+                    generalErrorMessages.push(...serverErrors[key]);
+                  } else {
+                    this.errors[key] = serverErrors[key];
+                    const inputElement = document.querySelector(`[name="${key}"]`);
+                    this.updateValidationUI(key, serverErrors[key], inputElement);
+                  }
                 }
+                if (generalErrorMessages.length > 0) {
+                  this.errors[this.formRefName] = generalErrorMessages;
+                }
+                console.log(
+                  "Server-side validation errors:",
+                  generalErrorMessages
+                );
               } else {
-                this.updateValidationUI(this.formRefName, [
-                  "An unknown validation error occurred."
-                ]);
+                this.errors = {};
+                this.errors[this.formRefName] = [
+                  "An unexpected validation error occurred (invalid format)."
+                ];
+                console.error("Unexpected 400 error format:", errorData);
               }
             } else {
-              this.updateValidationUI(this.formRefName, [
-                `Server error: ${ajaxResponse.status}`
-              ]);
+              let errorMessage = `Server error: ${ajaxResponse.status} ${ajaxResponse.statusText}`;
+              if (ajaxResponse.status === 401) {
+                try {
+                  const errorData = await ajaxResponse.json();
+                  errorMessage = errorData.message;
+                } catch (e) {
+                  errorMessage = "Login failed: Invalid credentials.";
+                }
+              }
+              this.errors = {};
+              this.errors[this.formRefName] = [errorMessage];
             }
           } else {
             const result = await ajaxResponse.json();
             console.log("Form submitted successfully!", result);
+            this.$dispatch("form-success", { response: result });
+            window.location.replace(result.redirectUrl);
           }
         } catch (error2) {
           console.error("Form submission error:", error2);
@@ -24216,12 +23971,12 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     };
   }
   function birthDateValidationCallback(values) {
-    const dayField2 = "BirthDate.Day";
-    const monthField2 = "BirthDate.Month";
-    const yearField2 = "BirthDate.Year";
-    const dayNumber = Number.parseInt(values[dayField2], 10);
-    const monthNumber = Number.parseInt(values[monthField2], 10);
-    const yearNumber = Number.parseInt(values[yearField2], 10);
+    const dayField = "BirthDate.Day";
+    const monthField = "BirthDate.Month";
+    const yearField = "BirthDate.Year";
+    const dayNumber = Number.parseInt(values[dayField], 10);
+    const monthNumber = Number.parseInt(values[monthField], 10);
+    const yearNumber = Number.parseInt(values[yearField], 10);
     const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
     if (Number.isNaN(dayNumber) || Number.isNaN(monthNumber) || Number.isNaN(yearNumber)) {
       return ["Invalid numeric value for Day, Month, or Year."];
@@ -24231,6 +23986,59 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       return ["The selected Day, Month, and Year do not form a valid date."];
     }
     return null;
+  }
+
+  // wwwroot/js/components/fetch-ajax.js
+  async function sendAjaxRequest(url, method, headers = {}, body = null) {
+    try {
+      await new Promise((r) => setTimeout(r, 1e3));
+      const options = {
+        method: method.toUpperCase(),
+        headers
+      };
+      if (body && !["GET", "HEAD"].includes(options.method)) {
+        options.body = body;
+      }
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        let errorData = null;
+        let errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          console.warn("Could not parse error response as JSON.", e);
+        }
+        if (response.status === 400 && errorData?.errors) {
+          return { success: false, status: 400, errors: errorData.errors };
+        }
+        if (response.status === 401) {
+          errorMessage = errorData?.message || "Authorization failed.";
+          return { success: false, status: 401, message: errorMessage };
+        }
+        errorMessage = errorData?.message || errorMessage;
+        return { success: false, status: response.status, message: errorMessage };
+      }
+      try {
+        const result = await response.json();
+        return { success: true, status: response.status, data: result };
+      } catch (e) {
+        console.error("Could not parse success response as JSON.", e);
+        return {
+          success: false,
+          status: "parsing_error",
+          message: "Failed to parse successful response.",
+          error: e
+        };
+      }
+    } catch (error2) {
+      console.error("AJAX request failed:", error2);
+      return {
+        success: false,
+        status: "network_error",
+        message: "Could not connect to the server. Network error.",
+        error: error2
+      };
+    }
   }
 
   // wwwroot/js/components/random-gradient.js
@@ -24277,9 +24085,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   window.formatDatePicker = formatDatePicker;
   window.resetDatePickerYear = resetDatePickerYear;
   window.avatarUploader = avatarUploader;
-  window.memberFormValidation = memberFormValidation;
   window.ajaxFormValidation = ajaxFormValidation;
   window.birthDateValidationCallback = birthDateValidationCallback;
+  window.sendAjaxRequest = sendAjaxRequest;
   createIcons({
     icons: {
       Menu,
@@ -24530,6 +24338,6 @@ lucide/dist/esm/lucide.js:
    *)
 
 vanilla-calendar-pro/utils/index.mjs:
-  (*! name: vanilla-calendar-pro v3.0.3 | url: https://github.com/uvarov-frontend/vanilla-calendar-pro *)
+  (*! name: vanilla-calendar-pro v3.0.4 | url: https://github.com/uvarov-frontend/vanilla-calendar-pro *)
 */
 //# sourceMappingURL=bundle.js.map

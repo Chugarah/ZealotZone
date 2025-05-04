@@ -1,3 +1,26 @@
+@using Infrastructure.Entities
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserEntity> SignInManager
+@inject UserManager<UserEntity> UserManager
+@model UserDataViewModel
+
+
+@{
+
+    UserEntity? user = null;
+    string? userFullName = null;
+    if (SignInManager.IsSignedIn(User))
+    {
+        user = await UserManager.GetUserAsync(User);
+        if (user != null)
+        {
+            // Combine first and last name, handle potential nulls if necessary
+            userFullName = $"{user.FirstName} {user.LastName}".Trim();
+        }
+    }
+}
+
+
 @{
 // An simple List, this will be extracted from somewhere else
 // TODO: This list creating need to be moved out later
@@ -29,7 +52,7 @@ var projectAvatars = new List<ListAvatarViewModel>
                     {
                     await Html.RenderPartialAsync("Components/_Avatar", avatar);
                     }
-                    Tommy Mattin-Lassei
+                  @userFullName
                     <!-- #endregion -->
                 </a>
             </div>
@@ -50,13 +73,13 @@ var projectAvatars = new List<ListAvatarViewModel>
                 <!-- -->
             </div>
 
-
             <!-- This will change based if user is logged in or not  -->
             <div class="p-0500 space-y-0500 card-navigation-divider ">
-                <a href="#" class="card-navigation-hover">
+                <a asp-area="User" asp-controller="UserLogOut" asp-action="Index" class="card-navigation-hover">
                     <i data-lucide="log-out" class="size-1250"></i>
                     Logout
                 </a>
             </div>
         </div>
     </div>
+

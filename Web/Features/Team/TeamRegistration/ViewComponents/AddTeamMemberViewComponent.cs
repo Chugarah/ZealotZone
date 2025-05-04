@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc;
-using ZealotZone.Features.TeamRegistration.ViewModels;
+using ZealotZone.Features.Team.TeamRegistration.ViewModels;
 
-namespace ZealotZone.Features.TeamRegistration.ViewComponents;
+namespace ZealotZone.Features.Team.TeamRegistration.ViewComponents;
 
 public class AddTeamMemberViewComponent(IAntiforgery antiforgery) : ViewComponent
 {

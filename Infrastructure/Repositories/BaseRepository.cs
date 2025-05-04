@@ -201,7 +201,7 @@ public abstract class BaseRepository<TDomain, TEntity>(
         var entity = factory.ToEntity(domainEntity);
 
         // Attach and mark as unchanged to avoid tracking conflicts
-        _dbSet.Attach(entity);
+        _dbSet.Attach(entity ?? throw new InvalidOperationException());
 
         // Mark the entity as modified
         dataContext.Entry(entity).State = EntityState.Modified;
@@ -221,7 +221,7 @@ public abstract class BaseRepository<TDomain, TEntity>(
         var entity = factory.ToEntity(domainEntity);
 
         // Remove the entity from the DbSet
-        _dbSet.Remove(entity);
+        _dbSet.Remove(entity ?? throw new InvalidOperationException());
 
         // Return the domain object
         return Task.FromResult(factory.ToDomain(entity));
@@ -235,7 +235,7 @@ public abstract class BaseRepository<TDomain, TEntity>(
     public Task<TDomain?> AttachAsync(TDomain? domainEntity)
     {
         var entity = factory.ToEntity(domainEntity);
-        _dbSet.Attach(entity);
+        _dbSet.Attach(entity ?? throw new InvalidOperationException());
         return Task.FromResult(factory.ToDomain(entity));
     }
 

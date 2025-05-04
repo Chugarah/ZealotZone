@@ -23,11 +23,7 @@
 
 	/* Text Editor Input */
 	.text-editor-input {
-		@apply p-3 sm:p-4 
-      placeholder:text-alpha-body-light
-        min-h-108125 min-w-30625
-        bg-transparent
-        rounded-br-none rounded-bl-none;
+		@apply p-3 bg-transparent rounded-bl-none rounded-br-none sm:p-4 placeholder:text-alpha-body-light min-h-108125 min-w-30625;
 	}
 
 	.tiptap-editor-menu {
@@ -41,14 +37,7 @@
 
 	/* Form Date Picker */
 	.form-date-picker-shared {
-		@apply hs-select-disabled:pointer-events-none 
-            hs-select-disabled:opacity-50 relative py-1 px-2 
-            flex text-nowrap w-full cursor-pointer 
-            
-            bg-white text-start text-sm 
-            focus:border-blue-500 focus:ring-blue-500 
-            before:absolute before:inset-0 before:z-1 
-            dark:bg-neutral-900 dark:border-neutral-700;
+		@apply relative flex w-full px-2 py-1 text-sm bg-white cursor-pointer hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 text-nowrap text-start focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-1 dark:bg-neutral-900 dark:border-neutral-700;
 	}
 
 	.form-date-picker-months {
@@ -60,8 +49,7 @@
 	}
 
 	.form-date-picker-single-month {
-		@apply bg-white flex flex-col overflow-hidden 
-        dark:bg-neutral-900 dark:border-neutral-700;
+		@apply flex flex-col overflow-hidden bg-white dark:bg-neutral-900 dark:border-neutral-700;
 	}
 	.form-date-picker-single-month-header {
 		@apply items-center gap-x-3 grid grid-cols-5 mx-1.5 pb-3;
@@ -87,12 +75,7 @@
 	}
 
 	.alpha-hs-select-dropdown-option {
-		@apply hover:bg-gray-100 focus:bg-gray-100 
-		dark:bg-alpha-grey-100 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 
-		
-		hs-select-disabled:opacity-50 px-4 py-2 rounded-lg focus:outline-hidden w-full 
-		text-gray-800 dark:text-neutral-200 text-sm cursor-pointer 
-		hs-select-disabled:pointer-events-none;
+		@apply w-full px-4 py-2 text-sm text-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 focus:bg-gray-100 dark:bg-alpha-grey-100 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 hs-select-disabled:opacity-50 focus:outline-hidden dark:text-neutral-200 hs-select-disabled:pointer-events-none;
 	}
 
 	.alpha-hs-select-droppdown-wrapper {
@@ -116,13 +99,7 @@
 
 	/*TODO: Need to update the avatars to follow template*/
 	.alpha-hs-select-droppdown-tag-item-remove {
-		@apply inline-flex shrink-0 justify-center items-center size-5 
-		ms-2 rounded-full 
-		
-		text-alpha-body-dark hover:bg-gray-300 
-		focus:outline-hidden focus:ring-2 
-		focus:ring-gray-400 text-sm 
-		dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer;
+		@apply inline-flex items-center justify-center text-sm rounded-full cursor-pointer shrink-0 size-5 ms-2 text-alpha-body-dark hover:bg-gray-300 focus:outline-hidden focus:ring-2 focus:ring-gray-400 dark:hover:bg-neutral-700 dark:text-neutral-400;
 	}
 
 	/* Multi Select End */
@@ -139,21 +116,49 @@
     }
 
     .alpha-form-error-message {
-        @apply hidden text-alpha-red dark:text-alpha-red align-middle;
+        @apply  align-middle text-alpha-red dark:text-alpha-red;
     }
 
     /* When input has error, style sibling span */
-    .input-validation-error ~ .alpha-form-error-message {
-        @apply whitespace-pre-line inline-flex items-center gap-x-1.5 px-3 py-1 my-0250 rounded-lg bg-alpha-red-opacity;
+    .input-validation-error ~ .alpha-form-error-message{
+        @apply whitespace-pre-line inline-flex items-center 
+		gap-x-1.5 px-3 py-1 my-0250 rounded-lg bg-alpha-red-opacity;
     }
 
-	.field-validation-valid{
-		@apply border border-alpha-green;
+	.alpha-add-background-error{
+		@apply  whitespace-pre-line  items-center gap-x-1.5 px-3 py-1 my-0250 rounded-lg bg-alpha-red-opacity;
 	}
-	.field-validation-invalid{
-		@apply border border-alpha-dark-red;
-	}
- 
 
+
+	.alpha-field-validation-valid{
+		@apply  border border-alpha-green;
+	}
+	.alpha-field-validation-invalid{
+		@apply  border border-alpha-dark-red;
+	}
+
+	.special-all-error-message{
+		@apply inline-flex items-center gap-x-1.5 px-3 py-1 my-0250 rounded-lg
+		bg-alpha-red-opacity align-middle text-alpha-red dark:text-alpha-red;
+	}
+
+	.alpha-form-hidden{
+		@apply hidden ;
+	}
+	.alpha-form-show{
+		@apply hidden ;
+	}
+
+
+	.alpha-form-checkbox-styled {
+		@apply shrink-0 mt-0.5
+		border border-gray-200 dark:border-neutral-700
+		rounded-sm
+		text-blue-600
+		focus:ring-blue-500
+		checked:bg-blue-500 checked:border-blue-500
+		dark:bg-neutral-800 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800
+		disabled:opacity-50 disabled:pointer-events-none;
+	}
 
 }

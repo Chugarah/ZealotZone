@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Identity;
 namespace Infrastructure.Entities;
 public class UserEntity : IdentityUser
 {
-    [ProtectedPersonalData]
-    [StringLength(100)]
-    public string? FirstName { get; init; }
+    // Email doesn't need to be redefining it when your UserEntity is inheriting IdentityUser
 
-    [ProtectedPersonalData]
+    [Required]
     [StringLength(100)]
-    public string? LastName { get; init; } = null!;
+    public string? FirstName { get; set; }
+    [Required]
+    [StringLength(100)]
+    public string? LastName { get; set; }
 }

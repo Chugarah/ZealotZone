@@ -44,19 +44,21 @@ import {
 	formatDatePicker,
 	resetDatePickerYear,
 	avatarUploader,
-	memberFormValidation,
 	ajaxFormValidation,
 	birthDateValidationCallback,
 } from "./forms/form-helpers";
+import {
+	sendAjaxRequest,
+} from "./components/fetch-ajax";
 import { applyRandomCssGradient } from "./components/random-gradient.js";
 
 // Make formatDatePicker available globally if needed
 window.formatDatePicker = formatDatePicker;
 window.resetDatePickerYear = resetDatePickerYear;
 window.avatarUploader = avatarUploader;
-window.memberFormValidation = memberFormValidation;
 window.ajaxFormValidation = ajaxFormValidation;
 window.birthDateValidationCallback = birthDateValidationCallback; 
+window.sendAjaxRequest = sendAjaxRequest;
 
 
 // Initialize icons

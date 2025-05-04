@@ -1,12 +1,15 @@
-
+using Core;
+using Infrastructure;
 using Infrastructure.Contexts;
 using Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using ZealotZone.Factories.User;
 using ZealotZone.Interfaces;
+using ZealotZone.Interfaces.Factories;
+using ZealotZone.Interfaces.Services;
 using ZealotZone.Services;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,19 +19,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 // Let's add support for Entity Framework Core and connect to a database
-var connectionString = builder.Configuration.GetConnectionString("SQLServer");
-builder.Services.AddDbContext<DataContext>(
-    d => d.UseAzureSql(connectionString)
-    );
+var connectionString = builder.Configuration.GetConnectionString("SQLServerAzure");
 
 // Inspired by Hands, Configuring requirements and setting regarding registration
-builder.Services.AddIdentity<UserEntity, IdentityRole>(
-    i =>
+
+builder
+    .Services.AddIdentity<UserEntity, IdentityRole>(i =>
     {
         i.User.RequireUniqueEmail = true;
         i.Password.RequiredLength = 4;
-    });
+    })
+    .AddEntityFrameworkStores<DataContext>();
+
 // Yummi Cookies
+
+// Time to register our Core Services and Infrastructure
+builder.Services.AddCoreServices();
+builder.Services.AddInfrastructure(connectionString!);
+
+// Registrering Our Factories
+builder.Services.AddScoped<IUserFactory, UserFactory>();
+
 builder.Services.ConfigureApplicationCookie(c =>
 {
     c.LoginPath = "/user-login";
@@ -42,8 +53,6 @@ builder.Services.ConfigureApplicationCookie(c =>
     c.ExpireTimeSpan = TimeSpan.FromDays(7);
     c.SlidingExpiration = true;
 });
-
-
 
 // Changing Razor Engine to look for Features location
 // Changing to Features' Folder Inspiration

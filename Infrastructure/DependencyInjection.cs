@@ -1,18 +1,28 @@
 
 using Core.Interfaces.Data;
+using Core.Interfaces.Factories;
+using Domain.User;
 using Infrastructure.Contexts;
+using Infrastructure.Entities;
+using Infrastructure.Factories;
+using Infrastructure.Repositories.User;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;
 
 /// <summary>
-/// This is a Composition Root pattern
-/// https://medium.com/@cfryerdev/dependency-injection-composition-root-418a1bb19130
-/// API -> Core
-/// Infrastructure -> Core
-/// API -> Infrastructure (only for DI registration)
+/// Provides methods for registering infrastructure layer dependencies into
+/// the ASP.NET Core dependency injection container.
 /// </summary>
+/// <remarks>
+/// This static class simplifies configuring the infrastructure dependencies such as
+/// database contexts, repositories, and services. It ensures that all required dependencies
+/// for the infrastructure layer are properly registered in the application's
+/// IServiceCollection. The main focus is on handling data access and basic
+/// domain data management.
+/// </remarks>
 public static class DependencyInjection
 {
     /// <summary>
@@ -35,6 +45,14 @@ public static class DependencyInjection
                 b => b.MigrationsAssembly(typeof(DataContext).Assembly.FullName)
             )
         );
+
+        // Registering the repositories in a DI container
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserPersistenceService, UserPersistenceService>();
+
+        // Registering the factories in a DI container
+        services.AddScoped<IEntityFactory<User, UserEntity>, UserFactory>();
+
         // Got help from Phind AI to add this line regarding the UnitOfWork
         services.AddScoped<IUnitOfWork>(provider => new UnitOfWork(
             provider.GetRequiredService<DataContext>()

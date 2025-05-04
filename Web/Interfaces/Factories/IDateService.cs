@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ZealotZone.Interfaces;
+namespace ZealotZone.Interfaces.Factories;
 
 public interface IDateService
 {

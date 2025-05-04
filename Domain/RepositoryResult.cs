@@ -31,14 +31,5 @@ public class RepositoryResult<TValue>
         Error = error ?? throw new ArgumentNullException(nameof(error));
         Value = default;
     }
-
-    private RepositoryResult(Error error)
-    {
-        Error = error;
-        StatusCode = 500;
-        Value = default;
-    }
-
-
 }
 

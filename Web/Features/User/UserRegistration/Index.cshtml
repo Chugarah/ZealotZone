@@ -1,6 +1,156 @@
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@model UserRegistrationViewModel
+
 @{
-    ViewData["Title"] = "User Registration";
+    ViewData["Title"] = "Create Account";
 }
 
-User Registration Form here :)
-MAAJOO!
+<div class="grid grid-cols-6 m-auto gap-2125 pt-5000 pb-3750">
+
+    <div class="w-1/2 col-span-6 m-auto view-card">
+
+
+        <form x-data="ajaxFormValidation({
+    formRefName: 'addUserForm',
+    validationEndpoint: '/user-registration',
+    antiforgeryToken: '@Antiforgery.GetAndStoreTokens(Context).RequestToken',
+    unselectedValue: null,
+    initialData: {
+        FullName: '@(Model?.FullName)',
+        Email: '@(Model?.Email)',
+        Password: '@(Model?.Password)',
+        ConfirmPassword: '@(Model?.ConfirmPassword)',
+        AcceptTerms: false
+    }
+})" novalidate="novalidate" method="POST"
+              enctype="multipart/form-data" x-on:submit.prevent="submitForm"
+              x-ref="addUserForm" id="addUserForm">
+            <div class="flex flex-col justify-center w-full px-20 py-10 m-auto" aria-label="Form Add User">
+
+                <fieldset :disabled="isSubmitting">
+                    <div class="flex justify-center py-1875">
+                        <h1>@ViewData["Title"]</h1>
+                    </div>
+                    <div class="flex">
+                        <div class="w-full pb-1875">
+                            <label asp-for="FullName" class="form-label alpha-form-label"></label>
+                            <input asp-for="FullName" type="text" class="alpha-form-input" x-model="formData.FullName"
+                                   x-on:input.debounce.500ms="validateField('FullName')"
+                                   x-on:blur="validateField('FullName')">
+
+                            <!-- Hiding and Showing Icon based on validation response -->
+                            <i class="alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="FullNameIconRef"
+                               :class="{ 'alpha-form-show': !validateField.FullName && errors.FullName?.length }"
+                               x-transition></i>
+
+                            <span asp-validation-for="FullName" class="alpha-form-error-message"></span>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-full pb-1875">
+                            <label asp-for="Email" class="form-label alpha-form-label"></label>
+                            <input asp-for="Email" type="text" class="alpha-form-input" x-model="formData.Email"
+                                   x-on:input.debounce.500ms="validateField('Email')"
+                                   x-on:blur="validateField('Email')">
+
+                            <!-- Hiding and Showing Icon based on validation response -->
+                            <i class="alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="EmailIconRef"
+                               :class="{ 'alpha-form-show': !validateField.Email && errors.Email?.length }"
+                               x-transition></i>
+
+                            <span asp-validation-for="Email" class="alpha-form-error-message"></span>
+                        </div>
+                    </div>
+                    @* --- Password Section --- *@
+                    <div class="flex">
+                        <div class="w-full pb-1875">
+                            <label asp-for="Password" class="form-label alpha-form-label"></label>
+                            <input asp-for="Password" type="Password" class="alpha-form-input"
+                                   x-model="formData.Password"
+                                   x-on:input.debounce.500ms="validateField('Password')"
+                                   x-on:blur="validateField('Password')">
+
+                            <!-- Hiding and Showing Icon based on validation response -->
+                            <i class="alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="PasswordIconRef"
+                               :class="{ 'alpha-form-show': !validateField.Password && errors.Password?.length }"
+                               x-transition></i>
+
+                            <span asp-validation-for="Password" class="alpha-form-error-message"></span>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-full pb-1875">
+                            <label asp-for="ConfirmPassword" class="form-label alpha-form-label"></label>
+                            <input asp-for="ConfirmPassword" type="Password" class="alpha-form-input"
+                                   x-model="formData.ConfirmPassword"
+                                   x-on:input.debounce.500ms="validateField('ConfirmPassword')"
+                                   x-on:blur="validateField('ConfirmPassword')"
+                            >
+
+                            <!-- Hiding and Showing Icon based on validation response -->
+                            <i class="alpha-form-validation-icon" data-lucide="octagon-alert"
+                               x-ref="ConfirmPasswordIconRef"
+                               :class="{ 'alpha-form-show': !validateField.ConfirmPassword && errors.ConfirmPassword?.length }"
+                               x-transition></i>
+
+                            <span asp-validation-for="ConfirmPassword" class="alpha-form-error-message"></span>
+                        </div>
+                    </div>
+                    @* --- Password Section End --- *@
+                    <div class="flex items-start py-09375">
+                        <div class="flex items-center h-5">
+                            <input asp-for="AcceptTerms" type="checkbox"
+                                   class="alpha-form-checkbox-styled "
+                                   x-model="formData.AcceptTerms"
+                                   x-on:change="validateField('AcceptTerms')">
+                        </div>
+                        <div class="ms-3">
+                            <label asp-for="AcceptTerms"></label>
+                            I accept the <a href="~/files/doom.txt" target="_blank"
+                                            class="inline! text-alpha-accent dark:text-alpha-accent">Terms and
+                                Conditions</a>
+                        </div>
+                    </div>
+                    <div class="flex gap-1500">
+                        <div class="w-full">
+                            <i class="alpha-form-validation-icon" data-lucide="octagon-alert" x-ref="AcceptTermsIconRef"
+                               x-transition></i>
+                            <span asp-validation-for="AcceptTerms" class="alpha-form-error-message"
+                                  :class="{ 'alpha-add-background-error': !validateField.AcceptTerms && errors.AcceptTerms?.length }"></span>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="flex py-1500">
+                    <button type="submit" class="w-full btn-primary" :disabled="isSubmitting"
+                            :tabindex="isSubmitting ? '-1' : '0'">
+                        <!-- Add this line -->
+                        <span class="spinner-secondary" x-show="isSubmitting" role="status" aria-label="loading">
+                </span>
+                        <span x-show="!isSubmitting">
+                    Create Account
+                </span>
+                    </button>
+                </div>
+                <div class="flex py-1500">
+                    <!-- Error message container -->
+                    <div x-show="errors[formRefName]?.length > 0" class="special-all-error-message">
+                        <ul class="list-disc list-inside">
+                            <template x-for="(error, index) in errors[formRefName]" :key="index">
+                                <li x-text="error"></li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex justify-center pt-5000">
+                    Already have an account? <a class="p-0 pl-04375 text-alpha-accent dark:text-alpha-accent"
+                                                href="@Url.Action("Index", "UserLogin", new { area = "User" })">Login</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+

@@ -6,15 +6,15 @@
 }
 
 .project-card-header {
-	@apply flex items-center w-full justify-start gap-10625;
+	@apply flex items-center justify-start w-full gap-10625;
 }
 
 .project-card-body {
-	@apply items-center w-full justify-start min-h-5000;
+	@apply items-center justify-start w-full min-h-5000;
 }
 
 .project-card-footer {
-	@apply flex items-end w-full justify-between gap-10625;
+	@apply flex items-end justify-between w-full gap-10625;
 }
 
 .project-card-time-left {
@@ -33,4 +33,12 @@
 
 .project-card-icon {
 	@apply relative flex items-center p-[1.77em] justify-center;
+}
+
+
+/* View Card */
+.view-card {
+	@apply flex flex-col gap-3 sm:flex p-1500  
+    bg-alpha-surface rounded-[var(--spacing-1000)] shadow-surface-2
+	;
 }

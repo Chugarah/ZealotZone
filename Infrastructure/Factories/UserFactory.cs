@@ -1,4 +1,4 @@
-using Domain;
+using Domain.User;
 using Infrastructure.Entities;
 
 namespace Infrastructure.Factories;
@@ -16,6 +16,7 @@ public class UserFactory : EntityFactoryBase<User, UserEntity>
     /// <returns></returns>
     public override User ToDomain(UserEntity usersEntity) => new()
     {
+        Email = usersEntity.Email,
         FirstName = usersEntity.FirstName,
         LastName = usersEntity.LastName,
     };
@@ -28,6 +29,7 @@ public class UserFactory : EntityFactoryBase<User, UserEntity>
     /// <returns></returns>
     public override UserEntity ToEntity(User users) => new()
     {
+        Email = users.Email,
         FirstName = users.FirstName,
         LastName = users.LastName,
     };

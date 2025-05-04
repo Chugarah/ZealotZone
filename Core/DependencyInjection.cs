@@ -1,5 +1,10 @@
 using Core.Factories.Data;
+using Core.Factories.User;
+using Core.Interfaces.Data;
+using Core.Interfaces.DTos;
 using Core.Interfaces.Factories;
+using Core.Interfaces.User;
+using Core.Services.User;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core;
@@ -16,8 +21,11 @@ public static class DependencyInjection
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         // Register services
-        services.AddSingleton<IRepositoryResultFactory, RepositoryResultFactory>();
+        services.AddScoped<IRepositoryResultFactory, RepositoryResultFactory>();
+        services.AddScoped<IUserService, UserService>();
+
         // Register factories
+        services.AddScoped<IUserDtoFactory, UserDtoFactory>();
 
         // Returning the services so it could be used
         // in our API layer where we are registering the services

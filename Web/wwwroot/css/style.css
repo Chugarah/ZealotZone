@@ -40,6 +40,7 @@
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
+    --radius-sm: 0.25rem;
     --radius-md: 0.375rem;
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
@@ -66,15 +67,15 @@
     --spacing-0500: 0.5rem;
     --spacing-05625: 0.5625rem;
     --spacing-0625: 0.625rem;
+    --spacing-0750: 0.75rem;
     --spacing-0875: 0.875rem;
+    --spacing-09375: 0.9375rem;
     --spacing-1000: 1rem;
     --spacing-10625: 1.0625rem;
     --spacing-1125: 1.125rem;
     --spacing-1250: 1.25rem;
     --spacing-1375: 1.375rem;
-    --spacing-14375: 1.4375rem;
     --spacing-1500: 1.5rem;
-    --spacing-1625: 1.625rem;
     --spacing-1875: 1.875rem;
     --spacing-2125: 2.125rem;
     --spacing-2500: 2.5em;
@@ -82,6 +83,7 @@
     --spacing-3000: 3rem;
     --spacing-3125: 3.125rem;
     --spacing-3500: 3.5rem;
+    --spacing-3750: 3.75rem;
     --spacing-5000: 5rem;
     --spacing-9375: 9.375rem;
     --spacing-108125: 10.8125rem;
@@ -149,8 +151,15 @@
     --shadow-popover-80: var(--shadow-offset-popover-2) var(--shadow-color-medium),
 		var(--shadow-offset-popover-3) var(--shadow-color-high);
     --shadow-button: var(--shadow-offset-button) var(--shadow-color-button);
-    --font-nunito: 'Nunito', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-nunito: "Nunito", ui-sans-serif, system-ui, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-base: var(--font-nunito);
+    --text-alpha-h1: 2.25rem;
+    --text-alpha-h2: 2rem;
+    --text-alpha-h3: 1.75rem;
+    --text-alpha-h4: 1.5rem;
+    --text-alpha-h5: 1.25rem;
+    --text-alpha-h6: 1.125rem;
     --menu-horizontal: 0.94rem;
     --text-body-regular-15: 0.94rem;
     --text-body-regular-14: 0.88rem;
@@ -410,6 +419,9 @@
   .col-span-4 {
     grid-column: span 4 / span 4;
   }
+  .col-span-6 {
+    grid-column: span 6 / span 6;
+  }
   .container {
     width: 100%;
     @media (width >= 480px) {
@@ -454,6 +466,9 @@
   }
   .my-auto {
     margin-block: auto;
+  }
+  .ms-3 {
+    margin-inline-start: calc(var(--spacing) * 3);
   }
   .ms-auto {
     margin-inline-start: auto;
@@ -587,6 +602,9 @@
   .inline {
     display: inline;
   }
+  .inline\! {
+    display: inline !important;
+  }
   .inline-block {
     display: inline-block;
   }
@@ -624,6 +642,10 @@
     width: calc(var(--spacing) * 8);
     height: calc(var(--spacing) * 8);
   }
+  .size-1000 {
+    width: var(--spacing-1000);
+    height: var(--spacing-1000);
+  }
   .size-1250 {
     width: var(--spacing-1250);
     height: var(--spacing-1250);
@@ -642,8 +664,14 @@
   .h-4 {
     height: calc(var(--spacing) * 4);
   }
+  .h-5 {
+    height: calc(var(--spacing) * 5);
+  }
   .h-6 {
     height: calc(var(--spacing) * 6);
+  }
+  .h-1875 {
+    height: var(--spacing-1875);
   }
   .h-full {
     height: 100%;
@@ -660,6 +688,9 @@
   .min-h-3000 {
     min-height: var(--spacing-3000);
   }
+  .w-1\/2 {
+    width: calc(1/2 * 100%);
+  }
   .w-10 {
     width: calc(var(--spacing) * 10);
   }
@@ -671,6 +702,9 @@
   }
   .w-32 {
     width: calc(var(--spacing) * 32);
+  }
+  .w-\[1px\] {
+    width: 1px;
   }
   .w-\[calc\(100\%-32px\)\] {
     width: calc(100% - 32px);
@@ -711,6 +745,9 @@
   .shrink-0 {
     flex-shrink: 0;
   }
+  .grow {
+    flex-grow: 1;
+  }
   .-translate-y-1\/2 {
     --tw-translate-y: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -742,6 +779,9 @@
   .grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
+  .grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
   .grid-cols-12 {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
@@ -756,6 +796,9 @@
   }
   .items-center {
     align-items: center;
+  }
+  .items-start {
+    align-items: flex-start;
   }
   .justify-between {
     justify-content: space-between;
@@ -888,6 +931,9 @@
   .bg-alpha-background {
     background-color: var(--color-alpha-background);
   }
+  .bg-alpha-border-200 {
+    background-color: var(--color-alpha-border-200);
+  }
   .bg-alpha-red {
     background-color: var(--color-alpha-red);
   }
@@ -948,6 +994,9 @@
   .px-20 {
     padding-inline: calc(var(--spacing) * 20);
   }
+  .px-1875 {
+    padding-inline: var(--spacing-1875);
+  }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
   }
@@ -975,11 +1024,11 @@
   .py-1500 {
     padding-block: var(--spacing-1500);
   }
-  .py-1625 {
-    padding-block: var(--spacing-1625);
+  .py-1875 {
+    padding-block: var(--spacing-1875);
   }
-  .py-2500 {
-    padding-block: var(--spacing-2500);
+  .py-09375 {
+    padding-block: var(--spacing-09375);
   }
   .ps-4 {
     padding-inline-start: calc(var(--spacing) * 4);
@@ -996,11 +1045,14 @@
   .pt-3 {
     padding-top: calc(var(--spacing) * 3);
   }
+  .pt-5000 {
+    padding-top: var(--spacing-5000);
+  }
   .pr-0875 {
     padding-right: var(--spacing-0875);
   }
-  .pr-1500 {
-    padding-right: var(--spacing-1500);
+  .pr-1375 {
+    padding-right: var(--spacing-1375);
   }
   .pb-0 {
     padding-bottom: calc(var(--spacing) * 0);
@@ -1008,8 +1060,20 @@
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
   }
-  .pl-14375 {
-    padding-left: var(--spacing-14375);
+  .pb-1250 {
+    padding-bottom: var(--spacing-1250);
+  }
+  .pb-1875 {
+    padding-bottom: var(--spacing-1875);
+  }
+  .pb-3750 {
+    padding-bottom: var(--spacing-3750);
+  }
+  .pl-0750 {
+    padding-left: var(--spacing-0750);
+  }
+  .pl-04375 {
+    padding-left: var(--spacing-04375);
   }
   .text-center {
     text-align: center;
@@ -1059,6 +1123,9 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
+  .text-alpha-accent {
+    color: var(--color-alpha-accent);
+  }
   .text-alpha-body-dark {
     color: var(--color-alpha-body-dark);
   }
@@ -1094,6 +1161,15 @@
   }
   .uppercase {
     text-transform: uppercase;
+  }
+  .italic {
+    font-style: italic;
+  }
+  .line-through {
+    text-decoration-line: line-through;
+  }
+  .underline {
+    text-decoration-line: underline;
   }
   .decoration-2 {
     text-decoration-thickness: 2px;
@@ -1440,6 +1516,11 @@
   .dark\:fill-neutral-200 {
     &:where(.dark, .dark *) {
       fill: var(--color-neutral-200);
+    }
+  }
+  .dark\:text-alpha-accent {
+    &:where(.dark, .dark *) {
+      color: var(--color-alpha-accent);
     }
   }
   .dark\:text-blue-500 {
@@ -2030,10 +2111,6 @@
   flex-grow: 1;
   grid-auto-flow: column;
   grid-auto-rows: auto;
-  padding-inline: var(--spacing-1000);
-}
-.header-skeleton {
-  background-color: var(--color-alpha-border-200);
 }
 .main-content-skeleton {
   overflow: clip;
@@ -2046,15 +2123,18 @@
   grid-row-start: 1;
   grid-row-end: 2;
   display: flex;
-  padding-right: var(--spacing-1000);
 }
-.header_menu {
+.header-menu {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding-inline: var(--spacing-1875);
+  padding-block: var(--spacing-1125);
 }
-.header_container {
-  padding-right: var(--spacing-1875);
+.header-container {
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  border-color: var(--color-alpha-border-200);
 }
 .header-menu-settings {
   display: flex;
@@ -2143,10 +2223,9 @@
 }
 .main-content-body {
   padding-inline: var(--spacing-1875);
-  padding-block: var(--spacing-2625);
+  padding-bottom: var(--spacing-2625);
 }
 .main-content-project-nav {
-  padding-bottom: var(--spacing-1875);
   span {
     padding-right: var(--spacing-10625);
   }
@@ -2253,115 +2332,115 @@
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 200;
-  src: url('/fonts/Nunito/nunito-v26-latin-200.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-200.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 200;
-  src: url('/fonts/Nunito/nunito-v26-latin-200italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-200italic.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 300;
-  src: url('/fonts/Nunito/nunito-v26-latin-300.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-300.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 300;
-  src: url('/fonts/Nunito/nunito-v26-latin-300italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-300italic.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/Nunito/nunito-v26-latin-regular.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-regular.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 400;
-  src: url('/fonts/Nunito/nunito-v26-latin-italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-italic.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 500;
-  src: url('/fonts/Nunito/nunito-v26-latin-500.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-500.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 500;
-  src: url('/fonts/Nunito/nunito-v26-latin-500italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-500italic.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 600;
-  src: url('/fonts/Nunito/nunito-v26-latin-600.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-600.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 600;
-  src: url('/fonts/Nunito/nunito-v26-latin-600italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-600italic.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  src: url('/fonts/Nunito/nunito-v26-latin-700.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-700.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 700;
-  src: url('/fonts/Nunito/nunito-v26-latin-700italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-700italic.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 800;
-  src: url('/fonts/Nunito/nunito-v26-latin-800.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-800.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 800;
-  src: url('/fonts/Nunito/nunito-v26-latin-800italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-800italic.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 900;
-  src: url('/fonts/Nunito/nunito-v26-latin-900.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-900.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: italic;
   font-weight: 900;
-  src: url('/fonts/Nunito/nunito-v26-latin-900italic.woff2') format('woff2');
+  src: url("/fonts/Nunito/nunito-v26-latin-900italic.woff2") format("woff2");
 }
 @layer base {
   :root {
@@ -2377,27 +2456,27 @@
     color: var(--color-alpha-heading);
   }
   h1 {
-    font-size: var(--text-h1);
+    font-size: var(--text-alpha-h1);
     color: var(--color-alpha-heading);
   }
   h2 {
-    font-size: var(--text-h2);
+    font-size: var(--text-alpha-h2);
     color: var(--color-alpha-heading);
   }
   h3 {
-    font-size: var(--text-h3);
+    font-size: var(--text-alpha-h3);
     color: var(--color-alpha-heading);
   }
   h4 {
-    font-size: var(--text-h4);
+    font-size: var(--text-alpha-h4);
     color: var(--color-alpha-heading);
   }
   h5 {
-    font-size: var(--text-h5);
+    font-size: var(--text-alpha-h5);
     color: var(--color-alpha-heading);
   }
   h6 {
-    font-size: var(--text-h6);
+    font-size: var(--text-alpha-h6);
     color: var(--color-alpha-heading);
     font-weight: var(--font-weight-semibold);
   }
@@ -2897,7 +2976,6 @@
     color: var(--color-alpha-dark-red);
   }
   .alpha-form-error-message {
-    display: none;
     vertical-align: middle;
     color: var(--color-alpha-red);
     &:where(.dark, .dark *) {
@@ -2915,15 +2993,91 @@
     padding-block: calc(var(--spacing) * 1);
     white-space: pre-line;
   }
-  .field-validation-valid {
+  .alpha-add-background-error {
+    margin-block: var(--spacing-0250);
+    align-items: center;
+    column-gap: calc(var(--spacing) * 1.5);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-alpha-red-opacity);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 1);
+    white-space: pre-line;
+  }
+  .alpha-field-validation-valid {
     border-style: var(--tw-border-style);
     border-width: 1px;
     border-color: var(--color-alpha-green);
   }
-  .field-validation-invalid {
+  .alpha-field-validation-invalid {
     border-style: var(--tw-border-style);
     border-width: 1px;
     border-color: var(--color-alpha-dark-red);
+  }
+  .special-all-error-message {
+    margin-block: var(--spacing-0250);
+    display: inline-flex;
+    align-items: center;
+    column-gap: calc(var(--spacing) * 1.5);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-alpha-red-opacity);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 1);
+    vertical-align: middle;
+    color: var(--color-alpha-red);
+    &:where(.dark, .dark *) {
+      color: var(--color-alpha-red);
+    }
+  }
+  .alpha-form-hidden {
+    display: none;
+  }
+  .alpha-form-show {
+    display: none;
+  }
+  .alpha-form-checkbox-styled {
+    margin-top: calc(var(--spacing) * 0.5);
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+    border-color: var(--color-gray-200);
+    color: var(--color-blue-600);
+    &:checked {
+      border-color: var(--color-blue-500);
+    }
+    &:checked {
+      background-color: var(--color-blue-500);
+    }
+    &:focus {
+      --tw-ring-color: var(--color-blue-500);
+    }
+    &:disabled {
+      pointer-events: none;
+    }
+    &:disabled {
+      opacity: 50%;
+    }
+    &:where(.dark, .dark *) {
+      border-color: var(--color-neutral-700);
+    }
+    &:where(.dark, .dark *) {
+      background-color: var(--color-neutral-800);
+    }
+    &:where(.dark, .dark *) {
+      &:checked {
+        border-color: var(--color-blue-500);
+      }
+    }
+    &:where(.dark, .dark *) {
+      &:checked {
+        background-color: var(--color-blue-500);
+      }
+    }
+    &:where(.dark, .dark *) {
+      &:focus {
+        --tw-ring-offset-color: var(--color-gray-800);
+      }
+    }
   }
 }
 @layer components {
@@ -2938,6 +3092,10 @@
   .avatar-container--project-card {
     width: var(--spacing-1875);
     height: var(--spacing-1875);
+  }
+  .avatar-container--header-card {
+    width: var(--spacing-2500);
+    height: var(--spacing-2500);
   }
   .avatar-container--project-notification {
     width: var(--spacing-3500);
@@ -3099,6 +3257,21 @@
   align-items: center;
   justify-content: center;
   padding: 1.77em;
+}
+.view-card {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3);
+  border-radius: var(--spacing-1000);
+  background-color: var(--color-alpha-surface);
+  padding: var(--spacing-1500);
+  --tw-shadow: var(--shadow-offset-1) var(--shadow-color-low), var(--shadow-offset-2)
+		rgba(var(--shadow-color-light), var(--shadow-opacity-low));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  box-shadow: var(--shadow-surface-2);
+  @media (width >= 40rem) {
+    display: flex;
+  }
 }
 .icon-gradient {
   position: absolute;

@@ -4,8 +4,10 @@ namespace Core.Dto.User;
 
 public class UserInsertDto
 {
-    [StringLength(100)]
-    public string FirstName { get; init; } = null!;
-    [StringLength(100)]
-    public string LastName { get; init; } = null!;
+    [Required]
+    public string Email { get; init; } = null!;
+    [Required]
+    public string FirstName { get; set; } = null!;
+    [Required]
+    public string LastName { get; set; } = null!;
 }

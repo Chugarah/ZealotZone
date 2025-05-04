@@ -149,6 +149,7 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\vendor\preline-main\src\utils\types.ts" />
     <_ContentIncludedByDefault Remove="Views\Shared\Components\AvatarUpload\Default.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Projects\Projects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />

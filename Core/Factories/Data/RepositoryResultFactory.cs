@@ -27,15 +27,20 @@ public class RepositoryResultFactory : IRepositoryResultFactory
         return new RepositoryResult<TValue>(value, statusCode);
     }
 
+    public string? OperationFailed(char error, int statusCode = 200)
+    {
+        return new string(error, statusCode);
+    }
+
     // The class is sealed to prevent inheritance, ensuring that the factory's behavior
     public RepositoryResult<TValue> OperationFailed<TValue>(Error error, int statusCode)
     {
         if (error == Error.NonError)
         {
-            throw new
-                InvalidOperationException("Cannot create a failure result with this type of error.");
+            throw new InvalidOperationException(
+                "Cannot create a failure result with this type of error."
+            );
         }
         return new RepositoryResult<TValue>(error, statusCode);
     }
-
 }

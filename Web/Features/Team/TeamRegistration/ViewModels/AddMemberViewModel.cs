@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using ZealotZone.Features.TeamRegistration.ViewModels;
 
-namespace ZealotZone.Features.TeamRegistration.ViewModels;
+namespace ZealotZone.Features.Team.TeamRegistration.ViewModels;
 
 public class AddMemberViewModel
 {
@@ -32,7 +33,7 @@ public class AddMemberViewModel
     [Display(Name = "Last Name", Prompt = "Last name")]
     public string LastName { get; set; } = null!;
 
-    [DataType(DataType.EmailAddress)] // Keep for server-side validation & semantics
+    [DataType(DataType.EmailAddress)]
     [Required(ErrorMessage = "Please provide a valid email address.")]
     // This is needed for Client-side validation
     [RegularExpression(

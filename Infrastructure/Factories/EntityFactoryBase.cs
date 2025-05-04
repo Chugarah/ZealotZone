@@ -23,7 +23,7 @@ namespace Infrastructure.Factories;
 /// <example>
 /// <code>
 /// // Auto-mapped conversion
-/// var factory = new EntityFactoryBase&lt;Status, StatusEntity&gt;();
+/// var factory = new EntityFactoryBase&lt;Status, StatusEntity;
 /// var domainEntity = factory.ToDomain(dbEntity);
 ///
 /// // Customized conversion

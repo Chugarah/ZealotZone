@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ZealotZone.Features.TeamRegistration.ViewModels;
+using ZealotZone.Features.Team.TeamRegistration.ViewModels;
 
 namespace ZealotZone.Features.Team.TeamRegistration;
 
@@ -23,11 +23,7 @@ public class TeamRegistrationController : Controller
     [Route("/add-member")]
     public IActionResult AddMember([FromForm] AddMemberViewModel addMemberModel)
     {
-        if (!ModelState.IsValid)
-        {
-            return ValidationProblem(ModelState);
-        }
-
-        return Ok(new { Message = "Testing :)" });
+        return !ModelState.IsValid ? ValidationProblem(ModelState)
+            : Ok(new { Message = "Testing :)" });
     }
 }

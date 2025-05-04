@@ -7,9 +7,9 @@ namespace Infrastructure.Repositories.User;
 
 public class UserRepository(
     DataContext dataContext,
-    IEntityFactory<Domain.User?, UserEntity> factory,
+    IEntityFactory<Domain.User.User?, UserEntity> factory,
     IRepositoryResultFactory resultFactory) :
-    BaseRepository<Domain.User,
+    BaseRepository<Domain.User.User,
         UserEntity>(dataContext, factory, resultFactory),
     IUserRepository
 {

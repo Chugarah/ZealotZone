@@ -1,75 +1,55 @@
 # ZealotZone
 
-Projectmanager for my Protossn units
+**Projektledare för mina Protoss-enheter**  
+En ASP.NET-baserad webbapplikation för hantering av projekt inom Protoss-fraktionen.
 
-MJaao!!
-Clean..Yummi!
-https://medium.com/@roshikanayanadhara/clean-architecture-in-net-a-practical-guide-with-examples-817568b3f42e
-https://medium.com/@roshikanayanadhara/understanding-clean-architecture-with-a-chef-example-2878005abd4d
+Denna text är genererad av AI :)
 
-sudo dnf install dotnet-sdk-9.0
+---
 
-## Installation Dumpage
+## ✅ Funktioner
 
-pnpm add -D tailwindcss@latest postcss@latest autoprefixer@latest
+- Skapa, visa och hantera projekt
+- Filtrera projekt baserat på status (påbörjade/slutförda)
+- Användarregistrering och inloggning
+- Skyddade användarspecifika sidor
+- Formulärvalidering med JavaScript (Vanilla & Alpine.js)
+- Databas via Azure SQL med Entity Framework Core
+- Följer Service Pattern och Microsoft Identity (Individual Account)
 
-pnpm tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/style.css
+---
 
-// Watcher CSS Tailwind
-pnpm tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/style.css --watch
-// Watcher Javascript
+## 📋 Krav för godkänt
 
-pnpm add -D esbuild
-pnpm approve-builds
-pnpm add -D browser-sync
-pnpm add -D concurrently
-pnpm add -D alpinejs
+| Funktion                                       | Status | Kommentar                                        |
+| ---------------------------------------------- | ------ | ------------------------------------------------ |
+| Samtliga sidor enligt designfil                | ❌      | Projektformulär saknas (Skapa/redigera projekt)  |
+| Visa projekt efter status (startade/slutförda) | ❌      | Ej implementerat, endast mockdata                |
+| Hantera projektstatus                          | ❌      | Krävs även om det inte är med i designfil        |
+| Utökning av projektmodell                      | ❌      | Ej implementerat                                 |
+| Skapa projekt via formulär                     | ❌      | Endast användare kan läggas till via formulär    |
+| Formulärvalidering med JavaScript              | ✅      | Använder Vanilla JS & Alpine.js                  |
+| Databas (Entity Framework Core)                | ✅      | Azure SQL (online)                               |
+| Microsoft Identity (authentisering)            | ✅      | Registrering, inloggning och utloggning fungerar |
+| Skydd av användarspecifika sidor               | ✅      | Projektsidor är skyddade med `Authorize`         |
 
-pnpm run mvc-watch-run
+---
 
-<https://alexduggleby.com/blog/a-more-beautiful-based-asp-net-identity-ui-based-on-tailwindcss-and-preline/>
-<http://192.168.0.102:3001/>
+## ⚙️ Teknikstack
 
-<https://browsersync.io/>
+- ASP.NET (Razor Pages eller MVC)
+- Entity Framework Core
+- Microsoft Identity
+- Azure SQL Database
+- JavaScript (Vanilla & Alpine.js)
+- HTML/CSS
 
-pnpm add -D @tailwindcss/typography
-pnpm add -D @tailwindcss/forms
-pnpm add -D @tailwindcss/aspect-ratio
-pnpm add -D @tailwindcss/container-queries
-pnpm list
-pnpm add -D preline
+---
 
-pnpm add -D @preline/theme-switch
-## <https://vanilla-calendar.pro/>
+## 🚀 Kom igång
 
-pnpm add -D vanilla-calendar-pro lodash
+### Klona projektet
 
-pnpm add -D @tiptap/core @tiptap/pm @tiptap/starter-kit
-
-<https://tiptap.dev/docs/editor/extensions/functionality/bubble-menu>
-pnpm add -D @tiptap/extension-placeholder @tiptap/extension-ordered-list @tiptap/extension-list-item
-
-pnpm add -D @tiptap/extension-bold @tiptap/extension-underline  @tiptap/extension-link
-
-pnpm add -D @tiptap/extension-bullet-list @tiptap/extension-list-item @tiptap/extension-ordered-list @tiptap/extension-list-item @tiptap/extension-blockquote
-pnpm add -D @tiptap/extension-text-align
-pnpm add -D @colinaut/alpinejs-plugin-simple-validate
-pnpm add -D prettier-plugin-tailwindcss
-
-
-
-
-
-
-Icons
-<https://lucide.dev/>
-
-pnpm install lucide
-<i data-lucide="menu"></i>
-<span class="btn-primary"><i data-lucide="plus"></i>Add Project</span>
-
-We are using Preline as our component template :)
-<https://preline.co/>
-
-
-
+```bash
+git clone https://github.com/ditt-användarnamn/ZealotZone.git
+cd ZealotZone

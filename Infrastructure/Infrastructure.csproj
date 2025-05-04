@@ -20,10 +20,17 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Core\Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Identity">
+        <HintPath>..\..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\9.0.4\Microsoft.AspNetCore.Identity.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
